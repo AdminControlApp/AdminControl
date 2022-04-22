@@ -1,0 +1,10 @@
+{
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"resolveJsonModule": true,
+		"module": "ESNext",
+		"types": [
+			"vite/client"
+		]
+	}
+}

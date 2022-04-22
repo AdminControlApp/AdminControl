@@ -1,0 +1,46 @@
+{
+	"name": "@admincontrol/app",
+	"type": "module",
+	"main": "packages/main/dist/main.cjs",
+	"scripts": {
+		"build": "npm run build:main && npm run build:preload && npm run build:renderer",
+		"build:main": "cd ./packages/main && vite build",
+		"build:preload": "cd ./packages/preload && vite build",
+		"build:renderer": "cd ./packages/renderer && vite build",
+		"compile": "cross-env MODE=production npm run build && electron-builder build --config .electron-builder.config.js --dir --config.asar=false",
+		"test": "npm run test:main && npm run test:preload && npm run test:renderer && npm run test:e2e",
+		"test:e2e": "npm run build && vitest run",
+		"test:main": "vitest run -r packages/main --passWithNoTests",
+		"test:preload": "vitest run -r packages/preload --passWithNoTests",
+		"test:renderer": "vitest run -r packages/renderer --passWithNoTests",
+		"dev": "cross-env ELECTRON_RUN_AS_NODE='' node-ts ./scripts/watch.ts",
+		"lint": "eslint --fix --cache .",
+		"prettier": "prettier --write .",
+		"tc:main": "tsc --noEmit -p packages/main/tsconfig.json",
+		"tc:preload": "tsc --noEmit -p packages/preload/tsconfig.json",
+		"tc:renderer": "vue-tsc --noEmit -p packages/renderer/tsconfig.json",
+		"tc": "pnpm run tc:main && npm run tc:preload && npm run tc:renderer"
+	},
+	"devDependencies": {
+		"@vitejs/plugin-vue": "2.3.1",
+		"@vue/test-utils": "2.0.0-rc.17",
+		"cross-env": "7.0.3",
+		"electron": "^18.0.1",
+		"electron-builder": "22.14.13",
+		"electron-devtools-installer": "3.2.0",
+		"happy-dom": "2.55.0",
+		"playwright": "1.20.2",
+		"rollup": "^2.70.1",
+		"typescript": "4.6.3",
+		"vite": "2.9.1",
+		"vitest": "0.8.3",
+		"vue-tsc": "0.33.9"
+	},
+	"dependencies": {
+		"desm": "^1.2.0",
+		"electron-updater": "4.6.5",
+		"menubar": "^9.2.0",
+		"phone-call-pass": "link:../phone-call-pass/packages/phone-call-pass/dist",
+		"vue": "3.2.31"
+	}
+}
