@@ -4,6 +4,7 @@ import * as fs from 'node:fs';
 import { builtinModules } from 'node:module';
 import * as path from 'node:path';
 import * as process from 'node:process';
+import jsImports from 'vite-plugin-js-imports';
 import WindiCSS from 'vite-plugin-windicss';
 import { defineConfig } from 'vitest/config';
 
@@ -33,6 +34,7 @@ export default defineConfig({
 			reactivityTransform: true,
 		}),
 		WindiCSS(),
+		jsImports(),
 	],
 	server: {
 		fs: {

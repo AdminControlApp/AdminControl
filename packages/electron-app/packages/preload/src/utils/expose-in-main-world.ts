@@ -1,7 +1,7 @@
 import { contextBridge } from 'electron';
 
 /**
- * Typesafe wrapper for `electron.contextBridge.exposeInMainWorld`.
+ * Type-safe wrapper for `electron.contextBridge.exposeInMainWorld`.
  * Guarantees that all exposed APIs will comply with contracts.
  * @param key The key to inject the API onto window with. The API will be accessible on window[apiKey].
  * @param api Your API

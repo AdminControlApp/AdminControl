@@ -35,6 +35,7 @@ importers:
       rollup: ^2.70.1
       typescript: 4.6.3
       vite: 2.9.1
+      vite-plugin-js-imports: ^1.1.1
       vite-plugin-windicss: ^1.8.4
       vitest: 0.8.3
       vue: 3.2.31
@@ -45,6 +46,7 @@ importers:
       electron-store: 8.0.1
       electron-updater: 4.6.5
       phone-call-pass: link:../phone-call-pass/packages/phone-call-pass/dist
+      vite-plugin-js-imports: 1.1.1_vite@2.9.1
       vue: 3.2.31
       windicss: 3.5.1
     devDependencies:
@@ -6956,6 +6958,14 @@ packages:
       extsprintf: 1.4.1
     dev: true
     optional: true
+
+  /vite-plugin-js-imports/1.1.1_vite@2.9.1:
+    resolution: {integrity: sha512-c430jHbuXHmWfI/xpZTbhfi5bt7okpOoyDDSeWnNjZ7fcIXZDWkocoHT+sgMefIXdOCyJcoVcMC2+3RiKRqJ/w==}
+    peerDependencies:
+      vite: ^2.9.0
+    dependencies:
+      vite: 2.9.1
+    dev: false
 
   /vite-plugin-windicss/1.8.4_vite@2.9.1:
     resolution: {integrity: sha512-LSZAO8BZn3x406GRbYX5t5ONXXJVdqiQtN1qrznLA/Dy5/NzZVhfcrL6N1qEYYO7HsCDT4pLAjTzObvDnM9Y8A==}

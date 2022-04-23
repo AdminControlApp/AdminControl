@@ -11,5 +11,5 @@
 		},
 		"lib": ["ESNext", "dom", "dom.iterable"]
 	},
-	"include": ["./src"]
+	"include": ["./src", "../preload/typings/contracts"]
 }
