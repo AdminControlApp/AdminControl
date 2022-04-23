@@ -1,20 +1,9 @@
 {
 	"extends": "../../tsconfig.json",
 	"compilerOptions": {
-		"module": "esnext",
-		"target": "esnext",
-		"types": [
-			"node"
-		],
+		"types": ["node"],
 		"baseUrl": "."
 	},
-	"include": [
-		"src/**/*.ts",
-		"typings/contracts.d.ts",
-		"../../typings/**/*.d.ts"
-, "src/index.mts"	],
-	"exclude": [
-		"**/*.spec.ts",
-		"**/*.test.ts"
-	]
+	"include": ["./src", "./typings"],
+	"exclude": ["./test"]
 }

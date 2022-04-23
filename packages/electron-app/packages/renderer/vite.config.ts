@@ -4,12 +4,13 @@ import { builtinModules } from 'node:module';
 import * as path from 'node:path';
 import vue from '@vitejs/plugin-vue';
 import { dirname, join } from 'desm';
-import type { UserConfig } from 'vitest/config';
+import WindiCSS from 'vite-plugin-windicss';
+import { defineConfig } from 'vite';
 
 const { chrome } = JSON.parse(
 	fs.readFileSync(
 		join(import.meta.url, '../../.electron-vendors.cache.json'),
-		'utf-8'
+		'utf8'
 	)
 ) as {
 	chrome: string;
@@ -17,10 +18,7 @@ const { chrome } = JSON.parse(
 
 const PACKAGE_ROOT = dirname(import.meta.url);
 
-/**
- * @see https://vitejs.dev/config/
- */
-const config: UserConfig = {
+export default defineConfig({
 	mode: process.env.MODE,
 	root: PACKAGE_ROOT,
 	resolve: {
@@ -30,7 +28,7 @@ const config: UserConfig = {
 			'~p': join(import.meta.url, '../preload/src'),
 		},
 	},
-	plugins: [vue()],
+	plugins: [vue(), WindiCSS()],
 	base: '',
 	server: {
 		fs: {
@@ -52,6 +50,4 @@ const config: UserConfig = {
 	test: {
 		environment: 'happy-dom',
 	},
-};
-
-export default config;
+});

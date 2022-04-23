@@ -1,11 +1,14 @@
-import { app, Menu, Tray } from 'electron';
+import { app, Menu, Tray, nativeImage } from 'electron';
 import { join } from 'desm';
 
 export function createTray() {
 	app
 		.whenReady()
 		.then(() => {
-			const tray = new Tray(join(import.meta.url, '../assets/icon.png'));
+			const image = nativeImage.createFromPath(
+				join(import.meta.url, '../assets/icon.png')
+			);
+			const tray = new Tray(image.resize({ width: 16, height: 16 }));
 			const contextMenu = Menu.buildFromTemplate([
 				{ label: 'Item1', type: 'radio' },
 				{ label: 'Item2', type: 'radio' },

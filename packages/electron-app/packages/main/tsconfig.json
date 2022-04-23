@@ -1,22 +1,12 @@
 {
 	"extends": "../../tsconfig.json",
 	"compilerOptions": {
-		"types": [
-			"node",
-		],
+		"types": ["node", "../../typings/env"],
 		"baseUrl": ".",
 		"paths": {
-			"~m/*": [
-				"./src/*"
-			]
+			"~m/*": ["./src/*"]
 		}
 	},
-	"include": [
-		"src/**/*.ts",
-		"../../typings/**/*.d.ts"
-	],
-	"exclude": [
-		"**/*.spec.ts",
-		"**/*.test.ts"
-	]
+	"include": ["./src"],
+	"exclude": ["./test"]
 }

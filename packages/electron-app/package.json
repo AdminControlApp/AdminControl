@@ -33,14 +33,16 @@
 		"rollup": "^2.70.1",
 		"typescript": "4.6.3",
 		"vite": "2.9.1",
+		"vite-plugin-windicss": "^1.8.4",
 		"vitest": "0.8.3",
 		"vue-tsc": "0.33.9"
 	},
 	"dependencies": {
 		"desm": "^1.2.0",
+		"electron-store": "^8.0.1",
 		"electron-updater": "4.6.5",
-		"menubar": "^9.2.0",
 		"phone-call-pass": "link:../phone-call-pass/packages/phone-call-pass/dist",
-		"vue": "3.2.31"
+		"vue": "3.2.31",
+		"windicss": "^3.5.1"
 	}
 }

@@ -5,6 +5,7 @@
 		"test",
 		"typings",
 		".eslintrc.cjs",
-		"vite.config.ts"
+		"vite.config.ts",
+		"windi.config.ts"
 	]
 }
