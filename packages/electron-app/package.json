@@ -23,27 +23,27 @@
 	},
 	"devDependencies": {
 		"@vitejs/plugin-vue": "2.3.1",
-		"@vue/test-utils": "2.0.0-rc.17",
+		"@vue/test-utils": "2.0.0-rc.21",
 		"cross-env": "7.0.3",
-		"electron": "^18.0.1",
-		"electron-builder": "22.14.13",
+		"electron": "^18.1.0",
+		"electron-builder": "23.0.3",
 		"electron-devtools-installer": "3.2.0",
 		"happy-dom": "2.55.0",
-		"playwright": "1.20.2",
-		"rollup": "^2.70.1",
+		"playwright": "1.21.1",
+		"rollup": "^2.70.2",
 		"typescript": "4.6.3",
-		"vite": "2.9.1",
+		"vite": "2.9.5",
 		"vite-plugin-windicss": "^1.8.4",
-		"vitest": "0.8.3",
-		"vue-tsc": "0.33.9"
+		"vitest": "0.9.4",
+		"vue-tsc": "0.34.9"
 	},
 	"dependencies": {
 		"desm": "^1.2.0",
 		"electron-store": "^8.0.1",
-		"electron-updater": "^4.6.5",
+		"electron-updater": "^5.0.1",
 		"phone-call-pass": "link:../phone-call-pass/packages/phone-call-pass/dist",
 		"vite-plugin-js-imports": "^1.1.1",
-		"vue": "^3.2.31",
+		"vue": "^3.2.33",
 		"windicss": "^3.5.1"
 	}
 }
