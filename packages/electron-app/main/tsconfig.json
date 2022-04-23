@@ -1,7 +1,7 @@
 {
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
-		"types": ["node", "../../typings/env"],
+		"types": ["node", "../typings/env"],
 		"baseUrl": ".",
 		"paths": {
 			"~m/*": ["./src/*"]

@@ -1,5 +1,5 @@
-import { app, Menu, Tray, nativeImage } from 'electron';
 import { join } from 'desm';
+import { app, Menu, nativeImage,Tray } from 'electron';
 
 export function createTray() {
 	app

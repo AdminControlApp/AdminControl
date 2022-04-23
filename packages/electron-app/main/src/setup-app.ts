@@ -1,8 +1,10 @@
-import * as process from 'node:process';
 import { app } from 'electron';
-import { restoreOrCreateWindow } from './main-window.js';
+import * as process from 'node:process';
+
 import { installDevtools } from '~m/utils/devtools.js';
 import { checkForUpdates } from '~m/utils/updates.js';
+
+import { restoreOrCreateWindow } from './main-window.js';
 
 export function setupApp() {
 	/**

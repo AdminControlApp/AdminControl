@@ -1,6 +1,6 @@
-import { URL } from 'node:url';
-import { BrowserWindow } from 'electron';
 import { join } from 'desm';
+import { BrowserWindow } from 'electron';
+import { URL } from 'node:url';
 
 async function createWindow() {
 	const browserWindow = new BrowserWindow({

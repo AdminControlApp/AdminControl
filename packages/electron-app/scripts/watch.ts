@@ -1,18 +1,18 @@
 #!/usr/bin/env node
 
-import * as process from 'node:process';
 import electronPath from 'electron';
-import type { Buffer } from 'node:buffer';
 import type { ExecaChildProcess } from 'execa';
 import { execa } from 'execa';
-import { createServer, build, createLogger } from 'vite';
+import type { Buffer } from 'node:buffer';
+import * as process from 'node:process';
+import type { OutputPlugin } from 'rollup';
 import type {
-	LogLevel,
 	InlineConfig,
+	LogLevel,
 	ResolvedServerOptions,
 	WebSocketServer,
 } from 'vite';
-import type { OutputPlugin } from 'rollup';
+import { build, createLogger,createServer } from 'vite';
 
 process.env.MODE = process.env.MODE ?? 'development';
 const mode = process.env.MODE as 'production' | 'development';

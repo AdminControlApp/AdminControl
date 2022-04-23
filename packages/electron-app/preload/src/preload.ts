@@ -1,5 +1,5 @@
-import { store } from './store.js';
-import { exposeInMainWorld } from './utils/expose-in-main-world.js';
+import { contextBridge } from 'electron';
 
-console.log(store)
-exposeInMainWorld('store', store);
+import { exposedElectron } from './exposed.js';
+
+contextBridge.exposeInMainWorld('electron', exposedElectron);

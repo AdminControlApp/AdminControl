@@ -1,5 +1,5 @@
-import { URL } from 'node:url';
 import { app, shell } from 'electron';
+import { URL } from 'node:url';
 
 export async function initializeSecurityRestrictions() {
 	/**

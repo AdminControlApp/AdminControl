@@ -5,11 +5,10 @@
 		"baseUrl": ".",
 		"paths": {
 			"~r/*": ["./src/*"],
-			"~m": ["../main/src/*"],
-			"~p": ["../preload/src/*"],
-			"~/*": ["../../*"]
+			"~m/*": ["../main/src/*"],
+			"~p/*": ["../preload/src/*"]
 		},
 		"lib": ["ESNext", "dom", "dom.iterable"]
 	},
-	"include": ["./src", "../preload/typings/contracts"]
+	"include": ["./src", "./typings/global"]
 }

@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import { useElectronStore } from './utils/store.js';
-
 const twilioSessionId = $ref('');
 const twilioAuthToken = $ref('');
 const destinationPhoneNUmber = $ref('');
 const originPhoneNumber = $ref('');
 
-const store = useElectronStore();
 function saveSettings() {
-	console.log(store);
+	const { store } = window.electron;
 	store.set('twilioSessionId', twilioSessionId);
 	store.set('twilioAuthToken', twilioAuthToken);
 	store.set('destinationPhoneNumber', destinationPhoneNUmber);
