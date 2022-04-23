@@ -1,14 +1,15 @@
 {
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
-		"types": ["node", "vue/ref-macros"],
+		"outDir": "dist",
 		"baseUrl": ".",
 		"paths": {
 			"~r/*": ["./src/*"],
 			"~m/*": ["../main/src/*"],
 			"~p/*": ["../preload/src/*"]
 		},
-		"lib": ["ESNext", "dom", "dom.iterable"]
+		"lib": ["ESNext", "dom", "dom.iterable"],
+		"types": ["node", "vue/ref-macros", "./typings/global"]
 	},
-	"include": ["./src", "./typings/global"]
+	"include": ["./src"]
 }
