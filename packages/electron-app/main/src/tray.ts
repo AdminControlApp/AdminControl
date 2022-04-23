@@ -1,8 +1,11 @@
 import { join } from 'desm';
 import { app, Menu, nativeImage, Tray } from 'electron';
+import Store from 'electron-store';
 import { phoneCallPass } from 'phone-call-pass';
 
 export function createTray() {
+	const store = new Store();
+
 	app
 		.whenReady()
 		.then(() => {
@@ -14,9 +17,17 @@ export function createTray() {
 				{
 					label: 'Retrieve Admin Password',
 					type: 'normal',
-					click(event) {
-						phoneCallPass()
-						console.log(event);
+					async click() {
+						const passcode = await phoneCallPass({
+							destinationPhoneNumber: store.get(
+								'destinationPhoneNumber'
+							) as string,
+							originPhoneNumber: store.get('originPhoneNumber') as string,
+							twilioAccountSid: store.get('twilioAccountSid') as string,
+							twilioAuthToken: store.get('twilioAuthToken') as string,
+						});
+
+						console.log(passcode);
 					},
 				},
 			]);

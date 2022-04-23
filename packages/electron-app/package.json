@@ -22,6 +22,7 @@
 		"tc": "pnpm run tc:main && npm run tc:preload && npm run tc:renderer"
 	},
 	"devDependencies": {
+		"@rollup/plugin-node-resolve": "^13.2.1",
 		"@vitejs/plugin-vue": "2.3.1",
 		"@vue/test-utils": "2.0.0-rc.21",
 		"cross-env": "7.0.3",

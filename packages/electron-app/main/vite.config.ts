@@ -1,3 +1,4 @@
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { dirname, join } from 'desm';
 import * as fs from 'node:fs';
 import { builtinModules } from 'node:module';
@@ -27,6 +28,7 @@ const config: UserConfig = {
 			'~m': join(import.meta.url, './src'),
 		},
 	},
+	plugins: [nodeResolve()],
 	build: {
 		sourcemap: 'inline',
 		target: `node${node}`,
