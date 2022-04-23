@@ -9,7 +9,7 @@
 			"~p/*": ["../preload/src/*"]
 		},
 		"lib": ["ESNext", "dom", "dom.iterable"],
-		"types": ["node", "vue/ref-macros", "./typings/global"]
+		"types": ["node", "./typings/global", "./typings/env"]
 	},
 	"include": ["./src"]
 }
