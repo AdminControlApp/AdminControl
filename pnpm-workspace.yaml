@@ -1,4 +1,2 @@
 packages:
   - packages/*
-  - phone-call-pass
-  - phone-call-pass/packages/*
