@@ -5,6 +5,5 @@ module.exports = defineConfig({
 	extends: '../../.eslintrc.cjs',
 	parserOptions: {
 		project: path.resolve(__dirname, 'tsconfig.eslint.json'),
-		extraFileExtensions: ['.vue'],
 	},
 });

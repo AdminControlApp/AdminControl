@@ -1,11 +1,11 @@
-import * as fs from 'node:fs';
-import * as process from 'node:process';
-import { builtinModules } from 'node:module';
-import * as path from 'node:path';
 import vue from '@vitejs/plugin-vue';
 import { dirname, join } from 'desm';
+import * as fs from 'node:fs';
+import { builtinModules } from 'node:module';
+import * as path from 'node:path';
+import * as process from 'node:process';
 import WindiCSS from 'vite-plugin-windicss';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 
 const { chrome } = JSON.parse(
 	fs.readFileSync(
@@ -28,8 +28,12 @@ export default defineConfig({
 			'~p': join(import.meta.url, '../preload/src'),
 		},
 	},
-	plugins: [vue(), WindiCSS()],
-	base: '',
+	plugins: [
+		vue({
+			reactivityTransform: true,
+		}),
+		WindiCSS(),
+	],
 	server: {
 		fs: {
 			strict: true,
