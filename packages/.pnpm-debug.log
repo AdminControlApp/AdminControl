@@ -1,19 +1,24 @@
 {
   "0 debug pnpm:scope": {
-    "selected": 1
+    "selected": 1,
+    "workspacePrefix": "/Users/leonzalion/projects/AdminControlApp/AdminControl"
   },
-  "1 error pnpm": {
-    "errno": 1,
-    "code": "ELIFECYCLE",
-    "pkgid": "admin-control-monorepo@",
-    "stage": "dev:electron",
-    "script": "pnpm run dev --filter=@admincontrol/app",
-    "pkgname": "admin-control-monorepo",
+  "1 info pnpm": {
+    "err": {
+      "name": "Error",
+      "message": "not found: build:main",
+      "code": "ENOENT",
+      "stack": "Error: not found: build:main\n    at getNotFoundError (/Users/leonzalion/Library/pnpm/nodejs/17.8.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:41689:51)\n    at Function.whichSync [as sync] (/Users/leonzalion/Library/pnpm/nodejs/17.8.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:41766:13)\n    at getCommandAbsolutePathSync (/Users/leonzalion/Library/pnpm/nodejs/17.8.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:43331:44)\n    at default_1 (/Users/leonzalion/Library/pnpm/nodejs/17.8.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:43340:32)\n    at /Users/leonzalion/Library/pnpm/nodejs/17.8.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:178600:39"
+    }
+  },
+  "2 error pnpm": {
+    "code": "ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL",
+    "prefix": "/Users/leonzalion/projects/AdminControlApp/AdminControl",
     "err": {
       "name": "pnpm",
-      "message": "admin-control-monorepo@ dev:electron: `pnpm run dev --filter=@admincontrol/app`\nExit status 1",
-      "code": "ELIFECYCLE",
-      "stack": "pnpm: admin-control-monorepo@ dev:electron: `pnpm run dev --filter=@admincontrol/app`\nExit status 1\n    at EventEmitter.<anonymous> (/Users/leonzalion/Library/pnpm/nodejs/17.8.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:105830:20)\n    at EventEmitter.emit (node:events:527:28)\n    at ChildProcess.<anonymous> (/Users/leonzalion/Library/pnpm/nodejs/17.8.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:92391:18)\n    at ChildProcess.emit (node:events:527:28)\n    at maybeClose (node:internal/child_process:1090:16)\n    at Process.ChildProcess._handle.onexit (node:internal/child_process:302:5)"
+      "message": "not found: build:main",
+      "code": "ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL",
+      "stack": "Error: not found: build:main\n    at getNotFoundError (/Users/leonzalion/Library/pnpm/nodejs/17.8.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:41689:51)\n    at Function.whichSync [as sync] (/Users/leonzalion/Library/pnpm/nodejs/17.8.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:41766:13)\n    at getCommandAbsolutePathSync (/Users/leonzalion/Library/pnpm/nodejs/17.8.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:43331:44)\n    at default_1 (/Users/leonzalion/Library/pnpm/nodejs/17.8.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:43340:32)\n    at /Users/leonzalion/Library/pnpm/nodejs/17.8.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:178600:39"
     }
   }
 }

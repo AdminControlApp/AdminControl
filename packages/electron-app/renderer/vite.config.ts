@@ -1,6 +1,4 @@
 import vue from '@vitejs/plugin-vue';
-import { dirname, join } from 'desm';
-import * as fs from 'node:fs';
 import { builtinModules } from 'node:module';
 import * as path from 'node:path';
 import * as process from 'node:process';
@@ -8,25 +6,18 @@ import jsImports from 'vite-plugin-js-imports';
 import WindiCSS from 'vite-plugin-windicss';
 import { defineConfig } from 'vitest/config';
 
-const { chrome } = JSON.parse(
-	fs.readFileSync(
-		join(import.meta.url, '../.electron-vendors.cache.json'),
-		'utf8'
-	)
-) as {
-	chrome: string;
-};
+import { chrome } from '../.electron-vendors.cache.json';
 
-const PACKAGE_ROOT = dirname(import.meta.url);
+const PACKAGE_ROOT = __dirname;
 
 export default defineConfig({
 	mode: process.env.MODE,
 	root: PACKAGE_ROOT,
 	resolve: {
 		alias: {
-			'~r': join(import.meta.url, 'src'),
-			'~m': join(import.meta.url, '../main/src'),
-			'~p': join(import.meta.url, '../preload/src'),
+			'~r': path.join(__dirname, 'src'),
+			'~m': path.join(__dirname, '../main/src'),
+			'~p': path.join(__dirname, '../preload/src'),
 		},
 	},
 	plugins: [

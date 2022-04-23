@@ -2,7 +2,7 @@
 
 import electronPath from 'electron';
 import type { ExecaChildProcess } from 'execa';
-import { execa } from 'execa';
+import execa from 'execa';
 import type { Buffer } from 'node:buffer';
 import * as process from 'node:process';
 import type { OutputPlugin } from 'rollup';

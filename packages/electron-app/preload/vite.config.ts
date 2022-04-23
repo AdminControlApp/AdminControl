@@ -1,19 +1,11 @@
-import { dirname, join } from 'desm';
-import * as fs from 'node:fs';
 import { builtinModules } from 'node:module';
+import * as path from 'node:path';
 import * as process from 'node:process';
 import type { UserConfig } from 'vite';
 
-const { chrome } = JSON.parse(
-	fs.readFileSync(
-		join(import.meta.url, '../.electron-vendors.cache.json'),
-		'utf-8'
-	)
-) as {
-	chrome: string;
-};
+import { chrome } from '../.electron-vendors.cache.json';
 
-const PACKAGE_ROOT = dirname(import.meta.url);
+const PACKAGE_ROOT = __dirname;
 
 const config: UserConfig = {
 	mode: process.env.MODE,
@@ -21,9 +13,9 @@ const config: UserConfig = {
 	envDir: process.cwd(),
 	resolve: {
 		alias: {
-			'~r': join(import.meta.url, '../renderer/src'),
-			'~m': join(import.meta.url, '../main/src'),
-			'~p': join(import.meta.url, './src'),
+			'~r': path.join(import.meta.url, '../renderer/src'),
+			'~m': path.join(import.meta.url, '../main/src'),
+			'~p': path.join(import.meta.url, './src'),
 		},
 	},
 	build: {
