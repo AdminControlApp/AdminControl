@@ -1,6 +1,6 @@
-import { join } from 'desm';
 import { app, Menu, nativeImage, Tray } from 'electron';
 import Store from 'electron-store';
+import path from 'node:path';
 import { phoneCallPass } from 'phone-call-pass';
 
 export function createTray() {
@@ -10,7 +10,7 @@ export function createTray() {
 		.whenReady()
 		.then(() => {
 			const image = nativeImage.createFromPath(
-				join(import.meta.url, '../assets/icon.png')
+				path.join(__dirname, '../assets/icon.png')
 			);
 			const tray = new Tray(image.resize({ width: 16, height: 16 }));
 			const contextMenu = Menu.buildFromTemplate([

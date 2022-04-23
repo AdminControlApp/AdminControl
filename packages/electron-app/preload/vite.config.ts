@@ -15,9 +15,6 @@ const { chrome } = JSON.parse(
 
 const PACKAGE_ROOT = dirname(import.meta.url);
 
-/**
- * @see https://vitejs.dev/config/
- */
 const config: UserConfig = {
 	mode: process.env.MODE,
 	root: PACKAGE_ROOT,

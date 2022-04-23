@@ -12,7 +12,7 @@ import type {
 	ResolvedServerOptions,
 	WebSocketServer,
 } from 'vite';
-import { build, createLogger,createServer } from 'vite';
+import { build, createLogger, createServer } from 'vite';
 
 process.env.MODE = process.env.MODE ?? 'development';
 const mode = process.env.MODE as 'production' | 'development';
@@ -75,36 +75,30 @@ const setupMainPackageWatcher = async ({
 
 	let spawnProcess: ExecaChildProcess | undefined;
 
-	return getWatcher({
-		name: 'reload-app-on-main-package-change',
-		configFile: 'main/vite.config.ts',
-		writeBundle() {
-			if (spawnProcess !== undefined) {
-				void spawnProcess.off('exit', process.exit);
-				spawnProcess.kill('SIGINT');
-				spawnProcess = undefined;
-			}
+	if (spawnProcess !== undefined) {
+		void spawnProcess.off('exit', process.exit);
+		spawnProcess.kill('SIGINT');
+		spawnProcess = undefined;
+	}
 
-			spawnProcess = execa(String(electronPath), ['.']);
+	spawnProcess = execa(String(electronPath), ['.']);
 
-			spawnProcess.stdout?.on('data', (d: Buffer) => {
-				const dString = d.toString().trim();
-				if (dString !== '') {
-					logger.warn(d.toString(), { timestamp: true });
-				}
-			});
-			spawnProcess.stderr?.on('data', (d: Buffer) => {
-				const data = d.toString().trim();
-				if (!data) return;
-				const mayIgnore = stderrFilterPatterns.some((r) => r.test(data));
-				if (mayIgnore) return;
-				logger.error(data, { timestamp: true });
-			});
-
-			// Stops the watch script when the application has been quit
-			void spawnProcess.on('exit', process.exit);
-		},
+	spawnProcess.stdout?.on('data', (d: Buffer) => {
+		const dString = d.toString().trim();
+		if (dString !== '') {
+			logger.warn(d.toString(), { timestamp: true });
+		}
 	});
+	spawnProcess.stderr?.on('data', (d: Buffer) => {
+		const data = d.toString().trim();
+		if (!data) return;
+		const mayIgnore = stderrFilterPatterns.some((r) => r.test(data));
+		if (mayIgnore) return;
+		logger.error(data, { timestamp: true });
+	});
+
+	// Stops the watch script when the application has been quit
+	void spawnProcess.on('exit', process.exit);
 };
 
 /**

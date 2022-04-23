@@ -1,6 +1,8 @@
 {
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
+		"outDir": "dist",
+		"module": "CommonJS",
 		"types": ["node", "../typings/env"],
 		"baseUrl": ".",
 		"paths": {

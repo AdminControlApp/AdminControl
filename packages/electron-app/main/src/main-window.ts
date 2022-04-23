@@ -1,6 +1,6 @@
-import { join } from 'desm';
 import { BrowserWindow } from 'electron';
-import { URL } from 'node:url';
+import * as path from 'node:path';
+import process from 'node:process';
 
 async function createWindow() {
 	const browserWindow = new BrowserWindow({
@@ -8,7 +8,7 @@ async function createWindow() {
 		webPreferences: {
 			// https://www.electronjs.org/docs/latest/api/webview-tag#warning
 			webviewTag: false,
-			preload: join(import.meta.url, '../../preload/dist/preload.cjs'),
+			preload: path.join(__dirname, '../preload/dist/preload.cjs'),
 		},
 	});
 
@@ -19,13 +19,13 @@ async function createWindow() {
 		@see https://github.com/electron/electron/issues/25012
 	*/
 	browserWindow.on('ready-to-show', () => {
-		if (import.meta.env.DEV) {
+		if (process.env.DEV) {
 			browserWindow.showInactive();
 		} else {
 			browserWindow.show();
 		}
 
-		if (import.meta.env.DEV) {
+		if (process.env.DEV) {
 			browserWindow?.webContents.openDevTools();
 		}
 	});
@@ -36,9 +36,9 @@ async function createWindow() {
 		`file://../renderer/index.html` for production and test
 	*/
 	const pageUrl =
-		import.meta.env.DEV && import.meta.env.VITE_DEV_SERVER_URL !== undefined
-			? import.meta.env.VITE_DEV_SERVER_URL
-			: new URL('../renderer/dist/index.html', import.meta.url).toString();
+		process.env.DEV && process.env.VITE_DEV_SERVER_URL !== undefined
+			? process.env.VITE_DEV_SERVER_URL
+			: path.join(__dirname, '../renderer/dist/index.html').toString();
 
 	await browserWindow.loadURL(pageUrl);
 

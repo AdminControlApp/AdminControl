@@ -6,4 +6,7 @@ module.exports = defineConfig({
 	parserOptions: {
 		project: path.resolve(__dirname, 'tsconfig.eslint.json'),
 	},
+	rules: {
+		'unicorn/prefer-module': 'off',
+	},
 });
