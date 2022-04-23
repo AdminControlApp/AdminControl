@@ -10,7 +10,7 @@ import { defineConfig } from 'vitest/config';
 
 const { chrome } = JSON.parse(
 	fs.readFileSync(
-		join(import.meta.url, '../../.electron-vendors.cache.json'),
+		join(import.meta.url, '../.electron-vendors.cache.json'),
 		'utf8'
 	)
 ) as {

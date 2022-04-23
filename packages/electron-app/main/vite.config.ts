@@ -1,17 +1,15 @@
-import * as fs from 'node:fs';
-import * as process from 'node:process';
-import { builtinModules } from 'node:module';
 import { dirname, join } from 'desm';
+import * as fs from 'node:fs';
+import { builtinModules } from 'node:module';
+import * as process from 'node:process';
 import type { UserConfig } from 'vite';
 
-const { chrome } = JSON.parse(
+const { node } = JSON.parse(
 	fs.readFileSync(
-		join(import.meta.url, '../../.electron-vendors.cache.json'),
-		'utf-8'
+		join(import.meta.url, '../.electron-vendors.cache.json'),
+		'utf8'
 	)
-) as {
-	chrome: string;
-};
+) as { node: string };
 
 const PACKAGE_ROOT = dirname(import.meta.url);
 
@@ -25,24 +23,24 @@ const config: UserConfig = {
 	resolve: {
 		alias: {
 			'~r': join(import.meta.url, '../renderer/src'),
-			'~m': join(import.meta.url, '../main/src'),
-			'~p': join(import.meta.url, './src'),
+			'~p': join(import.meta.url, '../preload/src'),
+			'~m': join(import.meta.url, './src'),
 		},
 	},
 	build: {
 		sourcemap: 'inline',
-		target: `chrome${chrome}`,
+		target: `node${node}`,
 		outDir: 'dist',
 		assetsDir: '.',
 		minify: process.env.MODE !== 'development',
 		lib: {
-			entry: 'src/preload.ts',
+			entry: 'src/main.ts',
 			formats: ['cjs'],
 		},
 		rollupOptions: {
 			external: [
-				/electron\.cjs/,
 				'electron',
+				'electron-devtools-installer',
 				...builtinModules.flatMap((p) => [p, `node:${p}`]),
 			],
 			output: {

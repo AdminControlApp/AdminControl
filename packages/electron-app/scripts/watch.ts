@@ -77,7 +77,7 @@ const setupMainPackageWatcher = async ({
 
 	return getWatcher({
 		name: 'reload-app-on-main-package-change',
-		configFile: 'packages/main/vite.config.ts',
+		configFile: 'main/vite.config.ts',
 		writeBundle() {
 			if (spawnProcess !== undefined) {
 				void spawnProcess.off('exit', process.exit);
@@ -113,7 +113,7 @@ const setupMainPackageWatcher = async ({
 const setupPreloadPackageWatcher = async ({ ws }: { ws: WebSocketServer }) =>
 	getWatcher({
 		name: 'reload-page-on-preload-package-change',
-		configFile: 'packages/preload/vite.config.ts',
+		configFile: 'preload/vite.config.ts',
 		writeBundle() {
 			ws.send({
 				type: 'full-reload',
@@ -124,7 +124,7 @@ const setupPreloadPackageWatcher = async ({ ws }: { ws: WebSocketServer }) =>
 try {
 	const viteDevServer = await createServer({
 		...sharedConfig,
-		configFile: 'packages/renderer/vite.config.ts',
+		configFile: 'renderer/vite.config.ts',
 	});
 
 	await viteDevServer.listen();

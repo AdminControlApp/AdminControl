@@ -1,8 +1,8 @@
-import * as path from 'node:path';
 import electronPath from 'electron';
-import * as fs from 'node:fs';
-import * as process from 'node:process';
 import { execaSync } from 'execa';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import * as process from 'node:process';
 
 /**
  * Returns versions of electron vendors
@@ -13,7 +13,6 @@ function getVendors(): NodeJS.ProcessVersions {
 	const { stdout: output } = execaSync(
 		`${String(electronPath)} -p "JSON.stringify(process.versions)"`,
 		{
-
 			env: { ELECTRON_RUN_AS_NODE: '1' },
 			encoding: 'utf-8',
 		}
