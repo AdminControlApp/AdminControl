@@ -4,6 +4,9 @@
 	"type": "module",
 	"scripts": {
 		"prepare": "lion-git-hooks",
+		"tc": "pnpm recursive run tc",
+		"lint": "pnpm recursive run lint",
+		"prettier": "pnpm recursive run prettier",
 		"dev:electron": "pnpm run dev --filter=@admincontrol/app"
 	},
 	"devDependencies": {
