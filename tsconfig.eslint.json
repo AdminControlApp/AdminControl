@@ -1,5 +1,4 @@
 {
-	"include": [
-		".eslintrc.cjs"
-	]
+	"extends": "./tsconfig.json",
+	"include": ["scripts", ".eslintrc.cjs"]
 }
