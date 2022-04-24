@@ -42,9 +42,9 @@ export function setupApp() {
 			console.error('Failed create window:', error);
 		});
 
-	if (import.meta.env.DEV) {
+	// if (import.meta.env.DEV) {
 		installDevtools();
-	}
+	// }
 
 	if (import.meta.env.PROD) {
 		checkForUpdates();

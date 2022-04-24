@@ -9,6 +9,7 @@ import { chrome } from '../.electron-vendors.cache.json';
 const PACKAGE_ROOT = __dirname;
 
 const config: UserConfig = {
+	root: PACKAGE_ROOT,
 	mode: process.env.MODE,
 	plugins: [
 		bundleESM(),
@@ -19,7 +20,6 @@ const config: UserConfig = {
 			},
 		},
 	],
-	root: PACKAGE_ROOT,
 	envDir: process.cwd(),
 	resolve: {
 		alias: {

@@ -13,6 +13,7 @@ const PACKAGE_ROOT = __dirname;
 export default defineConfig({
 	mode: process.env.MODE,
 	root: PACKAGE_ROOT,
+	base: '',
 	resolve: {
 		alias: {
 			'~r': path.join(__dirname, 'src'),
