@@ -1,6 +1,6 @@
 {
 	"rust-analyzer.linkedProjects": [
 		"packages/phone-call-pass/src/secure-input/Cargo.toml",
-		"packages/encryption-brute-forcer/Cargo.toml"
+		"packages/encryption/src/encryption-brute-forcer/Cargo.toml"
 	]
 }

@@ -1,8 +1,10 @@
 {
 	"name": "@admincontrol/encryption",
 	"version": "1.0.0",
+	"type": "module",
 	"description": "Encryption utilities for AdminControl.",
 	"scripts": {
+		"start": "node-ts ./src/bin/cli.ts",
 		"preinstall": "pnpm build",
 		"lint": "eslint --fix --cache .",
 		"prettier": "prettier --write .",
