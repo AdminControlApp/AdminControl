@@ -12,7 +12,7 @@
 		"compile:electron": "pnpm run compile --filter=@admincontrol/app"
 	},
 	"devDependencies": {
-		"@leonzalion/configs": "^1.2.29",
+		"@leonzalion/configs": "^1.2.30",
 		"@types/node": "^17.0.25",
 		"eslint-define-config": "^1.4.0",
 		"execa": "^5.1.1",
