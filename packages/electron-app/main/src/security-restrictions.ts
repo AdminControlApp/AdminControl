@@ -1,5 +1,4 @@
 import { app, shell } from 'electron';
-import process from 'node:process';
 import { URL } from 'node:url';
 
 export async function initializeSecurityRestrictions() {
