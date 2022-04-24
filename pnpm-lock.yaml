@@ -7,14 +7,14 @@ importers:
 
   .:
     specifiers:
-      '@leonzalion/configs': ^1.2.29
+      '@leonzalion/configs': ^1.2.30
       '@types/node': ^17.0.25
       eslint-define-config: ^1.4.0
       execa: ^5.1.1
       lion-system: ^1.3.20
       typescript: ^4.6.3
     devDependencies:
-      '@leonzalion/configs': 1.2.29_typescript@4.6.3
+      '@leonzalion/configs': 1.2.30_typescript@4.6.3
       '@types/node': 17.0.25
       eslint-define-config: 1.4.0
       execa: 5.1.1
@@ -417,6 +417,56 @@ packages:
 
   /@leonzalion/configs/1.2.29_typescript@4.6.3:
     resolution: {integrity: sha512-he9zPelPu0KcXRtp9ryiynxT2S2SdRvXmsa4nIkCl/WLU7EvigHan/+anz4bpkgarGBTijKYsy3fd+qPoRa5NA==}
+    hasBin: true
+    dependencies:
+      '@commitlint/cli': 16.2.3_@swc+core@1.2.171
+      '@commitlint/config-conventional': 16.2.1
+      '@rushstack/eslint-patch': 1.1.3
+      '@swc/core': 1.2.171
+      '@swc/helpers': 0.3.8
+      '@types/node': 17.0.25
+      '@typescript-eslint/eslint-plugin': 5.20.0_81f0d1a74f014d44d273bd1612c85fd9
+      '@typescript-eslint/parser': 5.20.0_eslint@8.14.0+typescript@4.6.3
+      eslint: 8.14.0
+      eslint-config-airbnb-base: 15.0.0_662e1b2e8ef3f6aa5d22c3f7cd670612
+      eslint-config-prettier: 8.5.0_eslint@8.14.0
+      eslint-config-xo: 0.40.0_eslint@8.14.0
+      eslint-config-xo-typescript: 0.50.0_e7a300b26844813a4ad7af0fc0b6271b
+      eslint-define-config: 1.4.0
+      eslint-plugin-eslint-comments: 3.2.0_eslint@8.14.0
+      eslint-plugin-import: 2.26.0_eslint@8.14.0
+      eslint-plugin-no-use-extend-native: 0.5.0
+      eslint-plugin-node: 11.1.0_eslint@8.14.0
+      eslint-plugin-simple-import-sort: 7.0.0_eslint@8.14.0
+      eslint-plugin-unicorn: 42.0.0_eslint@8.14.0
+      eslint-plugin-vue: 8.7.1_eslint@8.14.0
+      is-ci: 3.0.1
+      lint-staged: 12.4.0
+      lion-git-hooks: 1.0.9
+      lion-system: 1.3.20_typescript@4.6.3
+      lionp: 1.0.24_typescript@4.6.3
+      log-symbols: 5.1.0
+      markdownlint-cli: 0.31.1
+      minimist: 1.2.6
+      pkg-up: 4.0.0
+      postcss: 8.4.12
+      prettier: 2.6.2
+      resolve: 1.22.0
+      ts-node: 10.7.0_7d566efa5626d66beac221bdccbf79f6
+      tsc-alias: 1.6.7
+      tsconfig-paths: 3.14.1
+      update-notifier: 5.1.0
+      webpack: /lodash.noop/3.0.1
+      xo: 0.48.0_lodash.noop@3.0.1
+    transitivePeerDependencies:
+      - '@swc/wasm'
+      - enquirer
+      - supports-color
+      - typescript
+    dev: true
+
+  /@leonzalion/configs/1.2.30_typescript@4.6.3:
+    resolution: {integrity: sha512-nkw9MjFSbfWUGWrE9muzkeRxrzzzbmn/4nt3t0OCtyxE+mzR112ko419FuTgNkEdqADdB2xgLHumP1LXi12oHQ==}
     hasBin: true
     dependencies:
       '@commitlint/cli': 16.2.3_@swc+core@1.2.171
