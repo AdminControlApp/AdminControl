@@ -1,6 +1,5 @@
 import { builtinModules } from 'node:module';
 import * as path from 'node:path';
-import * as process from 'node:process';
 import process from 'node:process';
 import bundleESM from 'rollup-plugin-bundle-esm';
 import type { UserConfig } from 'vite';
@@ -41,8 +40,8 @@ const config: UserConfig = {
 		},
 		rollupOptions: {
 			external: [
-				/electron\.cjs/,
 				'electron',
+				'electron-devtools-installer',
 				...builtinModules.flatMap((p) => [p, `node:${p}`]),
 			],
 			output: {
