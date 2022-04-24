@@ -37,6 +37,11 @@ function saveSettings() {
 		>
 			Save Settings
 		</button>
+		<button
+			class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-medium mt-8"
+		>
+			Retrieve Passcode
+		</button>
 	</div>
 </template>
 

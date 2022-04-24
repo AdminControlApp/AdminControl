@@ -14,7 +14,7 @@ function getVendors(): NodeJS.ProcessVersions {
 		`${String(electronPath)} -p "JSON.stringify(process.versions)"`,
 		{
 			env: { ELECTRON_RUN_AS_NODE: '1' },
-			encoding: 'utf-8',
+			encoding: 'utf8',
 		}
 	);
 

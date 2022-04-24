@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/prefer-module */
+
 import vue from '@vitejs/plugin-vue';
 import { builtinModules } from 'node:module';
 import * as path from 'node:path';
