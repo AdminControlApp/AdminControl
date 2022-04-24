@@ -1,14 +1,17 @@
 <script setup lang="ts">
-const twilioSessionId = $ref('');
-const twilioAuthToken = $ref('');
-const destinationPhoneNUmber = $ref('');
-const originPhoneNumber = $ref('');
+const { store } = window.electron;
+
+const twilioSessionId = $ref((store.get('twilioSessionId') as string) ?? '');
+const twilioAuthToken = $ref((store.get('twilioAuthToken') as string) ?? '');
+const destinationPhoneNumber = $ref(store.get('destinationPhoneNumber') ?? '');
+const originPhoneNumber = $ref(
+	(store.get('originPhoneNumber') as string) ?? ''
+);
 
 function saveSettings() {
-	const { store } = window.electron;
 	store.set('twilioSessionId', twilioSessionId);
 	store.set('twilioAuthToken', twilioAuthToken);
-	store.set('destinationPhoneNumber', destinationPhoneNUmber);
+	store.set('destinationPhoneNumber', destinationPhoneNumber);
 	store.set('originPhoneNumber', originPhoneNumber);
 }
 </script>
@@ -24,7 +27,7 @@ function saveSettings() {
 			<span class="input-label">Twilio Auth Token:</span>
 			<input v-model="twilioAuthToken" type="text" class="input" />
 			<span class="input-label">Destination Phone Number:</span>
-			<input v-model="destinationPhoneNUmber" type="text" class="input" />
+			<input v-model="destinationPhoneNumber" type="text" class="input" />
 			<span class="input-label">Origin Phone Number:</span>
 			<input v-model="originPhoneNumber" type="text" class="input" />
 		</div>
