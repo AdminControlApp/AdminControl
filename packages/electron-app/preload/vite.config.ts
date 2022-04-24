@@ -13,9 +13,9 @@ const config: UserConfig = {
 	envDir: process.cwd(),
 	resolve: {
 		alias: {
-			'~r': path.join(import.meta.url, '../renderer/src'),
-			'~m': path.join(import.meta.url, '../main/src'),
-			'~p': path.join(import.meta.url, './src'),
+			'~r': path.join(__dirname, '../renderer/src'),
+			'~m': path.join(__dirname, '../main/src'),
+			'~p': path.join(__dirname, './src'),
 		},
 	},
 	build: {

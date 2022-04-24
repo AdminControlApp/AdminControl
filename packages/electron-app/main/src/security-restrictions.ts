@@ -25,8 +25,8 @@ export async function initializeSecurityRestrictions() {
 			| 'unknown'
 		>
 	>(
-		process.env.DEV && process.env.VITE_DEV_SERVER_URL
-			? [[new URL(process.env.VITE_DEV_SERVER_URL).origin, new Set()]]
+		import.meta.env.DEV && import.meta.env.VITE_DEV_SERVER_URL
+			? [[new URL(import.meta.env.VITE_DEV_SERVER_URL).origin, new Set()]]
 			: []
 	);
 
@@ -62,7 +62,7 @@ export async function initializeSecurityRestrictions() {
 			// Prevent navigation
 			event.preventDefault();
 
-			if (process.env.DEV) {
+			if (import.meta.env.DEV) {
 				console.warn('Blocked navigating to an unallowed origin:', origin);
 			}
 		});
@@ -82,7 +82,7 @@ export async function initializeSecurityRestrictions() {
 				);
 				callback(permissionGranted);
 
-				if (!permissionGranted && process.env.DEV) {
+				if (!permissionGranted && import.meta.env.DEV) {
 					console.warn(
 						`${origin} requested permission for '${permission}', but was blocked.`
 					);
@@ -107,7 +107,7 @@ export async function initializeSecurityRestrictions() {
 			if (ALLOWED_EXTERNAL_ORIGINS.has(origin)) {
 				// Open default browser
 				shell.openExternal(url).catch(console.error);
-			} else if (process.env.DEV) {
+			} else if (import.meta.env.DEV) {
 				console.warn('Blocked the opening of an unallowed origin:', origin);
 			}
 
@@ -125,7 +125,7 @@ export async function initializeSecurityRestrictions() {
 		contents.on('will-attach-webview', (event, webPreferences, params) => {
 			const { origin } = new URL(params.src!);
 			if (!ALLOWED_ORIGINS_AND_PERMISSIONS.has(origin)) {
-				if (process.env.DEV) {
+				if (import.meta.env.DEV) {
 					console.warn(
 						`A webview tried to attach ${params.src!}, but was blocked.`
 					);

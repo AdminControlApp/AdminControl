@@ -1,6 +1,5 @@
 import { BrowserWindow } from 'electron';
 import * as path from 'node:path';
-import process from 'node:process';
 
 async function createWindow() {
 	const browserWindow = new BrowserWindow({
@@ -8,7 +7,7 @@ async function createWindow() {
 		webPreferences: {
 			// https://www.electronjs.org/docs/latest/api/webview-tag#warning
 			webviewTag: false,
-			preload: path.join(__dirname, '../preload/dist/preload.cjs'),
+			preload: path.join(__dirname, '../../preload/dist/preload.cjs'),
 		},
 	});
 
@@ -19,13 +18,13 @@ async function createWindow() {
 		@see https://github.com/electron/electron/issues/25012
 	*/
 	browserWindow.on('ready-to-show', () => {
-		if (process.env.DEV) {
+		if (import.meta.env.DEV) {
 			browserWindow.showInactive();
 		} else {
 			browserWindow.show();
 		}
 
-		if (process.env.DEV) {
+		if (import.meta.env.DEV) {
 			browserWindow?.webContents.openDevTools();
 		}
 	});
@@ -36,8 +35,8 @@ async function createWindow() {
 		`file://../renderer/index.html` for production and test
 	*/
 	const pageUrl =
-		process.env.DEV && process.env.VITE_DEV_SERVER_URL !== undefined
-			? process.env.VITE_DEV_SERVER_URL
+		import.meta.env.DEV && import.meta.env.VITE_DEV_SERVER_URL !== undefined
+			? import.meta.env.VITE_DEV_SERVER_URL
 			: path.join(__dirname, '../renderer/dist/index.html').toString();
 
 	await browserWindow.loadURL(pageUrl);
