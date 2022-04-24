@@ -1,0 +1,14 @@
+{
+	"name": "@admincontrol/encryption",
+	"version": "1.0.0",
+	"description": "Encryption utilities for AdminControl.",
+	"scripts": {
+		"preinstall": "pnpm build",
+		"lint": "eslint --fix --cache .",
+		"prettier": "prettier --write .",
+		"build": "node-ts ./scripts/build.ts"
+	},
+	"dependencies": {
+		"execa": "^6.1.0"
+	}
+}

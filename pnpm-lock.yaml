@@ -78,6 +78,12 @@ importers:
       vitest: 0.9.4_happy-dom@2.55.0
       vue-tsc: 0.34.9_typescript@4.6.3
 
+  packages/encryption:
+    specifiers:
+      execa: ^6.1.0
+    dependencies:
+      execa: 6.1.0
+
   packages/phone-call-pass:
     specifiers:
       '@leonzalion/configs': ^1.2.29

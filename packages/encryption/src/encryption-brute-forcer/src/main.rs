@@ -15,6 +15,9 @@ impl EncryptionBruteForcer {
 
 	fn brute_force(&mut self) {
 		loop {
+			if self.attempt_number == 0 {
+				println!("yo");
+			}
 			self.attempt_number += 1;
 		}
 	}
@@ -23,32 +26,38 @@ impl EncryptionBruteForcer {
 static mut BRUTE_FORCERS: Vec<&'static mut EncryptionBruteForcer> = Vec::new();
 
 fn main() -> Result<(), Error> {
-	unsafe {
-		let num_cpus = num_cpus::get();
-		for _ in 0..num_cpus {
-			let brute_forcer: &'static mut EncryptionBruteForcer =
-				Box::leak(Box::new(EncryptionBruteForcer::new()));
+	let num_cpus = num_cpus::get();
+	for _ in 0..num_cpus {
+		let brute_forcer: &'static mut EncryptionBruteForcer =
+			Box::leak(Box::new(EncryptionBruteForcer::new()));
+
+		unsafe {
 			BRUTE_FORCERS.push(brute_forcer);
 		}
+	}
 
-		let mut sigs = Vec::<i32>::new();
-		sigs.extend(TERM_SIGNALS);
+	let mut sigs = Vec::<i32>::new();
+	sigs.extend(TERM_SIGNALS);
 
-		let mut signals = SignalsInfo::<SignalOnly>::new(&sigs).unwrap();
+	let mut signals = SignalsInfo::<SignalOnly>::new(&sigs).unwrap();
+
+	unsafe {
 		for brute_forcer in &mut BRUTE_FORCERS {
 			std::thread::spawn(move || {
 				brute_forcer.brute_force();
 			});
 		}
+	}
 
-		for info in &mut signals {
-			eprintln!("Received a signal {:?}", info);
+	for info in &mut signals {
+		eprintln!("Received a signal {:?}", info);
+		unsafe {
 			for brute_forcer in &BRUTE_FORCERS {
 				eprintln!("{}", brute_forcer.attempt_number);
 			}
-			std::process::exit(0);
 		}
-
-		Ok(())
+		std::process::exit(0);
 	}
+
+	Ok(())
 }
