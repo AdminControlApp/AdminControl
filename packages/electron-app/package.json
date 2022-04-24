@@ -2,6 +2,13 @@
 	"name": "@admincontrol/app",
 	"type": "commonjs",
 	"main": "main/dist/main.cjs",
+	"description": "An open-source application that controls administrator access to your computer.",
+	"repository": "AdminControlApp/AdminControl",
+	"author": {
+		"name": "Leon Si",
+		"email": "contact@leonzalion.com",
+		"url": "https://leonzalion.com"
+	},
 	"scripts": {
 		"build": "npm run build:main && npm run build:preload && npm run build:renderer",
 		"build:main": "cd ./main && vite build",

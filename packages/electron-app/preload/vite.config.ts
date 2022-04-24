@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/prefer-module */
+
 import { builtinModules } from 'node:module';
 import * as path from 'node:path';
 import * as process from 'node:process';
