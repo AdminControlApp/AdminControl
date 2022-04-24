@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
-import electronPath from 'electron';
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+import electronPath = require('electron');
 import type { ExecaChildProcess } from 'execa';
-import execa from 'execa';
+import * as execa from 'execa';
 import type { Buffer } from 'node:buffer';
 import * as process from 'node:process';
 import type { OutputPlugin } from 'rollup';
@@ -115,17 +116,19 @@ const setupPreloadPackageWatcher = async ({ ws }: { ws: WebSocketServer }) =>
 		},
 	});
 
-try {
-	const viteDevServer = await createServer({
-		...sharedConfig,
-		configFile: 'renderer/vite.config.ts',
-	});
+(async () => {
+	try {
+		const viteDevServer = await createServer({
+			...sharedConfig,
+			configFile: 'renderer/vite.config.ts',
+		});
 
-	await viteDevServer.listen();
+		await viteDevServer.listen();
 
-	await setupPreloadPackageWatcher(viteDevServer);
-	await setupMainPackageWatcher(viteDevServer);
-} catch (error: unknown) {
-	console.error(error);
-	process.exit(1);
-}
+		await setupPreloadPackageWatcher(viteDevServer);
+		await setupMainPackageWatcher(viteDevServer);
+	} catch (error: unknown) {
+		console.error(error);
+		process.exit(1);
+	}
+})();

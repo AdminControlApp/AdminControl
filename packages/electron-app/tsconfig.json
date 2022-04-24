@@ -2,7 +2,7 @@
 	"extends": "../../tsconfig.json",
 	"compilerOptions": {
 		"resolveJsonModule": true,
-		"module": "ESNext",
+		"module": "CommonJS",
 		"types": [
 			"vite/client"
 		]

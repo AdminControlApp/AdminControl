@@ -1,10 +1,10 @@
 import { app, Menu, nativeImage, Tray } from 'electron';
 import Store from 'electron-store';
 import path from 'node:path';
-import { phoneCallPass } from 'phone-call-pass';
 
-export function createTray() {
+export async function createTray() {
 	const store = new Store();
+	const { phoneCallPass } = await import('phone-call-pass');
 
 	app
 		.whenReady()

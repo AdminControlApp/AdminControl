@@ -13,7 +13,7 @@
 		"test:main": "vitest run -r main --passWithNoTests",
 		"test:preload": "vitest run -r preload --passWithNoTests",
 		"test:renderer": "vitest run -r renderer --passWithNoTests",
-		"dev": "cross-env ELECTRON_RUN_AS_NODE='' node-ts ./scripts/watch.mts",
+		"dev": "cross-env ELECTRON_RUN_AS_NODE='' node-ts ./scripts/watch.ts",
 		"lint": "eslint --fix --cache .",
 		"prettier": "prettier --write .",
 		"tc:main": "tsc --noEmit -p main/tsconfig.json",

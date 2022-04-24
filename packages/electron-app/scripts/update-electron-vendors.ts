@@ -1,5 +1,5 @@
 import electronPath from 'electron';
-import execa from 'execa';
+import * as execa from 'execa';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as process from 'node:process';

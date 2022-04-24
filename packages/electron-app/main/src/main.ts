@@ -5,7 +5,7 @@ import { createTray } from './tray.js';
 async function main() {
 	setupApp();
 	await initializeSecurityRestrictions();
-	createTray();
+	await createTray();
 }
 
 void main();
