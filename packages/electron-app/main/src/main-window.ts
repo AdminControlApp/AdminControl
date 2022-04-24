@@ -1,5 +1,6 @@
 import { BrowserWindow } from 'electron';
 import * as path from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 async function createWindow() {
 	const browserWindow = new BrowserWindow({
@@ -37,7 +38,9 @@ async function createWindow() {
 	const pageUrl =
 		import.meta.env.DEV && import.meta.env.VITE_DEV_SERVER_URL !== undefined
 			? import.meta.env.VITE_DEV_SERVER_URL
-			: path.join(__dirname, '../../renderer/dist/index.html').toString();
+			: pathToFileURL(
+					path.join(__dirname, '../../renderer/dist/index.html')
+			  ).toString();
 
 	await browserWindow.loadURL(pageUrl);
 
