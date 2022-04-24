@@ -15,8 +15,8 @@ function saveSettings() {
 	store.set('originPhoneNumber', originPhoneNumber);
 }
 
-function retrievePasscode() {
-	window.electron.phoneCallPass();
+async function retrievePasscode() {
+	console.log(await window.electron.phoneCallPass());
 }
 </script>
 

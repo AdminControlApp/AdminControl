@@ -15,7 +15,7 @@ async function main() {
 	});
 
 	const { phoneCallPass } = await import('phone-call-pass');
-	ipcMain.on('phone-call-pass', async (event) => {
+	ipcMain.handle('phone-call-pass', async () => {
 		const passcode = await phoneCallPass({
 			destinationPhoneNumber: store.get('destinationPhoneNumber') as string,
 			originPhoneNumber: store.get('originPhoneNumber') as string,
@@ -23,7 +23,7 @@ async function main() {
 			twilioAuthToken: store.get('twilioAuthToken') as string,
 		});
 
-		event.returnValue = passcode;
+		return passcode;
 	});
 
 	setupApp();
