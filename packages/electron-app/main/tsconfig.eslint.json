@@ -4,6 +4,7 @@
 		"src",
 		"scripts",
 		"test",
-		".eslintrc.cjs"
+		".eslintrc.cjs",
+		"vite.config.ts"
 	]
 }

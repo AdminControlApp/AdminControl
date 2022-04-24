@@ -52,8 +52,8 @@ const getWatcher = async ({
 	});
 
 /**
- * Start or restart App when source files are changed
- */
+	Start or restart App when source files are changed
+*/
 const setupMainPackageWatcher = async ({
 	config: { server },
 }: {
@@ -76,35 +76,41 @@ const setupMainPackageWatcher = async ({
 
 	let spawnProcess: ExecaChildProcess | undefined;
 
-	if (spawnProcess !== undefined) {
-		void spawnProcess.off('exit', process.exit);
-		spawnProcess.kill('SIGINT');
-		spawnProcess = undefined;
-	}
+	return getWatcher({
+		name: 'reload-app-on-main-package-change',
+		configFile: 'main/vite.config.ts',
+		writeBundle() {
+			if (spawnProcess !== undefined) {
+				void spawnProcess.off('exit', process.exit);
+				spawnProcess.kill('SIGINT');
+				spawnProcess = undefined;
+			}
 
-	spawnProcess = execa(String(electronPath), ['.']);
+			spawnProcess = execa(String(electronPath), ['.']);
 
-	spawnProcess.stdout?.on('data', (d: Buffer) => {
-		const dString = d.toString().trim();
-		if (dString !== '') {
-			logger.warn(d.toString(), { timestamp: true });
-		}
+			spawnProcess.stdout?.on('data', (d: Buffer) => {
+				const dString = d.toString().trim();
+				if (dString !== '') {
+					logger.warn(d.toString(), { timestamp: true });
+				}
+			});
+			spawnProcess.stderr?.on('data', (d: Buffer) => {
+				const data = d.toString().trim();
+				if (!data) return;
+				const mayIgnore = stderrFilterPatterns.some((r) => r.test(data));
+				if (mayIgnore) return;
+				logger.error(data, { timestamp: true });
+			});
+
+			// Stops the watch script when the application has been quit
+			void spawnProcess.on('exit', process.exit);
+		},
 	});
-	spawnProcess.stderr?.on('data', (d: Buffer) => {
-		const data = d.toString().trim();
-		if (!data) return;
-		const mayIgnore = stderrFilterPatterns.some((r) => r.test(data));
-		if (mayIgnore) return;
-		logger.error(data, { timestamp: true });
-	});
-
-	// Stops the watch script when the application has been quit
-	void spawnProcess.on('exit', process.exit);
 };
 
 /**
- * Start or restart App when source files are changed
- */
+	Start or restart App when source files are changed
+*/
 const setupPreloadPackageWatcher = async ({ ws }: { ws: WebSocketServer }) =>
 	getWatcher({
 		name: 'reload-page-on-preload-package-change',
