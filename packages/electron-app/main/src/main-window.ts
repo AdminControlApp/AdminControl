@@ -32,12 +32,12 @@ async function createWindow() {
 	/**
 		URL for main window.
 		Vite dev server for development.
-		`file://../renderer/index.html` for production and test
+		`file://../../renderer/index.html` for production and test
 	*/
 	const pageUrl =
 		import.meta.env.DEV && import.meta.env.VITE_DEV_SERVER_URL !== undefined
 			? import.meta.env.VITE_DEV_SERVER_URL
-			: path.join(__dirname, '../renderer/dist/index.html').toString();
+			: path.join(__dirname, '../../renderer/dist/index.html').toString();
 
 	await browserWindow.loadURL(pageUrl);
 
