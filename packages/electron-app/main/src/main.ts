@@ -13,6 +13,19 @@ async function main() {
 	ipcMain.on('electron-store-set', (_event, key, value) => {
 		store.set(key, value);
 	});
+
+	const { phoneCallPass } = await import('phone-call-pass');
+	ipcMain.on('phone-call-pass', async (event) => {
+		const passcode = await phoneCallPass({
+			destinationPhoneNumber: store.get('destinationPhoneNumber') as string,
+			originPhoneNumber: store.get('originPhoneNumber') as string,
+			twilioAccountSid: store.get('twilioAccountSid') as string,
+			twilioAuthToken: store.get('twilioAuthToken') as string,
+		});
+
+		event.returnValue = passcode;
+	});
+
 	setupApp();
 	await initializeSecurityRestrictions();
 	await createTray();

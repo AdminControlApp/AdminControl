@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { store } = window.electron;
 
-const twilioSessionId = $ref((store.get('twilioSessionId') as string) ?? '');
+const twilioAccountSid = $ref((store.get('twilioAccountSid') as string) ?? '');
 const twilioAuthToken = $ref((store.get('twilioAuthToken') as string) ?? '');
 const destinationPhoneNumber = $ref(store.get('destinationPhoneNumber') ?? '');
 const originPhoneNumber = $ref(
@@ -9,10 +9,14 @@ const originPhoneNumber = $ref(
 );
 
 function saveSettings() {
-	store.set('twilioSessionId', twilioSessionId);
+	store.set('twilioAccountSid', twilioAccountSid);
 	store.set('twilioAuthToken', twilioAuthToken);
 	store.set('destinationPhoneNumber', destinationPhoneNumber);
 	store.set('originPhoneNumber', originPhoneNumber);
+}
+
+function retrievePasscode() {
+	window.electron.phoneCallPass();
 }
 </script>
 
@@ -23,7 +27,7 @@ function saveSettings() {
 			class="grid grid-cols-[max-content,1fr] w-xl gap-y-2 gap-x-4 items-center"
 		>
 			<span class="input-label">Twilio Account Session ID:</span>
-			<input v-model="twilioSessionId" type="text" class="input" />
+			<input v-model="twilioAccountSid" type="text" class="input" />
 			<span class="input-label">Twilio Auth Token:</span>
 			<input v-model="twilioAuthToken" type="text" class="input" />
 			<span class="input-label">Destination Phone Number:</span>
@@ -39,6 +43,7 @@ function saveSettings() {
 		</button>
 		<button
 			class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-medium mt-8"
+			@click="retrievePasscode"
 		>
 			Retrieve Passcode
 		</button>

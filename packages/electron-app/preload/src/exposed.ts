@@ -9,4 +9,7 @@ export const exposedElectron = {
 			ipcRenderer.send('electron-store-set', property, val);
 		},
 	},
+	phoneCallPass() {
+		ipcRenderer.send('phone-call-pass');
+	},
 };
