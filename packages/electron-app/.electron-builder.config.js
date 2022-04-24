@@ -10,6 +10,7 @@ if (process.env.VITE_APP_VERSION === undefined) {
  * @see https://www.electron.build/configuration/configuration
  */
 const config = {
+	productName: 'AdminControl',
 	directories: {
 		output: 'dist',
 		buildResources: 'buildResources',
