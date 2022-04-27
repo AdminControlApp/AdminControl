@@ -56,3 +56,4 @@ thumbs.db
 /.idea/csv-plugin.xml
 
 target
+.pnpm-debug.log

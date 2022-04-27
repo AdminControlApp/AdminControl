@@ -11,6 +11,11 @@
 		"build": "node-ts ./scripts/build.ts"
 	},
 	"dependencies": {
+		"cryptr": "^6.0.3",
+		"desm": "^1.2.0",
 		"execa": "^6.1.0"
+	},
+	"devDependencies": {
+		"@types/cryptr": "^4.0.1"
 	}
 }

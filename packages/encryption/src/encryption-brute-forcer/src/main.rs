@@ -1,17 +1,19 @@
 use std::io::Error;
 
-use aes_gcm::aead::consts::U0;
 use aes_gcm::aead::generic_array::GenericArray;
 use aes_gcm::aead::{Aead, NewAead};
 use aes_gcm::Nonce;
-use aes_gcm::{aes::Aes256, Aes256Gcm, Key};
+use aes_gcm::{Aes256Gcm, Key};
 use signal_hook::consts::TERM_SIGNALS;
 use signal_hook::iterator::exfiltrator::SignalOnly;
 use signal_hook::iterator::SignalsInfo;
 
+static ADMIN_PASSWORD_QUALIFIER: &[u8] = b"__ADMIN_PASSWORD__";
+
 struct EncryptionBruteForcer {
 	pub attempt_number: u64,
 	forcer_number: u8,
+	ciphertext: String,
 }
 
 impl EncryptionBruteForcer {
@@ -19,20 +21,33 @@ impl EncryptionBruteForcer {
 		Self {
 			attempt_number: 0,
 			forcer_number,
+			ciphertext,
 		}
 	}
 
 	/// Tries to brute force the encrypted ciphertext by generating keys of `"12345" + random string of 10 digits`. "12345" represents the 5-digit admin password.
 	fn brute_force(&mut self) {
-		let nonce = Nonce::from_slice(b"");
+		let nonce = Nonce::from_slice(b"unique nonce");
 
 		loop {
-			let forcer_number = self.forcer_number;
-			let key = Key::from_slice(
-				&format!("12345{:0<2}{:0<8}", self.forcer_number, self.attempt_number).as_bytes(),
+			// Key size must be 32 characters, so we left pad it with zeros
+			let key_string = format!(
+				"0000000000000000012345{:0<2}{:0<8}",
+				self.forcer_number, self.attempt_number
 			);
+			let key: &GenericArray<u8, _> = Key::from_slice(&key_string.as_bytes());
 			let cipher = Aes256Gcm::new(key);
-			let plaintext = cipher.decrypt(nonce, ciphertext.as_ref());
+			let plaintext = cipher
+				.decrypt(&nonce, self.ciphertext.as_ref())
+				.expect("Failed to decrypt ciphertext.");
+
+			if plaintext.starts_with(ADMIN_PASSWORD_QUALIFIER) {
+				eprintln!(
+					"Admin password cracked on attempt number {} by forcer number {}",
+					self.attempt_number, self.forcer_number
+				);
+			}
+
 			self.attempt_number += 1;
 		}
 	}
@@ -41,12 +56,13 @@ impl EncryptionBruteForcer {
 static mut BRUTE_FORCERS: Vec<&'static mut EncryptionBruteForcer> = Vec::new();
 
 fn main() -> Result<(), Error> {
-	let ciphertext = std::env::args().nth(2).expect("no ciphertext given");
+	let ciphertext = std::env::args().nth(1).expect("no ciphertext given");
 
 	let num_cpus = num_cpus::get();
-	for _ in 0..num_cpus {
-		let brute_forcer: &'static mut EncryptionBruteForcer =
-			Box::leak(Box::new(EncryptionBruteForcer::new(ciphertext)));
+	for forcer_index in 0..num_cpus {
+		let brute_forcer: &'static mut EncryptionBruteForcer = Box::leak(Box::new(
+			EncryptionBruteForcer::new(forcer_index as u8, ciphertext.clone()),
+		));
 
 		unsafe {
 			BRUTE_FORCERS.push(brute_forcer);
@@ -56,7 +72,7 @@ fn main() -> Result<(), Error> {
 	let mut sigs = Vec::<i32>::new();
 	sigs.extend(TERM_SIGNALS);
 
-	let mut signals = SignalsInfo::<SignalOnly>::new(&sigs).unwrap();
+	let mut signals = SignalsInfo::<SignalOnly>::new(&sigs).expect("Failed to create SignalsInfo");
 
 	unsafe {
 		for brute_forcer in &mut BRUTE_FORCERS {

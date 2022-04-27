@@ -1,6 +1,3 @@
 {
-	"extends": "@leonzalion/configs/tsconfig.json",
-	"compilerOptions": {
-		"module": "CommonJS"
-	}
+	"extends": "@leonzalion/configs/tsconfig.json"
 }
