@@ -17,3 +17,4 @@ fs.cpSync(
 	'./src/encryption-brute-forcer/target/release/encryption-brute-forcer',
 	'./dist/encryption-brute-forcer/target/release/encryption-brute-forcer'
 );
+await copyPackageFiles();
