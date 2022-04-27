@@ -1,8 +1,12 @@
-import { execaCommandSync } from 'execa';
-import { chProjectDir } from 'lion-system';
+import { execaCommandSync as exec } from 'execa';
+import { chProjectDir, copyPackageFiles, rmDist } from 'lion-system';
 
 chProjectDir(import.meta.url);
-execaCommandSync('cargo build --release', {
+rmDist();
+exec('cargo build --release', {
 	cwd: './src/encryption-brute-forcer',
 	stdio: 'inherit',
 });
+exec('tsc');
+exec('tsc-alias');
+await copyPackageFiles();

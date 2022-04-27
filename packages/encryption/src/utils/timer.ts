@@ -5,7 +5,7 @@ import { Buffer } from 'node:buffer';
 
 import { aes256gcm } from '~/utils/encryption.js';
 
-export async function timeEncryptionBruteForcer() {
+export async function measureMaxSaltValue(): Promise<number> {
 	const encryptionBruteForcerBinPath = join(
 		import.meta.url,
 		'../encryption-brute-forcer/target/release/encryption-brute-forcer'
@@ -18,7 +18,7 @@ export async function timeEncryptionBruteForcer() {
 
 	// Key must be 32 bytes long
 	//                   0    5    0    5    0    5    0 2
-	const { encrypt, decrypt } = aes256gcm(key);
+	const { encrypt } = aes256gcm(key);
 
 	const adminPasscode = 'admin';
 	const adminPasscodeQualifier = '__ADMIN_PASSWORD__';
@@ -32,11 +32,19 @@ export async function timeEncryptionBruteForcer() {
 		cipherText,
 	]);
 
+	const numSeconds = 5;
 	setTimeout(() => {
 		console.info('Killing executable...');
 		encryptionBruteForcerProcess.kill('SIGINT');
-	}, 5000);
+	}, numSeconds * 1000);
 
 	const result = await encryptionBruteForcerProcess;
-	console.log(result.stdout);
+
+	// This is how many brute-force attempts on the key the user's machine can try per second
+	const attemptsPerSecond = Number(result.stdout) / numSeconds;
+
+	// We want brute-forcing to find the correct salt for a known code to take around 7 seconds, so we multiply this by 7 to get the maximum value of the salt
+	const maxSaltValue = Math.ceil(attemptsPerSecond * 7);
+
+	return maxSaltValue;
 }

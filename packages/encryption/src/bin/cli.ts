@@ -1,3 +1,3 @@
-import { timeEncryptionBruteForcer } from '../utils/timer.js';
+import { measureMaxSaltValue } from '~/utils/timer.js';
 
-await timeEncryptionBruteForcer();
+console.log(await measureMaxSaltValue());

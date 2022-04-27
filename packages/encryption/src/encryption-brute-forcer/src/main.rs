@@ -36,14 +36,12 @@ impl EncryptionBruteForcer {
 			// 	"0000000000000000012345{:0<2}{:0<8}",
 			// 	self.forcer_number, self.attempt_number
 			// );
-			let mut hasher = Sha256::new();
-			hasher.update(
-				format!(
-					"code:12345,salt:{:0<2}{:0<8}",
-					self.forcer_number, self.attempt_number
-				)
-				.as_bytes(),
+			let original_key = format!(
+				"code:12345,salt:{:0<2}{:0<8}",
+				self.forcer_number, self.attempt_number
 			);
+			let mut hasher = Sha256::new();
+			hasher.update(original_key.as_bytes());
 			let key_string = hasher.finalize();
 
 			let key: &GenericArray<u8, _> = Key::from_slice(&key_string[..]);
