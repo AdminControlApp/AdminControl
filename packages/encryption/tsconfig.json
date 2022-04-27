@@ -1,7 +1,12 @@
 {
-	"extends": "../../tsconfig.json",
+	"extends": "@leonzalion/configs/tsconfig.json",
 	"compilerOptions": {
 		"outDir": "dist",
-		"module": "ES2022"
-	}
+		"module": "ES2022",
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["./src/*"]
+		}
+	},
+	"include": ["./src"]
 }

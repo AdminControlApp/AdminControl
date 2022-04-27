@@ -38,6 +38,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "base64"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "33678aec1839cd59fbb29a90950baa95fc4a5464711a7858f5ba68dbc3d3eab2"
+dependencies = [
+ "byteorder",
+]
+
+[[package]]
+name = "byteorder"
+version = "1.4.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "14c189c53d098945499cdfa7ecc63567cf3886b3332b312a5b4585d8d3a6a610"
+
+[[package]]
 name = "cfg-if"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -75,6 +90,7 @@ name = "encryption-brute-forcer"
 version = "0.1.0"
 dependencies = [
  "aes-gcm",
+ "base64",
  "num_cpus",
  "signal-hook",
 ]

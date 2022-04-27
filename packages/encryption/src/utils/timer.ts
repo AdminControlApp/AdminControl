@@ -1,6 +1,8 @@
 import { join } from 'desm';
 import { execa } from 'execa';
-import Cryptr from 'cryptr';
+import { Buffer } from 'node:buffer';
+
+import { aes256gcm } from '~/utils/encryption.js';
 
 export async function timeEncryptionBruteForcer() {
 	const encryptionBruteForcerBinPath = join(
@@ -8,14 +10,20 @@ export async function timeEncryptionBruteForcer() {
 		'../encryption-brute-forcer/target/release/encryption-brute-forcer'
 	);
 
-	const secretCode = '12345';
-	const encryptionKeySalt = '1000000000';
-	const cryptr = new Cryptr(secretCode + encryptionKeySalt);
+	// Key must be 32 bytes long
+	//                   0    5    0    5    0    5    0 2
+	const { encrypt, decrypt } = aes256gcm(
+		Buffer.from('code:12345,salt:0000000000000000', 'utf8')
+	);
+
 	const adminPasscode = 'admin';
 	const adminPasscodeQualifier = '__ADMIN_PASSWORD__';
-	const cipherText = cryptr.encrypt(adminPasscodeQualifier + adminPasscode);
+	const { enc, authTag } = encrypt(adminPasscodeQualifier + adminPasscode);
+	const cipherText = Buffer.concat([enc, authTag]).toString('base64');
 
-	console.info(`Running executable with ciphertext ${cipherText}...`);
+	console.info(
+		`Running executable with ciphertext \`${cipherText.toString()}\`...`
+	);
 	const encryptionBruteForcerProcess = execa(encryptionBruteForcerBinPath, [
 		cipherText,
 	]);

@@ -16,6 +16,7 @@
 		"execa": "^6.1.0"
 	},
 	"devDependencies": {
-		"@types/cryptr": "^4.0.1"
+		"@types/cryptr": "^4.0.1",
+		"@types/node": "^17.0.25"
 	}
 }

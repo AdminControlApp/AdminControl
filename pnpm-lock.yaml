@@ -81,6 +81,7 @@ importers:
   packages/encryption:
     specifiers:
       '@types/cryptr': ^4.0.1
+      '@types/node': ^17.0.25
       cryptr: ^6.0.3
       desm: ^1.2.0
       execa: ^6.1.0
@@ -90,6 +91,7 @@ importers:
       execa: 6.1.0
     devDependencies:
       '@types/cryptr': 4.0.1
+      '@types/node': 17.0.25
 
   packages/phone-call-pass:
     specifiers:

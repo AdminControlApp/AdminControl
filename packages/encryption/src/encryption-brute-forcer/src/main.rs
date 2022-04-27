@@ -13,11 +13,11 @@ static ADMIN_PASSWORD_QUALIFIER: &[u8] = b"__ADMIN_PASSWORD__";
 struct EncryptionBruteForcer {
 	pub attempt_number: u64,
 	forcer_number: u8,
-	ciphertext: String,
+	ciphertext: Vec<u8>,
 }
 
 impl EncryptionBruteForcer {
-	pub fn new(forcer_number: u8, ciphertext: String) -> Self {
+	pub fn new(forcer_number: u8, ciphertext: Vec<u8>) -> Self {
 		Self {
 			attempt_number: 0,
 			forcer_number,
@@ -31,12 +31,16 @@ impl EncryptionBruteForcer {
 
 		loop {
 			// Key size must be 32 characters, so we left pad it with zeros
-			let key_string = format!(
-				"0000000000000000012345{:0<2}{:0<8}",
-				self.forcer_number, self.attempt_number
-			);
+			// let key_string = format!(
+			// 	"0000000000000000012345{:0<2}{:0<8}",
+			// 	self.forcer_number, self.attempt_number
+			// );
+			let key_string = "code:12345,salt:0000000000000000";
 			let key: &GenericArray<u8, _> = Key::from_slice(&key_string.as_bytes());
+			println!("{:?}", self.ciphertext);
+
 			let cipher = Aes256Gcm::new(key);
+			println!("{:?}", cipher.encrypt(&nonce, b"__ADMIN_PASSWORD__admin".as_ref()));
 			let plaintext = cipher
 				.decrypt(&nonce, self.ciphertext.as_ref())
 				.expect("Failed to decrypt ciphertext.");
@@ -61,7 +65,7 @@ fn main() -> Result<(), Error> {
 	let num_cpus = num_cpus::get();
 	for forcer_index in 0..num_cpus {
 		let brute_forcer: &'static mut EncryptionBruteForcer = Box::leak(Box::new(
-			EncryptionBruteForcer::new(forcer_index as u8, ciphertext.clone()),
+			EncryptionBruteForcer::new(forcer_index as u8, base64::decode(&ciphertext).unwrap()),
 		));
 
 		unsafe {
