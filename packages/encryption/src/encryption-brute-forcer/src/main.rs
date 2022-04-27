@@ -1,3 +1,4 @@
+use sha2::{Digest, Sha256};
 use std::io::Error;
 
 use aes_gcm::aead::generic_array::GenericArray;
@@ -35,21 +36,28 @@ impl EncryptionBruteForcer {
 			// 	"0000000000000000012345{:0<2}{:0<8}",
 			// 	self.forcer_number, self.attempt_number
 			// );
-			let key_string = "code:12345,salt:0000000000000000";
-			let key: &GenericArray<u8, _> = Key::from_slice(&key_string.as_bytes());
-			println!("{:?}", self.ciphertext);
+			let mut hasher = Sha256::new();
+			hasher.update(
+				format!(
+					"code:12345,salt:{:0<2}{:0<8}",
+					self.forcer_number, self.attempt_number
+				)
+				.as_bytes(),
+			);
+			let key_string = hasher.finalize();
+
+			let key: &GenericArray<u8, _> = Key::from_slice(&key_string[..]);
 
 			let cipher = Aes256Gcm::new(key);
-			println!("{:?}", cipher.encrypt(&nonce, b"__ADMIN_PASSWORD__admin".as_ref()));
-			let plaintext = cipher
-				.decrypt(&nonce, self.ciphertext.as_ref())
-				.expect("Failed to decrypt ciphertext.");
+			let plaintext = cipher.decrypt(&nonce, self.ciphertext.as_ref());
 
-			if plaintext.starts_with(ADMIN_PASSWORD_QUALIFIER) {
-				eprintln!(
-					"Admin password cracked on attempt number {} by forcer number {}",
-					self.attempt_number, self.forcer_number
-				);
+			if let Ok(plaintext) = plaintext {
+				if plaintext.starts_with(ADMIN_PASSWORD_QUALIFIER) {
+					eprintln!(
+						"Admin password cracked on attempt number {} by forcer number {}",
+						self.attempt_number, self.forcer_number
+					);
+				}
 			}
 
 			self.attempt_number += 1;
