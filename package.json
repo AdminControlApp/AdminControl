@@ -3,6 +3,7 @@
 	"type": "module",
 	"private": true,
 	"scripts": {
+		"pnpm:devPreinstall": "node ./scripts/setup.js",
 		"prepare": "lion-git-hooks",
 		"tc": "pnpm recursive run tc",
 		"lint": "pnpm recursive run lint",
