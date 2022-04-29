@@ -51,7 +51,7 @@
 		"desm": "^1.2.0",
 		"electron-store": "^8.0.1",
 		"electron-updater": "^5.0.1",
-		"nanoid-nice": "^1.0.0",
+		"nanoid-nice": "^1.0.1",
 		"package-name-regex": "^2.0.6",
 		"phone-call-pass": "link:../phone-call-pass/dist",
 		"vite-plugin-js-imports": "^1.1.1",

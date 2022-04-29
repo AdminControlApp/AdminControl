@@ -35,7 +35,7 @@ importers:
       electron-store: ^8.0.1
       electron-updater: ^5.0.1
       happy-dom: 2.55.0
-      nanoid-nice: ^1.0.0
+      nanoid-nice: ^1.0.1
       package-name-regex: ^2.0.6
       phone-call-pass: link:../phone-call-pass/dist
       playwright: 1.21.1
@@ -53,7 +53,7 @@ importers:
       desm: 1.2.0
       electron-store: 8.0.1
       electron-updater: 5.0.1
-      nanoid-nice: 1.0.0
+      nanoid-nice: 1.0.1
       package-name-regex: 2.0.6
       phone-call-pass: link:../phone-call-pass/dist
       vite-plugin-js-imports: 1.1.1_vite@2.9.5
@@ -5411,8 +5411,8 @@ packages:
     engines: {node: '>=12.0.0'}
     dev: true
 
-  /nanoid-nice/1.0.0:
-    resolution: {integrity: sha512-goAVhtcYlkZFFHaNjnERWBa/BxW+qb36E2sF2Yy2jhMEonf/kdou/w6VyWJD5saN+V5cOOnR9ktNZ85OIsrSeA==}
+  /nanoid-nice/1.0.1:
+    resolution: {integrity: sha512-HHhAQer6qKNSSaY+P4ArvTocslXZM9Xp4Mc8F661T7avUxEAuhbkSmbnD+YDE1qPijHsxK2OlIqjRWUNXc2tOg==}
     dependencies:
       nanoid: 3.3.3
       naughty-words: 1.2.0
