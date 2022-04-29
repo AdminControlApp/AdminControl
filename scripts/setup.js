@@ -1,7 +1,7 @@
 import { execSync } from 'node:child_process';
 import * as fs from 'node:fs';
 
-if (!fs.existsSync('packages/phone-call-pass/package.json')) {
+if (!fs.existsSync('packages/phone-call-pass')) {
 	try {
 		fs.rmSync('packages/phone-call-pass', { recursive: true, force: true });
 		execSync(
