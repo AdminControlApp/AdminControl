@@ -58,4 +58,7 @@ thumbs.db
 target
 .pnpm-debug.log
 
-packages/phone-call-pass
+packages/phone-call-pass/*
+!packages/phone-call-pass/dist
+packages/phone-call-pass/dist/*
+!packages/phone-call-pass/dist/.gitkeep
