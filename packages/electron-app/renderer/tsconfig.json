@@ -3,6 +3,7 @@
 	"compilerOptions": {
 		"outDir": "dist",
 		"baseUrl": ".",
+		"jsx": "preserve",
 		"paths": {
 			"~r/*": ["./src/*"],
 			"~m/*": ["../main/src/*"],

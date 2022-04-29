@@ -1,22 +1,27 @@
+import { measureMaxSaltValue } from '@admincontrol/encryption';
 import { ipcRenderer } from 'electron';
-import { customAlphabet, nanoid } from 'nanoid-nice';
+import * as sha256 from 'fast-sha256';
 
 async function retrieveSecretCode() {
 	return (await ipcRenderer.invoke('phone-call-pass')) as string;
 }
 
 async function resetAdminPassword() {
-	// First, retrieve the secret code from our accountability partner
+	// First, measure the time it takes to brute force a password
+	const maxSaltValue = await measureMaxSaltValue();
+
+	// Generate a random number from 0 to the max salt value
+	const salt = String(Math.floor(Math.random() * maxSaltValue));
+
+	// Then, retrieve the secret code from our accountability partner
 	const secretCode = await retrieveSecretCode();
 
-	// Generate a new alphanumeric string
-	const randomString = nanoid(10);
+	const secretString = `code:${secretCode},salt:${salt.padStart(10, '0')}`;
 
-	// Generate a random encryption salt (1-100)
-	const alphabet = customAlphabet('abcdefghijklmnopqrstuvwxyz');
+	const enc = new TextEncoder();
+	const hash = sha256.hash(enc.encode(secretString));
 
-	// The 
-	const encryptionSalt = alphabet(8);
+	return hash;
 }
 
 export const exposedElectron = {
@@ -31,4 +36,5 @@ export const exposedElectron = {
 	async phoneCallPass() {
 		return retrieveSecretPasscode();
 	},
+	resetAdminPassword,
 };

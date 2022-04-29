@@ -18,6 +18,11 @@ function saveSettings() {
 async function retrievePasscode() {
 	console.log(await window.electron.phoneCallPass());
 }
+
+async function resetAdminPassword() {
+	const hash = await window.electron.resetAdminPassword();
+	console.log(hash);
+}
 </script>
 
 <template>
@@ -47,6 +52,7 @@ async function retrievePasscode() {
 		>
 			Retrieve Passcode
 		</button>
+		<button @click="resetAdminPassword">Reset Admin Password</button>
 	</div>
 </template>
 
