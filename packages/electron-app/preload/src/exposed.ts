@@ -34,7 +34,7 @@ export const exposedElectron = {
 		},
 	},
 	async phoneCallPass() {
-		return retrieveSecretPasscode();
+		return retrieveSecretCode();
 	},
 	resetAdminPassword,
 };
