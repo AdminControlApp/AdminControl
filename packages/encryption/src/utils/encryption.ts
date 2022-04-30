@@ -1,5 +1,8 @@
+import * as execa from 'execa';
 import { Buffer } from 'node:buffer';
 import * as crypto from 'node:crypto';
+
+import { getBruteForcerExecutablePath } from '~/utils/brute-forcer.js';
 
 /**
 	Implementation of using `aes-256-gcm` with node.js's `crypto` lib.
@@ -40,4 +43,34 @@ export function aes256gcm(key: Buffer) {
 		encrypt,
 		decrypt,
 	};
+}
+
+export async function decryptAdminPassword({
+	encryptedAdminPassword,
+	secretCode,
+}: {
+	encryptedAdminPassword: string;
+	secretCode: string;
+}) {
+	const bruteForcerPath = getBruteForcerExecutablePath();
+
+	if (secretCode.length !== 5) {
+		throw new Error('Secret code must be 5 characters in length.');
+	}
+
+	const encryptionBruteForcerProcess = execa(bruteForcerPath, [
+		encryptedAdminPassword,
+		secretCode,
+	]);
+
+	setTimeout(() => {
+		encryptionBruteForcerProcess.kill('SIGINT');
+		throw new Error(
+			'Could not decrypt admin password after 30 seconds. Please check that the secret code provided was correct.'
+		);
+	}, 30_000);
+
+	const result = await encryptionBruteForcerProcess;
+
+	return result.stdout;
 }

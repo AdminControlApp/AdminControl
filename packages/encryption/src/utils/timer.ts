@@ -1,15 +1,12 @@
 import * as execa from 'execa';
 import { sha256 } from 'hash.js';
 import { Buffer } from 'node:buffer';
-import * as path from 'node:path';
 
+import { getBruteForcerExecutablePath } from '~/utils/brute-forcer.js';
 import { aes256gcm } from '~/utils/encryption.js';
 
 export async function measureMaxSaltValue(): Promise<number> {
-	const encryptionBruteForcerBinPath = path.join(
-		__dirname, // eslint-disable-line unicorn/prefer-module
-		'../encryption-brute-forcer/target/release/encryption-brute-forcer'
-	);
+	const bruteForcerPath = getBruteForcerExecutablePath();
 
 	// Key is produced from a SHA256 hash of the string `code:12345,salt:0000000000`
 	const key = Buffer.from(
@@ -20,21 +17,21 @@ export async function measureMaxSaltValue(): Promise<number> {
 	//                   0    5    0    5    0    5    0 2
 	const { encrypt } = aes256gcm(key);
 
-	const adminPasscode = 'admin';
-	const adminPasscodeQualifier = '__ADMIN_PASSWORD__';
-	const { enc, authTag } = encrypt(adminPasscodeQualifier + adminPasscode);
+	const adminPassword = 'admin';
+	const secretCode = '00000';
+	const { enc, authTag } = encrypt(adminPassword);
 	const cipherText = Buffer.concat([enc, authTag]).toString('base64');
 
 	console.info(
 		`Running executable with ciphertext \`${cipherText.toString()}\`...`
 	);
-	const encryptionBruteForcerProcess = execa(encryptionBruteForcerBinPath, [
+	const encryptionBruteForcerProcess = execa(bruteForcerPath, [
 		cipherText,
+		secretCode,
 	]);
 
 	const numSeconds = 5;
 	setTimeout(() => {
-		console.info('Killing executable...');
 		encryptionBruteForcerProcess.kill('SIGINT');
 	}, numSeconds * 1000);
 

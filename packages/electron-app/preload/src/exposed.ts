@@ -1,4 +1,8 @@
-import { aes256gcm, measureMaxSaltValue } from '@admincontrol/encryption';
+import {
+	aes256gcm,
+	decryptAdminPassword,
+	measureMaxSaltValue,
+} from '@admincontrol/encryption';
 import { ipcRenderer } from 'electron';
 import * as sha256 from 'fast-sha256';
 import { nanoid } from 'nanoid-nice';
@@ -46,4 +50,20 @@ export const exposedElectron = {
 		return retrieveSecretCode();
 	},
 	resetAdminPassword,
+	async getAdminPassword() {
+		const secretCode = await retrieveSecretCode();
+		const encryptedAdminPassword = this.store.get(
+			'encryptedAdminPassword'
+		) as string;
+		if (encryptedAdminPassword === undefined) {
+			throw new Error('Encrypted admin password not found.');
+		}
+
+		const decryptedAdminPassword = await decryptAdminPassword({
+			secretCode,
+			encryptedAdminPassword,
+		});
+
+		return decryptedAdminPassword;
+	},
 };

@@ -25,8 +25,12 @@ let encryptedAdminPassword = $ref<string>(
 	(store.get('encryptedAdminPassword') as string) ?? undefined
 );
 let adminPasswordMaxSaltValue = $ref<number>(
-	(store.get('encryptedAdminPassword') as number) ?? undefined
+	(store.get('maxSaltValue') as number) ?? undefined
 );
+
+async function getAdminPassword() {
+	console.log(await window.electron.getAdminPassword());
+}
 
 let isAdminPasswordResetting = $ref(false);
 async function resetAdminPassword() {
@@ -91,6 +95,12 @@ async function resetAdminPassword() {
 				<span>{{ adminPasswordMaxSaltValue }}</span>
 			</div>
 		</div>
+		<button
+			class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-medium mt-8 disabled:(bg-orange-300 cursor-not-allowed)"
+			@click="getAdminPassword"
+		>
+			Get Admin Password
+		</button>
 	</div>
 </template>
 

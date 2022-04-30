@@ -1,5 +1,6 @@
 use sha2::{Digest, Sha256};
 use std::io::Error;
+use std::process::exit;
 
 use aes_gcm::aead::generic_array::GenericArray;
 use aes_gcm::aead::{Aead, NewAead};
@@ -15,14 +16,16 @@ struct EncryptionBruteForcer {
 	pub attempt_number: u64,
 	forcer_number: u8,
 	ciphertext: Vec<u8>,
+	secret_code: String,
 }
 
 impl EncryptionBruteForcer {
-	pub fn new(forcer_number: u8, ciphertext: Vec<u8>) -> Self {
+	pub fn new(forcer_number: u8, ciphertext: Vec<u8>, secret_code: String) -> Self {
 		Self {
 			attempt_number: 0,
 			forcer_number,
 			ciphertext,
+			secret_code,
 		}
 	}
 
@@ -37,8 +40,8 @@ impl EncryptionBruteForcer {
 			// 	self.forcer_number, self.attempt_number
 			// );
 			let original_key = format!(
-				"code:12345,salt:{:0<2}{:0<8}",
-				self.forcer_number, self.attempt_number
+				"code:{},salt:{:0<2}{:0<8}",
+				self.secret_code, self.forcer_number, self.attempt_number
 			);
 			let mut hasher = Sha256::new();
 			hasher.update(original_key.as_bytes());
@@ -51,10 +54,8 @@ impl EncryptionBruteForcer {
 
 			if let Ok(plaintext) = plaintext {
 				if plaintext.starts_with(ADMIN_PASSWORD_QUALIFIER) {
-					eprintln!(
-						"Admin password cracked on attempt number {} by forcer number {}",
-						self.attempt_number, self.forcer_number
-					);
+					eprintln!("{}", std::str::from_utf8(&plaintext).unwrap());
+					exit(0);
 				}
 			}
 
@@ -67,12 +68,16 @@ static mut BRUTE_FORCERS: Vec<&'static mut EncryptionBruteForcer> = Vec::new();
 
 fn main() -> Result<(), Error> {
 	let ciphertext = std::env::args().nth(1).expect("no ciphertext given");
+	let secret_code = std::env::args().nth(2).expect("no secret code given");
 
 	let num_cpus = num_cpus::get();
 	for forcer_index in 0..num_cpus {
-		let brute_forcer: &'static mut EncryptionBruteForcer = Box::leak(Box::new(
-			EncryptionBruteForcer::new(forcer_index as u8, base64::decode(&ciphertext).unwrap()),
-		));
+		let brute_forcer: &'static mut EncryptionBruteForcer =
+			Box::leak(Box::new(EncryptionBruteForcer::new(
+				forcer_index as u8,
+				base64::decode(&ciphertext).unwrap(),
+				String::clone(&secret_code),
+			)));
 
 		unsafe {
 			BRUTE_FORCERS.push(brute_forcer);
