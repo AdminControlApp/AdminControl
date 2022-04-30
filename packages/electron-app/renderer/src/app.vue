@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import toBuffer from 'typedarray-to-buffer';
 import { VueSpinner } from 'vue3-spinners';
 
 const { store } = window.electron;
@@ -22,13 +21,16 @@ async function retrievePasscode() {
 	console.log(await window.electron.phoneCallPass());
 }
 
-let encryptedAdminPassword = $ref<string>();
+let encryptedAdminPassword = $ref<string>(
+	(store.get('encryptedAdminPassword') as string) ?? undefined
+);
 
 let isAdminPasswordResetting = $ref(false);
 async function resetAdminPassword() {
 	try {
 		isAdminPasswordResetting = true;
 		encryptedAdminPassword = await window.electron.resetAdminPassword();
+		store.set('encryptedAdminPassword', encryptedAdminPassword);
 	} finally {
 		isAdminPasswordResetting = false;
 	}
