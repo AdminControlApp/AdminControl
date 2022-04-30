@@ -30,7 +30,7 @@ async function resetAdminPassword() {
 
 	const encryptedPassword = Buffer.concat([enc, authTag]).toString('base64');
 
-	return encryptedPassword;
+	return { encryptedPassword, maxSaltValue };
 }
 
 export const exposedElectron = {

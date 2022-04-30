@@ -24,13 +24,20 @@ async function retrievePasscode() {
 let encryptedAdminPassword = $ref<string>(
 	(store.get('encryptedAdminPassword') as string) ?? undefined
 );
+let adminPasswordMaxSaltValue = $ref<number>(
+	(store.get('encryptedAdminPassword') as number) ?? undefined
+);
 
 let isAdminPasswordResetting = $ref(false);
 async function resetAdminPassword() {
 	try {
 		isAdminPasswordResetting = true;
-		encryptedAdminPassword = await window.electron.resetAdminPassword();
-		store.set('encryptedAdminPassword', encryptedAdminPassword);
+		const { encryptedPassword, maxSaltValue } =
+			await window.electron.resetAdminPassword();
+		encryptedAdminPassword = encryptedPassword;
+		adminPasswordMaxSaltValue = maxSaltValue;
+		store.set('encryptedAdminPassword', encryptedPassword);
+		store.set('maxSaltValue', maxSaltValue);
 	} finally {
 		isAdminPasswordResetting = false;
 	}
@@ -75,8 +82,14 @@ async function resetAdminPassword() {
 			<div v-else>Reset Admin Password</div>
 		</button>
 		<div v-if="encryptedAdminPassword !== undefined">
-			<span class="text-bold">Admin Password Hash: </span>
-			<span class="font-mono">{{ encryptedAdminPassword }}</span>
+			<div class="row gap-1">
+				<span class="font-bold">Admin Password Hash: </span>
+				<span class="font-mono">{{ encryptedAdminPassword }}</span>
+			</div>
+			<div class="row gap-1">
+				<span class="font-bold">Max Salt Value:</span>
+				<span>{{ adminPasswordMaxSaltValue }}</span>
+			</div>
 		</div>
 	</div>
 </template>
