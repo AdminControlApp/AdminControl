@@ -1,6 +1,8 @@
-import { measureMaxSaltValue } from '@admincontrol/encryption';
+import { aes256gcm, measureMaxSaltValue } from '@admincontrol/encryption';
 import { ipcRenderer } from 'electron';
 import * as sha256 from 'fast-sha256';
+import { nanoid } from 'nanoid-nice';
+import { Buffer } from 'node:buffer';
 
 async function retrieveSecretCode() {
 	return (await ipcRenderer.invoke('phone-call-pass')) as string;
@@ -18,10 +20,17 @@ async function resetAdminPassword() {
 
 	const secretString = `code:${secretCode},salt:${salt.padStart(10, '0')}`;
 
-	const enc = new TextEncoder();
-	const hash = sha256.hash(enc.encode(secretString));
+	const key = sha256.hash(new TextEncoder().encode(secretString));
 
-	return hash;
+	const adminPassword = nanoid(8);
+	// TODO: change the admin password using macOS apis
+
+	// Encrypting the admin password using the 32-byte SHA256 hash as the key
+	const { enc, authTag } = aes256gcm(Buffer.from(key)).encrypt(adminPassword);
+
+	const encryptedPassword = Buffer.concat([enc, authTag]).toString('base64');
+
+	return encryptedPassword;
 }
 
 export const exposedElectron = {

@@ -49,6 +49,7 @@
 		"vue-tsc": "0.34.9"
 	},
 	"dependencies": {
+		"buffer": "^6.0.3",
 		"desm": "^1.2.0",
 		"electron-store": "^8.0.1",
 		"electron-updater": "^5.0.1",
@@ -56,6 +57,7 @@
 		"nanoid-nice": "^1.0.1",
 		"package-name-regex": "^2.0.6",
 		"phone-call-pass": "link:../phone-call-pass/dist",
+		"typedarray-to-buffer": "^4.0.0",
 		"vite-plugin-js-imports": "^1.1.1",
 		"vue": "^3.2.33",
 		"vue3-spinners": "^1.1.1",
