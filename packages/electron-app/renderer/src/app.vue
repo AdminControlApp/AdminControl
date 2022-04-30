@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { VueSpinner } from 'vue3-spinners';
+
 const { store } = window.electron;
 
 const twilioAccountSid = $ref((store.get('twilioAccountSid') as string) ?? '');
@@ -19,9 +21,17 @@ async function retrievePasscode() {
 	console.log(await window.electron.phoneCallPass());
 }
 
+let adminPasswordHash = $ref<string>();
+
+let isAdminPasswordResetting = $ref(false);
 async function resetAdminPassword() {
-	const hash = await window.electron.resetAdminPassword();
-	console.log(hash);
+	try {
+		isAdminPasswordResetting = true;
+		const hash = await window.electron.resetAdminPassword();
+		adminPasswordHash = hash.toString();
+	} finally {
+		isAdminPasswordResetting = false;
+	}
 }
 </script>
 
@@ -56,8 +66,15 @@ async function resetAdminPassword() {
 			class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-medium mt-8"
 			@click="resetAdminPassword"
 		>
-			Reset Admin Password
+			<div v-if="isAdminPasswordResetting">
+				<VueSpinner /> Resetting Admin Password...
+			</div>
+			<div v-else>Reset Admin Password</div>
 		</button>
+		<div v-if="adminPasswordHash !== undefined">
+			<span class="text-bold">Admin Password Hash:</span>
+			<span class="font-mono">{{ adminPasswordHash }}</span>
+		</div>
 	</div>
 </template>
 

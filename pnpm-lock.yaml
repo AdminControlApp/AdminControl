@@ -50,6 +50,7 @@ importers:
       vitest: 0.9.4
       vue: ^3.2.33
       vue-tsc: 0.34.9
+      vue3-spinners: ^1.1.1
       windicss: ^3.5.1
     dependencies:
       desm: 1.2.0
@@ -61,6 +62,7 @@ importers:
       phone-call-pass: link:../phone-call-pass/dist
       vite-plugin-js-imports: 1.1.1_vite@2.9.5
       vue: 3.2.33
+      vue3-spinners: 1.1.1_vue@3.2.33
       windicss: 3.5.1
     devDependencies:
       '@admincontrol/encryption': link:../encryption/dist
@@ -7518,6 +7520,14 @@ packages:
       '@vue/runtime-dom': 3.2.33
       '@vue/server-renderer': 3.2.33_vue@3.2.33
       '@vue/shared': 3.2.33
+    dev: false
+
+  /vue3-spinners/1.1.1_vue@3.2.33:
+    resolution: {integrity: sha512-+4P/zhM1PQPJX0RIOPbC+OljQisPfuB/SqmiuSnm7Rm1TszeoLKTvifiz5P66g2eUr92e/th4s8uPdrsXesKJg==}
+    peerDependencies:
+      vue: ^3
+    dependencies:
+      vue: 3.2.33
     dev: false
 
   /wcwidth/1.0.1:
