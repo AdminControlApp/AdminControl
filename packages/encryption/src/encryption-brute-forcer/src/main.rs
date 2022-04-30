@@ -119,6 +119,14 @@ fn decrypt(ciphertext: String, secret_code: String, max_salt_value: u64) -> Resu
 		}
 	}
 
+	unsafe {
+		for brute_forcer in &mut BRUTE_FORCERS {
+			std::thread::spawn(move || {
+				brute_forcer.brute_force();
+			});
+		}
+	}
+
 	Ok(())
 }
 
