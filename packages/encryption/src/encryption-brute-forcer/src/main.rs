@@ -14,16 +14,16 @@ static ADMIN_PASSWORD_QUALIFIER: &[u8] = b"__ADMIN_PASSWORD__";
 
 struct EncryptionBruteForcer {
 	pub attempt_number: u64,
-	forcer_number: u8,
+	starting_salt: u64,
 	ciphertext: Vec<u8>,
 	secret_code: String,
 }
 
 impl EncryptionBruteForcer {
-	pub fn new(forcer_number: u8, ciphertext: Vec<u8>, secret_code: String) -> Self {
+	pub fn new(ciphertext: Vec<u8>, secret_code: String, starting_salt: u64) -> Self {
 		Self {
 			attempt_number: 0,
-			forcer_number,
+			starting_salt,
 			ciphertext,
 			secret_code,
 		}
@@ -34,15 +34,8 @@ impl EncryptionBruteForcer {
 		let nonce = Nonce::from_slice(b"unique nonce");
 
 		loop {
-			// Key size must be 32 characters, so we left pad it with zeros
-			// let key_string = format!(
-			// 	"0000000000000000012345{:0<2}{:0<8}",
-			// 	self.forcer_number, self.attempt_number
-			// );
-			let original_key = format!(
-				"code:{},salt:{:0<2}{:0<8}",
-				self.secret_code, self.forcer_number, self.attempt_number
-			);
+			let salt_attempt = self.starting_salt + self.attempt_number;
+			let original_key = format!("code:{},salt:{:0<10}", self.secret_code, salt_attempt);
 			let mut hasher = Sha256::new();
 			hasher.update(original_key.as_bytes());
 			let key_string = hasher.finalize();
@@ -66,17 +59,17 @@ impl EncryptionBruteForcer {
 
 static mut BRUTE_FORCERS: Vec<&'static mut EncryptionBruteForcer> = Vec::new();
 
-fn main() -> Result<(), Error> {
-	let ciphertext = std::env::args().nth(1).expect("no ciphertext given");
-	let secret_code = std::env::args().nth(2).expect("no secret code given");
-
+fn benchmark() -> Result<(), Error> {
 	let num_cpus = num_cpus::get();
+	let ciphertext = "random gibberish"; // TODO
+	let secret_code = String::from("00000");
+
 	for forcer_index in 0..num_cpus {
 		let brute_forcer: &'static mut EncryptionBruteForcer =
 			Box::leak(Box::new(EncryptionBruteForcer::new(
-				forcer_index as u8,
 				base64::decode(&ciphertext).unwrap(),
 				String::clone(&secret_code),
+				forcer_index as u64 * 10_000_000,
 			)));
 
 		unsafe {
@@ -106,6 +99,50 @@ fn main() -> Result<(), Error> {
 			println!("{}", total_operations);
 		}
 		std::process::exit(0);
+	}
+
+	Ok(())
+}
+
+fn decrypt(ciphertext: String, secret_code: String, max_salt_value: u64) -> Result<(), Error> {
+	let num_cpus = num_cpus::get();
+	for forcer_index in 0..num_cpus {
+		let brute_forcer: &'static mut EncryptionBruteForcer =
+			Box::leak(Box::new(EncryptionBruteForcer::new(
+				base64::decode(&ciphertext).unwrap(),
+				String::clone(&secret_code),
+				forcer_index as u64 * (max_salt_value / num_cpus as u64),
+			)));
+
+		unsafe {
+			BRUTE_FORCERS.push(brute_forcer);
+		}
+	}
+
+	Ok(())
+}
+
+fn main() -> Result<(), Error> {
+	let operation = std::env::args().nth(1).expect("no operation given");
+
+	match operation.as_str() {
+		"benchmark" => {
+			benchmark()?;
+		}
+		"decrypt" => {
+			let ciphertext = std::env::args().nth(2).expect("no ciphertext given");
+			let secret_code = std::env::args().nth(3).expect("no secret code given");
+			let max_salt_value = std::env::args().nth(4).expect("no secret code given");
+
+			decrypt(
+				ciphertext,
+				secret_code,
+				max_salt_value
+					.parse()
+					.expect("Failed to parse max salt value."),
+			)?;
+		}
+		_ => panic!("Unknown operation: `{}`", operation),
 	}
 
 	Ok(())

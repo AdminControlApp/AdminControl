@@ -54,9 +54,12 @@ export async function decryptAdminPassword({
 }) {
 	const bruteForcerPath = getBruteForcerExecutablePath();
 
-	if (secretCode.length !== 5) {
+	if (secretCode.length > 5) {
 		throw new Error('Secret code must be 5 characters in length.');
 	}
+
+	// TODO: remove me
+	secretCode = secretCode.padStart(5, '0');
 
 	const encryptionBruteForcerProcess = execa(bruteForcerPath, [
 		encryptedAdminPassword,

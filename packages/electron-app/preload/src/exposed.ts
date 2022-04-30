@@ -22,11 +22,25 @@ async function resetAdminPassword() {
 	// Then, retrieve the secret code from our accountability partner
 	const secretCode = await retrieveSecretCode();
 
-	const secretString = `code:${secretCode},salt:${salt.padStart(10, '0')}`;
+	const secretString = `code:${secretCode.padStart(
+		5,
+		'0'
+	)},salt:${salt.padStart(10, '0')}`;
+
+	// TODO: remove me
+	console.log('Secret string:', secretString);
+	console.log('Max Salt Value:', maxSaltValue);
 
 	const key = sha256.hash(new TextEncoder().encode(secretString));
 
+	// TODO: remove me
+	console.log('Key:', key);
+
 	const adminPassword = nanoid(8);
+
+	// TODO: remove me
+	console.log('Admin Password:', adminPassword);
+
 	// TODO: change the admin password using macOS apis
 
 	// Encrypting the admin password using the 32-byte SHA256 hash as the key
@@ -37,22 +51,24 @@ async function resetAdminPassword() {
 	return { encryptedPassword, maxSaltValue };
 }
 
-export const exposedElectron = {
-	store: {
-		get(val: string) {
-			return ipcRenderer.sendSync('electron-store-get', val) as unknown;
-		},
-		set(property: string, val: unknown) {
-			ipcRenderer.send('electron-store-set', property, val);
-		},
+const store = {
+	get(val: string) {
+		return ipcRenderer.sendSync('electron-store-get', val) as unknown;
 	},
+	set(property: string, val: unknown) {
+		ipcRenderer.send('electron-store-set', property, val);
+	},
+};
+
+export const exposedElectron = {
+	store,
 	async phoneCallPass() {
 		return retrieveSecretCode();
 	},
 	resetAdminPassword,
 	async getAdminPassword() {
 		const secretCode = await retrieveSecretCode();
-		const encryptedAdminPassword = this.store.get(
+		const encryptedAdminPassword = store.get(
 			'encryptedAdminPassword'
 		) as string;
 		if (encryptedAdminPassword === undefined) {
