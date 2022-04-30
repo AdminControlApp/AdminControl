@@ -4,7 +4,7 @@
 
 Electron has a negative reputation for bloated applications, and I completely understand it. But, for the purposes of this project, Electron was the best tool for the job.
 
-For one, a lot of the utilities involved with AdminControl (e.g. phone-call-pass) are already written in JavaScript/TypeScript, and I'm not interested in rewriting all my utilities in another programming language.
+For one, a lot of the utilities involved with AdminControl (e.g. phone-call-input) are already written in JavaScript/TypeScript, and I'm not interested in rewriting all my utilities in another programming language.
 
 I've tried setting up interop between Swift and JavaScript by using Rollup to bundle my utilities into a few files and including Node inside the macOS application, but this process in extremely painful and tedious.
 

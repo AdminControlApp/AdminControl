@@ -4,8 +4,9 @@ import path from 'node:path';
 
 export async function createTray() {
 	const store = new Store();
-	const { phoneCallPass } = await import('phone-call-pass');
+	const { phoneCallPass } = await import('phone-call-input');
 
+	const isAdminPasswordBeingRetrieved = false;
 	app
 		.whenReady()
 		.then(() => {
@@ -17,20 +18,30 @@ export async function createTray() {
 				{
 					label: 'Retrieve Admin Password',
 					type: 'normal',
-					async click() {
-						const passcode = await phoneCallPass({
-							destinationPhoneNumber: store.get(
-								'destinationPhoneNumber'
-							) as string,
-							originPhoneNumber: store.get('originPhoneNumber') as string,
-							twilioAccountSid: store.get('twilioAccountSid') as string,
-							twilioAuthToken: store.get('twilioAuthToken') as string,
-						});
-
-						console.log(passcode);
-					},
+					enabled: isAdminPasswordBeingRetrieved,
+					click: retrieveAdminPassword,
 				},
 			]);
+
+			async function retrieveAdminPassword() {
+				try {
+					contextMenu.items[0]!.enabled = false;
+
+					const passcode = await phoneCallPass({
+						destinationPhoneNumber: store.get(
+							'destinationPhoneNumber'
+						) as string,
+						originPhoneNumber: store.get('originPhoneNumber') as string,
+						twilioAccountSid: store.get('twilioAccountSid') as string,
+						twilioAuthToken: store.get('twilioAuthToken') as string,
+					});
+
+					console.log(passcode);
+				} finally {
+					contextMenu.items[0]!.enabled = true;
+				}
+			}
+
 			tray.setToolTip('Admin Control Actions');
 			tray.setContextMenu(contextMenu);
 		})

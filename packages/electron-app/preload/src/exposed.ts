@@ -9,8 +9,7 @@ import { nanoid } from 'nanoid-nice';
 import { Buffer } from 'node:buffer';
 
 async function retrieveSecretCode() {
-	return '01234';
-	return (await ipcRenderer.invoke('phone-call-pass')) as string;
+	return (await ipcRenderer.invoke('phone-call-input')) as string;
 }
 
 async function resetAdminPassword() {
@@ -28,19 +27,8 @@ async function resetAdminPassword() {
 		'0'
 	)},salt:${salt.padStart(10, '0')}`;
 
-	// TODO: remove me
-	console.log('Secret string:', secretString);
-	console.log('Salt:', salt);
-
 	const key = sha256.hash(new TextEncoder().encode(secretString));
-
-	// TODO: remove me
-	console.log('Key:', Buffer.from(key).toString('base64'));
-
 	const adminPassword = nanoid(8);
-
-	// TODO: remove me
-	console.log('Admin Password:', adminPassword);
 
 	// TODO: change the admin password using macOS apis
 
@@ -77,8 +65,6 @@ export const exposedElectron = {
 		}
 
 		const maxSaltValue = store.get('maxSaltValue') as number;
-
-		console.log(secretCode, encryptedAdminPassword, maxSaltValue);
 
 		const decryptedAdminPassword = await decryptAdminPassword({
 			secretCode,

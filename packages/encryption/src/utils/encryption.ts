@@ -56,12 +56,9 @@ export async function decryptAdminPassword({
 }) {
 	const bruteForcerPath = getBruteForcerExecutablePath();
 
-	if (secretCode.length > 5) {
+	if (secretCode.length !== 5) {
 		throw new Error('Secret code must be 5 characters in length.');
 	}
-
-	// TODO: remove me
-	secretCode = secretCode.padStart(5, '0');
 
 	const encryptionBruteForcerProcess = execa(bruteForcerPath, [
 		'decrypt',
@@ -71,10 +68,12 @@ export async function decryptAdminPassword({
 	]);
 
 	setTimeout(() => {
-		encryptionBruteForcerProcess.kill('SIGINT');
-		throw new Error(
-			'Could not decrypt admin password after 30 seconds. Please check that the secret code provided was correct.'
-		);
+		if (!encryptionBruteForcerProcess.killed) {
+			encryptionBruteForcerProcess.kill('SIGINT');
+			throw new Error(
+				'Could not decrypt admin password after 30 seconds. Please check that the secret code provided was correct.'
+			);
+		}
 	}, 30_000);
 
 	const result = await encryptionBruteForcerProcess;

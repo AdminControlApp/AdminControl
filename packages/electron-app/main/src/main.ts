@@ -14,8 +14,8 @@ async function main() {
 		store.set(key, value);
 	});
 
-	const { phoneCallPass } = await import('phone-call-pass');
-	ipcMain.handle('phone-call-pass', async () => {
+	const { phoneCallPass } = await import('phone-call-input');
+	ipcMain.handle('phone-call-input', async () => {
 		const passcode = await phoneCallPass({
 			destinationPhoneNumber: store.get('destinationPhoneNumber') as string,
 			originPhoneNumber: store.get('originPhoneNumber') as string,
