@@ -1,4 +1,5 @@
 import 'virtual:windi.css';
+import 'vue3-spinners/spinners.css';
 
 import { createApp } from 'vue';
 

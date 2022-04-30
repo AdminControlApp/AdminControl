@@ -63,11 +63,12 @@ async function resetAdminPassword() {
 			Retrieve Passcode
 		</button>
 		<button
-			class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-medium mt-8"
+			class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-medium mt-8 disabled:(bg-orange-300 cursor-not-allowed)"
+			:disabled="isAdminPasswordResetting"
 			@click="resetAdminPassword"
 		>
-			<div v-if="isAdminPasswordResetting">
-				<VueSpinner /> Resetting Admin Password...
+			<div v-if="isAdminPasswordResetting" class="row items-center">
+				<VueSpinner class="mr-2" /> Resetting Admin Password...
 			</div>
 			<div v-else>Reset Admin Password</div>
 		</button>
