@@ -1,34 +1,10 @@
 import * as execa from 'execa';
-import { sha256 } from 'hash.js';
-import { Buffer } from 'node:buffer';
 
 import { getBruteForcerExecutablePath } from '~/utils/brute-forcer.js';
-import { aes256gcm } from '~/utils/encryption.js';
 
 export async function measureMaxSaltValue(): Promise<number> {
 	const bruteForcerPath = getBruteForcerExecutablePath();
-
-	// Key is produced from a SHA256 hash of the string `code:12345,salt:0000000000`
-	const key = Buffer.from(
-		sha256().update(`code:12345,salt:0000000000`).digest()
-	);
-
-	// Key must be 32 bytes long
-	//                   0    5    0    5    0    5    0 2
-	const { encrypt } = aes256gcm(key);
-
-	const adminPassword = 'admin';
-	const secretCode = '00000';
-	const { enc, authTag } = encrypt(adminPassword);
-	const cipherText = Buffer.concat([enc, authTag]).toString('base64');
-
-	console.info(
-		`Running executable with ciphertext \`${cipherText.toString()}\`...`
-	);
-	const encryptionBruteForcerProcess = execa(bruteForcerPath, [
-		cipherText,
-		secretCode,
-	]);
+	const encryptionBruteForcerProcess = execa(bruteForcerPath, ['benchmark']);
 
 	const numSeconds = 5;
 	setTimeout(() => {

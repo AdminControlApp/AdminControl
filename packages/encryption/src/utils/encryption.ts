@@ -48,9 +48,11 @@ export function aes256gcm(key: Buffer) {
 export async function decryptAdminPassword({
 	encryptedAdminPassword,
 	secretCode,
+	maxSaltValue,
 }: {
 	encryptedAdminPassword: string;
 	secretCode: string;
+	maxSaltValue: number;
 }) {
 	const bruteForcerPath = getBruteForcerExecutablePath();
 
@@ -62,8 +64,10 @@ export async function decryptAdminPassword({
 	secretCode = secretCode.padStart(5, '0');
 
 	const encryptionBruteForcerProcess = execa(bruteForcerPath, [
+		'decrypt',
 		encryptedAdminPassword,
 		secretCode,
+		String(maxSaltValue),
 	]);
 
 	setTimeout(() => {
