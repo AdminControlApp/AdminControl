@@ -52,7 +52,12 @@ async function resetAdminPassword() {
 		>
 			Retrieve Passcode
 		</button>
-		<button @click="resetAdminPassword">Reset Admin Password</button>
+		<button
+			class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-medium mt-8"
+			@click="resetAdminPassword"
+		>
+			Reset Admin Password
+		</button>
 	</div>
 </template>
 

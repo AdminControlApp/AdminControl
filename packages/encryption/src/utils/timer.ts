@@ -1,19 +1,19 @@
-import { join } from 'desm';
-import { execa } from 'execa';
-import hash from 'hash.js';
+import * as execa from 'execa';
+import { sha256 } from 'hash.js';
 import { Buffer } from 'node:buffer';
+import * as path from 'node:path';
 
 import { aes256gcm } from '~/utils/encryption.js';
 
 export async function measureMaxSaltValue(): Promise<number> {
-	const encryptionBruteForcerBinPath = join(
-		import.meta.url,
+	const encryptionBruteForcerBinPath = path.join(
+		__dirname, // eslint-disable-line unicorn/prefer-module
 		'../encryption-brute-forcer/target/release/encryption-brute-forcer'
 	);
 
 	// Key is produced from a SHA256 hash of the string `code:12345,salt:0000000000`
 	const key = Buffer.from(
-		hash.sha256().update(`code:12345,salt:0000000000`).digest()
+		sha256().update(`code:12345,salt:0000000000`).digest()
 	);
 
 	// Key must be 32 bytes long

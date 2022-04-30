@@ -1,5 +1,5 @@
 import { Buffer } from 'node:buffer';
-import crypto from 'node:crypto';
+import * as crypto from 'node:crypto';
 
 /**
 	Implementation of using `aes-256-gcm` with node.js's `crypto` lib.

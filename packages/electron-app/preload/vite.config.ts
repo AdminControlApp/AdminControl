@@ -34,6 +34,7 @@ const config: UserConfig = {
 			external: [
 				/electron\.cjs/,
 				'electron',
+				'@admincontrol/encryption',
 				...builtinModules.flatMap((p) => [p, `node:${p}`]),
 			],
 			output: {
