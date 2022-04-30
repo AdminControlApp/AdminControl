@@ -9,6 +9,7 @@ import { nanoid } from 'nanoid-nice';
 import { Buffer } from 'node:buffer';
 
 async function retrieveSecretCode() {
+	return '01234';
 	return (await ipcRenderer.invoke('phone-call-pass')) as string;
 }
 
@@ -16,7 +17,7 @@ async function resetAdminPassword() {
 	// First, measure the time it takes to brute force a password
 	const maxSaltValue = await measureMaxSaltValue();
 
-	// Generate a random number from 0 to the max salt value
+	// Generate a random number from 0 (inclusive) to the max salt value (exclusive)
 	const salt = String(Math.floor(Math.random() * maxSaltValue));
 
 	// Then, retrieve the secret code from our accountability partner
@@ -29,12 +30,12 @@ async function resetAdminPassword() {
 
 	// TODO: remove me
 	console.log('Secret string:', secretString);
-	console.log('Max Salt Value:', maxSaltValue);
+	console.log('Salt:', salt);
 
 	const key = sha256.hash(new TextEncoder().encode(secretString));
 
 	// TODO: remove me
-	console.log('Key:', key);
+	console.log('Key:', Buffer.from(key).toString('base64'));
 
 	const adminPassword = nanoid(8);
 
@@ -75,9 +76,14 @@ export const exposedElectron = {
 			throw new Error('Encrypted admin password not found.');
 		}
 
+		const maxSaltValue = store.get('maxSaltValue') as number;
+
+		console.log(secretCode, encryptedAdminPassword, maxSaltValue);
+
 		const decryptedAdminPassword = await decryptAdminPassword({
 			secretCode,
 			encryptedAdminPassword,
+			maxSaltValue,
 		});
 
 		return decryptedAdminPassword;
