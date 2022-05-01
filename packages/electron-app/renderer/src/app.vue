@@ -10,7 +10,7 @@ let destinationPhoneNumber = $ref<string>();
 let originPhoneNumber = $ref<string>();
 let bitwardenClientId = $ref<string>();
 let bitwardenClientSecret = $ref<string>();
-let encryptedAdminPassword = $ref<string>();
+let encryptedAdminPassword = $ref<string | undefined>();
 let adminPasswordMaxSaltValue = $ref<number>();
 
 async function getSettings() {
