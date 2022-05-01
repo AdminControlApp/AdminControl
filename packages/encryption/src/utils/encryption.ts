@@ -68,7 +68,7 @@ export async function decryptAdminPassword({
 	]);
 
 	setTimeout(() => {
-		if (!encryptionBruteForcerProcess.exitCode !== null) {
+		if (encryptionBruteForcerProcess.exitCode !== null) {
 			encryptionBruteForcerProcess.kill('SIGINT');
 			throw new Error(
 				'Could not decrypt admin password after 30 seconds. Please check that the secret code provided was correct.'
