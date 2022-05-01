@@ -2,6 +2,9 @@
 	"name": "admin-control-monorepo",
 	"type": "module",
 	"private": true,
+	"engines": {
+		"pnpm": ">=7.0.0"
+	},
 	"scripts": {
 		"setup": "node ./scripts/setup.js",
 		"pnpm:devPreinstall": "node ./scripts/setup-check.js",
@@ -9,9 +12,9 @@
 		"tc": "pnpm recursive run tc",
 		"lint": "pnpm recursive run lint",
 		"prettier": "pnpm recursive run prettier",
-		"dev:electron": "pnpm run dev --filter=@admincontrol/app",
-		"build:electron": "pnpm run build --filter=@admincontrol/app",
-		"compile:electron": "pnpm run compile --filter=@admincontrol/app"
+		"dev:electron": "pnpm --filter=@admincontrol/app run dev",
+		"build:electron": "pnpm --filter=@admincontrol/app run build",
+		"compile:electron": "pnpm --filter=@admincontrol/app run compile"
 	},
 	"devDependencies": {
 		"@leonzalion/configs": "^1.2.33",
