@@ -1,4 +1,4 @@
-import type { MenuItem, MenuItemConstructorOptions } from 'electron';
+import type { MenuItemConstructorOptions } from 'electron';
 import { app, dialog, Menu, nativeImage, Tray } from 'electron';
 import Store from 'electron-store';
 import { getSecureInputProcesses } from 'get-secure-input-processes';
