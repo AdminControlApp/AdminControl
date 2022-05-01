@@ -1,6 +1,5 @@
 import {
 	clickElement,
-	getElements,
 	inputKeystrokes,
 	openSystemPreferencesPane,
 	waitForElementMatch,
@@ -15,23 +14,11 @@ export async function changeScreenTimePasscode({
 	oldPasscode,
 	newPasscode,
 }: ChangeScreenTimePasscodeProps) {
-	const { default: pWaitFor } = (await Function(
-		'return import("@leonzalion/p-wait-for")'
-	)()) as typeof import('@leonzalion/p-wait-for');
-
 	await openSystemPreferencesPane({
 		paneId: 'com.apple.preference.screentime',
 		anchor: 'Options',
 		windowName: 'Screen Time',
 	});
-
-	// Press the Options Menu on the sidebar
-	const optionsMenu = await waitForElementMatch(
-		'System Preferences',
-		(element) => element.path.some((part) => part.name === 'Options')
-	);
-
-	await clickElement(optionsMenu);
 
 	// Press the Change Passcode button
 	const changePasscodeButton = await waitForElementMatch(
