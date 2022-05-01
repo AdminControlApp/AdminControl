@@ -30,7 +30,7 @@ importers:
       '@types/package-name-regex': ^2.0.0
       '@vitejs/plugin-vue': 2.3.1
       '@vue/test-utils': 2.0.0-rc.21
-      applescript-utils: ^0.1.2
+      applescript-utils: ^0.1.6
       cross-env: 7.0.3
       delay: ^5.0.0
       desm: ^1.2.0
@@ -66,7 +66,7 @@ importers:
       '@admincontrol/encryption': link:../encryption/dist
       '@bitwarden/cli': 1.22.1
       '@leonzalion/p-wait-for': 4.2.1
-      applescript-utils: 0.1.2
+      applescript-utils: 0.1.6
       delay: 5.0.0
       desm: 1.2.0
       electron-store: 8.0.1
@@ -1760,8 +1760,8 @@ packages:
     resolution: {integrity: sha1-HjRA6RXwsSA9I3SOeO3XubW0PlY=}
     dev: false
 
-  /applescript-utils/0.1.2:
-    resolution: {integrity: sha512-QamKxrJZfvJLgkUSfry79btcOZ2bVx2FVCX77JMqYL4AA24e2jyCwcK6cW5Hi3eph+1KU5nkzcO7w1fEBrMUHA==}
+  /applescript-utils/0.1.6:
+    resolution: {integrity: sha512-RTienHEF4hWKXJiW/8QM1XKokvno9RrsuFEK96ECGVlXtHvpcR0Mm2+kTltSJ2+R518g/pW9itjOmfGNr5FDrg==}
     dependencies:
       execa: 6.1.0
       outdent: 0.8.0

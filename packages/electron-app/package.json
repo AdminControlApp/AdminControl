@@ -51,7 +51,7 @@
 		"@admincontrol/encryption": "link:../encryption/dist",
 		"@bitwarden/cli": "^1.22.1",
 		"@leonzalion/p-wait-for": "npm:@leonzalion/p-wait-for@^4.2.1",
-		"applescript-utils": "^0.1.2",
+		"applescript-utils": "^0.1.6",
 		"delay": "^5.0.0",
 		"desm": "^1.2.0",
 		"electron-store": "^8.0.1",
