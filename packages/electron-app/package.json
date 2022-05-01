@@ -29,7 +29,6 @@
 		"tc": "pnpm run tc:main && npm run tc:preload && npm run tc:renderer"
 	},
 	"devDependencies": {
-		"@admincontrol/encryption": "link:../encryption/dist",
 		"@rollup/plugin-node-resolve": "^13.2.1",
 		"@types/package-name-regex": "^2.0.0",
 		"@vitejs/plugin-vue": "2.3.1",
@@ -49,6 +48,7 @@
 		"vue-tsc": "0.34.9"
 	},
 	"dependencies": {
+		"@admincontrol/encryption": "link:../encryption/dist",
 		"@bitwarden/cli": "^1.22.1",
 		"delay": "^5.0.0",
 		"desm": "^1.2.0",

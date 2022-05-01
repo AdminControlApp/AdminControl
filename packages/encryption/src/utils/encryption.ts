@@ -67,16 +67,15 @@ export async function decryptAdminPassword({
 		String(maxSaltValue),
 	]);
 
-	setTimeout(() => {
-		if (encryptionBruteForcerProcess.exitCode !== null) {
-			encryptionBruteForcerProcess.kill('SIGINT');
-			throw new Error(
-				'Could not decrypt admin password after 30 seconds. Please check that the secret code provided was correct.'
-			);
-		}
+	const timeout = setTimeout(() => {
+		encryptionBruteForcerProcess.kill('SIGINT');
+		throw new Error(
+			'Could not decrypt admin password after 30 seconds. Please check that the secret code provided was correct.'
+		);
 	}, 30_000);
 
 	const result = await encryptionBruteForcerProcess;
+	clearTimeout(timeout);
 
 	return result.stdout;
 }
