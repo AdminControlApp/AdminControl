@@ -5,42 +5,65 @@ const { store } = window.electron;
 
 const twilioAccountSid = $ref((store.get('twilioAccountSid') as string) ?? '');
 const twilioAuthToken = $ref((store.get('twilioAuthToken') as string) ?? '');
-const destinationPhoneNumber = $ref(store.get('destinationPhoneNumber') ?? '');
+const destinationPhoneNumber = $ref(
+	(store.get('destinationPhoneNumber') as string) ?? ''
+);
 const originPhoneNumber = $ref(
 	(store.get('originPhoneNumber') as string) ?? ''
 );
 const currentAdminPassword = $ref<string>();
 
-function saveSettings() {
-	store.set('twilioAccountSid', twilioAccountSid);
-	store.set('twilioAuthToken', twilioAuthToken);
-	store.set('destinationPhoneNumber', destinationPhoneNumber);
-	store.set('originPhoneNumber', originPhoneNumber);
+async function saveSettings() {
+	await store.secureSet('twilioAccountSid', twilioAccountSid);
+	await store.secureSet('twilioAuthToken', twilioAuthToken);
+	await store.secureSet('destinationPhoneNumber', destinationPhoneNumber);
+	await store.secureSet('originPhoneNumber', originPhoneNumber);
 }
 
-async function retrievePasscode() {
-	console.log(await window.electron.phoneCallInput());
-}
-
-let encryptedAdminPassword = $ref<string>(
+const encryptedAdminPassword = $ref<string>(
 	(store.get('encryptedAdminPassword') as string) ?? undefined
 );
-let adminPasswordMaxSaltValue = $ref<number>(
+const adminPasswordMaxSaltValue = $ref<number>(
 	(store.get('maxSaltValue') as number) ?? undefined
 );
 
-async function getAdminPassword() {
-	console.log(await window.electron.getAdminPassword());
-}
-
 let isAdminPasswordResetting = $ref(false);
+
+const {
+	generateNewAdminPassword,
+	retrieveSecretCode,
+	setAdminPassword,
+	decryptAdminPassword,
+	encryptAdminPassword,
+} = window.electron;
+
 async function resetAdminPassword() {
 	try {
 		isAdminPasswordResetting = true;
-		const { encryptedPassword, maxSaltValue } =
-			await window.electron.resetAdminPassword({ currentAdminPassword });
-		encryptedAdminPassword = encryptedPassword;
-		adminPasswordMaxSaltValue = maxSaltValue;
+		const secretCode = await retrieveSecretCode();
+		const newAdminPassword = await generateNewAdminPassword();
+
+		let oldAdminPassword: string;
+		if (currentAdminPassword === undefined) {
+			oldAdminPassword = currentAdminPassword;
+		} else {
+			oldAdminPassword = await decryptAdminPassword({
+				encryptedAdminPassword,
+				maxSaltValue: adminPasswordMaxSaltValue,
+				secretCode,
+			});
+		}
+
+		await setAdminPassword({
+			currentAdminPassword: oldAdminPassword,
+			newAdminPassword,
+		});
+
+		const { encryptedAdminPassword, maxSaltValue } = await encryptAdminPassword({
+			adminPassword: newAdminPassword,
+			secretCode,
+		});
+
 		store.set('encryptedAdminPassword', encryptedPassword);
 		store.set('maxSaltValue', maxSaltValue);
 	} finally {
@@ -90,7 +113,7 @@ async function resetAdminPassword() {
 		</button>
 		<div v-if="encryptedAdminPassword !== undefined">
 			<div class="row gap-1">
-				<span class="font-bold">Admin Password Hash: </span>
+				<span class="font-bold">Encrypted Admin Password: </span>
 				<span class="font-mono">{{ encryptedAdminPassword }}</span>
 			</div>
 			<div class="row gap-1">
