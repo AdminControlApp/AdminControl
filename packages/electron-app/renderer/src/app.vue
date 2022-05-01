@@ -3,29 +3,46 @@ import { VueSpinner } from 'vue3-spinners';
 
 const { store } = window.electron;
 
-const twilioAccountSid = $ref((store.get('twilioAccountSid') as string) ?? '');
-const twilioAuthToken = $ref((store.get('twilioAuthToken') as string) ?? '');
-const destinationPhoneNumber = $ref(
-	(store.get('destinationPhoneNumber') as string) ?? ''
-);
-const originPhoneNumber = $ref(
-	(store.get('originPhoneNumber') as string) ?? ''
-);
+let twilioAccountSid = $ref<string>();
+let twilioAuthToken = $ref<string>();
+let destinationPhoneNumber = $ref<string>();
+let originPhoneNumber = $ref<string>();
+let bitwardenClientId = $ref<string>();
+let bitwardenClientSecret = $ref<string>();
+let encryptedAdminPassword = $ref<string>();
+let adminPasswordMaxSaltValue = $ref<number>();
+
+async function getSettings() {
+	twilioAccountSid = (await store.secureGet('twilioAccountSid')) ?? '';
+	twilioAuthToken = (await store.secureGet('twilioAuthToken')) ?? '';
+	destinationPhoneNumber =
+		(await store.secureGet('destinationPhoneNumber')) ?? '';
+	originPhoneNumber = (await store.secureGet('originPhoneNumber')) ?? '';
+	bitwardenClientId = (await store.secureGet('bitwardenClientId')) ?? '';
+	bitwardenClientSecret =
+		(await store.secureGet('bitwardenClientSecret')) ?? '';
+
+	encryptedAdminPassword =
+		(await store.secureGet('encryptedAdminPassword')) ?? undefined;
+
+	adminPasswordMaxSaltValue =
+		(store.get('maxSaltValue') as number) ?? undefined;
+}
+
 const currentAdminPassword = $ref<string>();
+
+(async () => {
+	await getSettings();
+})();
 
 async function saveSettings() {
 	await store.secureSet('twilioAccountSid', twilioAccountSid);
 	await store.secureSet('twilioAuthToken', twilioAuthToken);
 	await store.secureSet('destinationPhoneNumber', destinationPhoneNumber);
 	await store.secureSet('originPhoneNumber', originPhoneNumber);
+	await store.secureSet('bitwardenClientId', bitwardenClientId);
+	await store.secureSet('bitwardenClientSecret', bitwardenClientSecret);
 }
-
-const encryptedAdminPassword = $ref<string>(
-	(store.get('encryptedAdminPassword') as string) ?? undefined
-);
-const adminPasswordMaxSaltValue = $ref<number>(
-	(store.get('maxSaltValue') as number) ?? undefined
-);
 
 let isAdminPasswordResetting = $ref(false);
 
@@ -57,16 +74,22 @@ async function resetAdminPassword() {
 		await setAdminPassword({
 			currentAdminPassword: oldAdminPassword,
 			newAdminPassword,
+			bitwarden:
+				bitwardenClientId !== '' && bitwardenClientSecret !== ''
+					? {
+							clientId: bitwardenClientId,
+							clientSecret: bitwardenClientSecret,
+					  }
+					: undefined,
 		});
 
-		const { encryptedAdminPassword, maxSaltValue } = await encryptAdminPassword(
-			{
+		const { encryptedAdminPassword: newEncryptedAdminPassword, maxSaltValue } =
+			await encryptAdminPassword({
 				adminPassword: newAdminPassword,
 				secretCode,
-			}
-		);
+			});
 
-		store.set('encryptedAdminPassword', encryptedPassword);
+		await store.secureSet('encryptedAdminPassword', newEncryptedAdminPassword);
 		store.set('maxSaltValue', maxSaltValue);
 	} finally {
 		isAdminPasswordResetting = false;
@@ -90,6 +113,10 @@ async function resetAdminPassword() {
 			<input v-model="destinationPhoneNumber" type="text" class="input" />
 			<span class="input-label">Origin Phone Number:</span>
 			<input v-model="originPhoneNumber" type="text" class="input" />
+			<span class="input-label">Bitwarden Client ID:</span>
+			<input v-model="bitwardenClientId" type="text" class="input" />
+			<span class="input-label">Bitwarden Client Secret:</span>
+			<input v-model="bitwardenClientSecret" type="text" class="input" />
 		</div>
 		<button
 			class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md font-medium mt-8"
