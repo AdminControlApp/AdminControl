@@ -41,3 +41,7 @@ AdminControl has an option to refresh the admin password in case it ever gets le
 ## Setup
 
 When AdminControl is installed for the first time, it guides you through a set up for configuring the locations where the encrypted secret passwords and hash backup are stored to. Then, it optionally asks for a Bitwarden API Key for saving the encrypted password and hash backup into Bitwarden. After this, it then asks you if you want to set up phone-call-input, which allows you to enter a phone number that gets called whenever you need the admin password. You can optionally provide your own Twilio tokens
+
+## FileVault
+
+If your Mac is attached to an iCloud account, there is a relatively quick way to reset the admin password using this account. Luckily, you can disable this feature by turning on FileVault on your Mac.

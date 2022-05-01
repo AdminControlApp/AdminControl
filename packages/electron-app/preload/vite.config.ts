@@ -35,6 +35,7 @@ const config: UserConfig = {
 				/electron\.cjs/,
 				'electron',
 				'@admincontrol/encryption',
+				'keytar',
 				...builtinModules.flatMap((p) => [p, `node:${p}`]),
 			],
 			output: {

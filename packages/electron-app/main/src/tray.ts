@@ -4,7 +4,7 @@ import path from 'node:path';
 
 export async function createTray() {
 	const store = new Store();
-	const { phoneCallPass } = await import('phone-call-input');
+	const { phoneCallInput } = await import('phone-call-input');
 
 	const isAdminPasswordBeingRetrieved = false;
 	app
@@ -27,7 +27,7 @@ export async function createTray() {
 				try {
 					contextMenu.items[0]!.enabled = false;
 
-					const passcode = await phoneCallPass({
+					const passcode = await phoneCallInput({
 						destinationPhoneNumber: store.get(
 							'destinationPhoneNumber'
 						) as string,

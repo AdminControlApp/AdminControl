@@ -9,6 +9,7 @@ const destinationPhoneNumber = $ref(store.get('destinationPhoneNumber') ?? '');
 const originPhoneNumber = $ref(
 	(store.get('originPhoneNumber') as string) ?? ''
 );
+const currentAdminPassword = $ref<string>();
 
 function saveSettings() {
 	store.set('twilioAccountSid', twilioAccountSid);
@@ -18,7 +19,7 @@ function saveSettings() {
 }
 
 async function retrievePasscode() {
-	console.log(await window.electron.phoneCallPass());
+	console.log(await window.electron.phoneCallInput());
 }
 
 let encryptedAdminPassword = $ref<string>(
@@ -37,7 +38,7 @@ async function resetAdminPassword() {
 	try {
 		isAdminPasswordResetting = true;
 		const { encryptedPassword, maxSaltValue } =
-			await window.electron.resetAdminPassword();
+			await window.electron.resetAdminPassword({ currentAdminPassword });
 		encryptedAdminPassword = encryptedPassword;
 		adminPasswordMaxSaltValue = maxSaltValue;
 		store.set('encryptedAdminPassword', encryptedPassword);
@@ -54,6 +55,8 @@ async function resetAdminPassword() {
 		<div
 			class="grid grid-cols-[max-content,1fr] w-xl gap-y-2 gap-x-4 items-center"
 		>
+			<span class="input-label">Current Admin Password:</span>
+			<input v-model="currentAdminPassword" type="text" class="input" />
 			<span class="input-label">Twilio Account Session ID:</span>
 			<input v-model="twilioAccountSid" type="text" class="input" />
 			<span class="input-label">Twilio Auth Token:</span>
