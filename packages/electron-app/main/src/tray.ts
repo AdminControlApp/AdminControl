@@ -42,19 +42,23 @@ export async function createTray() {
 						throw new Error('Encrypted password not found!');
 					}
 
+					console.info('Decrypting admin password...');
 					const adminPassword = await decryptAdminPassword({
 						encryptedAdminPassword,
 						maxSaltValue: store.get('maxSaltValue') as number,
 						secretCode,
 					});
 
+					console.info('Waiting for secure input process...');
 					await pWaitFor(() => getSecureInputProcesses().length > 0, {
 						interval: 500,
 					});
 
+					console.info('Inputting password...');
 					await runAppleScript(
 						`tell application "System Events" to keystroke "${adminPassword}"`
 					);
+					console.info('Password inputted!');
 				} catch (error: unknown) {
 					dialog.showErrorBox('AdminControl Error', (error as Error).message);
 				} finally {

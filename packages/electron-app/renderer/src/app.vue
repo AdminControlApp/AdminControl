@@ -127,6 +127,11 @@ async function resetAdminPassword() {
 
 		await store.secureSet('encryptedAdminPassword', newEncryptedAdminPassword);
 		store.set('maxSaltValue', maxSaltValue);
+
+		notify({
+			text: 'The Admin Password has successfully been reset!',
+			type: 'success',
+		});
 	} catch (error: unknown) {
 		notify({
 			text: (error as Error).message,
@@ -206,7 +211,7 @@ async function resetAdminPassword() {
 			</div>
 			<div v-else>Reset Admin Password</div>
 		</button>
-		<div v-if="encryptedAdminPassword !== undefined">
+		<div v-if="encryptedAdminPassword !== undefined" class="mt-2">
 			<div class="row gap-1">
 				<span class="font-bold">Encrypted Admin Password: </span>
 				<span class="font-mono">{{ encryptedAdminPassword }}</span>
