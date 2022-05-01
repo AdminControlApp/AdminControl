@@ -1,6 +1,6 @@
+import * as execa from 'execa';
 import { copyPackageFiles, rmDist } from 'lion-system';
 import * as fs from 'node:fs';
-import * as execa from 'execa';
 
 (async () => {
 	rmDist();
