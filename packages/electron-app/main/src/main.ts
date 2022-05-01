@@ -1,6 +1,8 @@
 import { ipcMain } from 'electron';
 import Store from 'electron-store';
 
+import { retrieveSecretCode } from '~m/utils/secret-code.js';
+
 import { initializeSecurityRestrictions } from './security-restrictions.js';
 import { setupApp } from './setup-app.js';
 import { createTray } from './tray.js';
@@ -14,17 +16,7 @@ async function main() {
 		store.set(key, value);
 	});
 
-	const { phoneCallInput } = await import('phone-call-input');
-	ipcMain.handle('phone-call-input', async () => {
-		const passcode = await phoneCallInput({
-			destinationPhoneNumber: store.get('destinationPhoneNumber') as string,
-			originPhoneNumber: store.get('originPhoneNumber') as string,
-			twilioAccountSid: store.get('twilioAccountSid') as string,
-			twilioAuthToken: store.get('twilioAuthToken') as string,
-		});
-
-		return passcode;
-	});
+	ipcMain.handle('phone-call-input', async () => retrieveSecretCode());
 
 	setupApp();
 	await initializeSecurityRestrictions();

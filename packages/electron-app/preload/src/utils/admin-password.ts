@@ -22,13 +22,19 @@ export async function setAdminPassword({
 	bitwarden,
 }: SetAdminPasswordProps) {
 	if (bitwarden !== undefined) {
-		// Save the encrypted password in Bitwarden
-		await execa('bw', ['login', '--apikey'], {
-			env: {
-				BW_CLIENTID: bitwarden.clientId,
-				BW_CLIENT_SECRET: bitwarden.clientSecret,
-			},
+		const { exitCode } = await execa('bw', ['login', '--check'], {
+			reject: false,
 		});
+
+		if (exitCode === 1) {
+			// Save the encrypted password in Bitwarden
+			await execa('bw', ['login', '--apikey'], {
+				env: {
+					BW_CLIENTID: bitwarden.clientId,
+					BW_CLIENT_SECRET: bitwarden.clientSecret,
+				},
+			});
+		}
 	}
 
 	// Using `script` to trick `passwd` into thinking that stdin is a terminal (see https://stackoverflow.com/a/1402389)

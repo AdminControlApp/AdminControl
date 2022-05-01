@@ -92,8 +92,6 @@ async function resetAdminPassword() {
 
 		let oldAdminPassword: string;
 		if (currentAdminPassword === undefined) {
-			oldAdminPassword = currentAdminPassword;
-		} else {
 			if (encryptedAdminPassword === undefined) {
 				throw new Error(
 					'Encrypted admin password not found. The current admin password must be provided.'
@@ -105,6 +103,8 @@ async function resetAdminPassword() {
 				maxSaltValue: adminPasswordMaxSaltValue,
 				secretCode,
 			});
+		} else {
+			oldAdminPassword = currentAdminPassword;
 		}
 
 		await setAdminPassword({
@@ -127,6 +127,12 @@ async function resetAdminPassword() {
 
 		await store.secureSet('encryptedAdminPassword', newEncryptedAdminPassword);
 		store.set('maxSaltValue', maxSaltValue);
+	} catch (error: unknown) {
+		notify({
+			text: (error as Error).message,
+			type: 'error',
+			duration: 20_000,
+		});
 	} finally {
 		isAdminPasswordResetting = false;
 	}

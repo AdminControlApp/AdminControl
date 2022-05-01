@@ -1,15 +1,17 @@
-import { app, Menu, nativeImage, Tray } from 'electron';
+import { app, dialog, Menu, nativeImage, Tray } from 'electron';
+import Store from 'electron-store';
 import { getSecureInputProcesses } from 'get-secure-input-processes';
+import keytar from 'keytar';
 import path from 'node:path';
 import pWaitFor from 'p-wait-for';
 import { runAppleScript } from 'run-applescript';
 
+import { retrieveSecretCode } from '~m/utils/secret-code.js';
 import { decryptAdminPassword } from '~p/utils/encryption.js';
-import { retrieveSecretCode } from '~p/utils/secret-code.js';
-import { store } from '~p/utils/store.js';
 
 export async function createTray() {
 	const isAdminPasswordBeingRetrieved = false;
+	const store = new Store();
 	app
 		.whenReady()
 		.then(() => {
@@ -32,7 +34,8 @@ export async function createTray() {
 
 					const secretCode = await retrieveSecretCode();
 
-					const encryptedAdminPassword = await store.secureGet(
+					const encryptedAdminPassword = await keytar.getPassword(
+						'AdminControl',
 						'encryptedAdminPassword'
 					);
 					if (encryptedAdminPassword === null) {
@@ -52,6 +55,8 @@ export async function createTray() {
 					await runAppleScript(
 						`tell application "System Events" to keystroke "${adminPassword}"`
 					);
+				} catch (error: unknown) {
+					dialog.showErrorBox('AdminControl Error', (error as Error).message);
 				} finally {
 					contextMenu.items[0]!.enabled = true;
 				}
