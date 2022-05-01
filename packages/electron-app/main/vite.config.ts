@@ -42,6 +42,7 @@ const config: UserConfig = {
 			external: [
 				'electron',
 				'electron-devtools-installer',
+				'@admincontrol/encryption',
 				...builtinModules.flatMap((p) => [p, `node:${p}`]),
 			],
 			output: {

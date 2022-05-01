@@ -1,3 +1,4 @@
+import type { MenuItem, MenuItemConstructorOptions } from 'electron';
 import { app, dialog, Menu, nativeImage, Tray } from 'electron';
 import Store from 'electron-store';
 import { getSecureInputProcesses } from 'get-secure-input-processes';
@@ -19,18 +20,28 @@ export async function createTray() {
 				path.join(__dirname, '../assets/icon.png')
 			);
 			const tray = new Tray(image.resize({ width: 16, height: 16 }));
-			const contextMenu = Menu.buildFromTemplate([
-				{
-					label: 'Input Admin Password',
-					type: 'normal',
-					enabled: !isAdminPasswordBeingRetrieved,
-					click: inputAdminPassword,
-				},
-			]);
+
+			const inputAdminPasswordMenuItem: MenuItemConstructorOptions = {
+				label: 'Input Admin Password',
+				type: 'normal',
+				enabled: !isAdminPasswordBeingRetrieved,
+				click: inputAdminPassword,
+			};
+
+			const contextMenuTemplate: MenuItemConstructorOptions[] = [
+				inputAdminPasswordMenuItem,
+			];
+
+			function updateMenu() {
+				const contextMenu = Menu.buildFromTemplate(contextMenuTemplate);
+				tray.setContextMenu(contextMenu);
+			}
 
 			async function inputAdminPassword() {
 				try {
-					contextMenu.items[0]!.enabled = false;
+					inputAdminPasswordMenuItem.enabled = false;
+					inputAdminPasswordMenuItem.label = '📞 Calling phone number...';
+					updateMenu();
 
 					const secretCode = await retrieveSecretCode();
 
@@ -42,14 +53,19 @@ export async function createTray() {
 						throw new Error('Encrypted password not found!');
 					}
 
-					console.info('Decrypting admin password...');
+					inputAdminPasswordMenuItem.label = '🔓 Decrypting admin password...';
+					updateMenu();
+
 					const adminPassword = await decryptAdminPassword({
 						encryptedAdminPassword,
 						maxSaltValue: store.get('maxSaltValue') as number,
 						secretCode,
 					});
 
-					console.info('Waiting for secure input process...');
+					inputAdminPasswordMenuItem.label =
+						'🔒 Waiting for focus on a secure input process...';
+					updateMenu();
+
 					await pWaitFor(() => getSecureInputProcesses().length > 0, {
 						interval: 500,
 					});
@@ -62,12 +78,12 @@ export async function createTray() {
 				} catch (error: unknown) {
 					dialog.showErrorBox('AdminControl Error', (error as Error).message);
 				} finally {
-					contextMenu.items[0]!.enabled = true;
+					inputAdminPasswordMenuItem.enabled = true;
+					updateMenu();
 				}
 			}
 
 			tray.setToolTip('Admin Control Actions');
-			tray.setContextMenu(contextMenu);
 		})
 		.catch((error) => {
 			console.error(error);
