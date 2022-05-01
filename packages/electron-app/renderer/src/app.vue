@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { notify } from 'vue3-notify';
 import { VueSpinner } from 'vue3-spinners';
 
 const { store } = window.electron;
@@ -35,13 +36,42 @@ const currentAdminPassword = $ref<string>();
 	await getSettings();
 })();
 
+let areSettingsSaving = $ref(false);
 async function saveSettings() {
-	await store.secureSet('twilioAccountSid', twilioAccountSid);
-	await store.secureSet('twilioAuthToken', twilioAuthToken);
-	await store.secureSet('destinationPhoneNumber', destinationPhoneNumber);
-	await store.secureSet('originPhoneNumber', originPhoneNumber);
-	await store.secureSet('bitwardenClientId', bitwardenClientId);
-	await store.secureSet('bitwardenClientSecret', bitwardenClientSecret);
+	try {
+		areSettingsSaving = true;
+
+		if (twilioAccountSid !== '') {
+			await store.secureSet('twilioAccountSid', twilioAccountSid);
+		}
+
+		if (twilioAuthToken !== '') {
+			await store.secureSet('twilioAuthToken', twilioAuthToken);
+		}
+
+		if (destinationPhoneNumber !== '') {
+			await store.secureSet('destinationPhoneNumber', destinationPhoneNumber);
+		}
+
+		if (originPhoneNumber !== '') {
+			await store.secureSet('originPhoneNumber', originPhoneNumber);
+		}
+
+		if (bitwardenClientId !== '') {
+			await store.secureSet('bitwardenClientId', bitwardenClientId);
+		}
+
+		if (bitwardenClientSecret !== '') {
+			await store.secureSet('bitwardenClientSecret', bitwardenClientSecret);
+		}
+
+		notify({
+			text: 'Settings saved!',
+			type: 'success',
+		});
+	} finally {
+		areSettingsSaving = false;
+	}
 }
 
 let isAdminPasswordResetting = $ref(false);
@@ -101,19 +131,46 @@ async function resetAdminPassword() {
 	<div class="column items-center p-8">
 		<h1 class="text-3xl font-bold mb-8">Settings</h1>
 		<div
-			class="grid grid-cols-[max-content,1fr] w-xl gap-y-2 gap-x-4 items-center"
+			class="grid grid-cols-[max-content,1fr] w-xl gap-y-3 gap-x-4 items-center"
 		>
 			<span class="input-label">Current Admin Password:</span>
 			<input v-model="currentAdminPassword" type="text" class="input" />
-			<span class="input-label">Twilio Account Session ID:</span>
+			<span class="input-label">Twilio Account SID:</span>
 			<input v-model="twilioAccountSid" type="text" class="input" />
-			<span class="input-label">Twilio Auth Token:</span>
+			<div class="column">
+				<span class="input-label">Twilio Auth Token:</span>
+				<a
+					target="_blank"
+					href="https://console.twilio.com/us1/account/keys-credentials/api-keys?frameUrl=%2Fconsole%2Fproject%2Fapi-keys%3Fx-target-region%3Dus1"
+					class="text-orange-400 hover:text-orange-600 underline text-xs self-start"
+				>
+					Link to Tokens
+				</a>
+			</div>
 			<input v-model="twilioAuthToken" type="text" class="input" />
 			<span class="input-label">Destination Phone Number:</span>
 			<input v-model="destinationPhoneNumber" type="text" class="input" />
-			<span class="input-label">Origin Phone Number:</span>
+			<div class="column">
+				<span class="input-label">Origin Phone Number:</span>
+				<a
+					target="_blank"
+					href="https://console.twilio.com/us1/develop/phone-numbers/manage/incoming?frameUrl=%2Fconsole%2Fphone-numbers%2Fincoming%3Fx-target-region%3Dus1"
+					class="text-orange-400 hover:text-orange-600 underline text-xs self-start"
+				>
+					Link to Phone Numbers
+				</a>
+			</div>
 			<input v-model="originPhoneNumber" type="text" class="input" />
-			<span class="input-label">Bitwarden Client ID:</span>
+			<div class="column">
+				<span class="input-label">Bitwarden Client ID:</span>
+				<a
+					target="_blank"
+					href="https://vault.bitwarden.com/#/settings/account"
+					class="text-orange-400 hover:text-orange-600 underline text-xs self-start"
+				>
+					Link to API Key
+				</a>
+			</div>
 			<input v-model="bitwardenClientId" type="text" class="input" />
 			<span class="input-label">Bitwarden Client Secret:</span>
 			<input v-model="bitwardenClientSecret" type="text" class="input" />
@@ -122,7 +179,10 @@ async function resetAdminPassword() {
 			class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md font-medium mt-8"
 			@click="saveSettings"
 		>
-			Save Settings
+			<div v-if="areSettingsSaving" class="row items-center">
+				<VueSpinner class="mr-2" />Saving Settings...
+			</div>
+			<div v-else>Save Settings</div>
 		</button>
 		<button
 			class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-medium mt-8 disabled:(bg-orange-300 cursor-not-allowed)"
@@ -145,6 +205,7 @@ async function resetAdminPassword() {
 			</div>
 		</div>
 	</div>
+	<VueNotifications />
 </template>
 
 <style lang="postcss">

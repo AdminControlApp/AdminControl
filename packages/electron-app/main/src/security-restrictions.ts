@@ -41,6 +41,8 @@ export async function initializeSecurityRestrictions() {
 	*/
 	const ALLOWED_EXTERNAL_ORIGINS = new Set<`https://${string}`>([
 		'https://github.com',
+		'https://console.twilio.com',
+		'https://vault.bitwarden.com',
 	]);
 
 	app.on('web-contents-created', (_, contents) => {

@@ -67,6 +67,7 @@
 		"sudo-prompt": "^9.2.1",
 		"vite-plugin-js-imports": "^1.1.1",
 		"vue": "^3.2.33",
+		"vue3-notify": "^0.0.2",
 		"vue3-spinners": "^1.1.1",
 		"windicss": "^3.5.1"
 	}
