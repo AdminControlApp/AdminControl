@@ -37,6 +37,8 @@ export async function createTray() {
 				tray.setContextMenu(contextMenu);
 			}
 
+			updateMenu();
+
 			async function inputAdminPassword() {
 				try {
 					inputAdminPasswordMenuItem.enabled = false;
@@ -79,6 +81,7 @@ export async function createTray() {
 					dialog.showErrorBox('AdminControl Error', (error as Error).message);
 				} finally {
 					inputAdminPasswordMenuItem.enabled = true;
+					inputAdminPasswordMenuItem.label = 'Input Admin Password';
 					updateMenu();
 				}
 			}
