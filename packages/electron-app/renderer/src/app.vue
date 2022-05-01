@@ -59,10 +59,12 @@ async function resetAdminPassword() {
 			newAdminPassword,
 		});
 
-		const { encryptedAdminPassword, maxSaltValue } = await encryptAdminPassword({
-			adminPassword: newAdminPassword,
-			secretCode,
-		});
+		const { encryptedAdminPassword, maxSaltValue } = await encryptAdminPassword(
+			{
+				adminPassword: newAdminPassword,
+				secretCode,
+			}
+		);
 
 		store.set('encryptedAdminPassword', encryptedPassword);
 		store.set('maxSaltValue', maxSaltValue);
@@ -96,12 +98,6 @@ async function resetAdminPassword() {
 			Save Settings
 		</button>
 		<button
-			class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-medium mt-8"
-			@click="retrievePasscode"
-		>
-			Retrieve Passcode
-		</button>
-		<button
 			class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-medium mt-8 disabled:(bg-orange-300 cursor-not-allowed)"
 			:disabled="isAdminPasswordResetting"
 			@click="resetAdminPassword"
@@ -121,12 +117,6 @@ async function resetAdminPassword() {
 				<span>{{ adminPasswordMaxSaltValue }}</span>
 			</div>
 		</div>
-		<button
-			class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-medium mt-8 disabled:(bg-orange-300 cursor-not-allowed)"
-			@click="getAdminPassword"
-		>
-			Get Admin Password
-		</button>
 	</div>
 </template>
 

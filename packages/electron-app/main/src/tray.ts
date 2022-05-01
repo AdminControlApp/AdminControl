@@ -1,11 +1,14 @@
 import { app, Menu, nativeImage, Tray } from 'electron';
-import Store from 'electron-store';
+import { getSecureInputProcesses } from 'get-secure-input-processes';
 import path from 'node:path';
+import pWaitFor from 'p-wait-for';
+import { runAppleScript } from 'run-applescript';
+
+import { decryptAdminPassword } from '~p/utils/encryption.js';
+import { retrieveSecretCode } from '~p/utils/secret-code.js';
+import { store } from '~p/utils/store.js';
 
 export async function createTray() {
-	const store = new Store();
-	const { phoneCallInput } = await import('phone-call-input');
-
 	const isAdminPasswordBeingRetrieved = false;
 	app
 		.whenReady()
@@ -16,27 +19,39 @@ export async function createTray() {
 			const tray = new Tray(image.resize({ width: 16, height: 16 }));
 			const contextMenu = Menu.buildFromTemplate([
 				{
-					label: 'Retrieve Admin Password',
+					label: 'Input Admin Password',
 					type: 'normal',
-					enabled: isAdminPasswordBeingRetrieved,
-					click: retrieveAdminPassword,
+					enabled: !isAdminPasswordBeingRetrieved,
+					click: inputAdminPassword,
 				},
 			]);
 
-			async function retrieveAdminPassword() {
+			async function inputAdminPassword() {
 				try {
 					contextMenu.items[0]!.enabled = false;
 
-					const passcode = await phoneCallInput({
-						destinationPhoneNumber: store.get(
-							'destinationPhoneNumber'
-						) as string,
-						originPhoneNumber: store.get('originPhoneNumber') as string,
-						twilioAccountSid: store.get('twilioAccountSid') as string,
-						twilioAuthToken: store.get('twilioAuthToken') as string,
+					const secretCode = await retrieveSecretCode();
+
+					const encryptedAdminPassword = await store.secureGet(
+						'encryptedAdminPassword'
+					);
+					if (encryptedAdminPassword === null) {
+						throw new Error('Encrypted password not found!');
+					}
+
+					const adminPassword = await decryptAdminPassword({
+						encryptedAdminPassword,
+						maxSaltValue: store.get('maxSaltValue') as number,
+						secretCode,
 					});
 
-					console.log(passcode);
+					await pWaitFor(() => getSecureInputProcesses().length > 0, {
+						interval: 500,
+					});
+
+					await runAppleScript(
+						`tell application "System Events" to keystroke "${adminPassword}"`
+					);
 				} finally {
 					contextMenu.items[0]!.enabled = true;
 				}

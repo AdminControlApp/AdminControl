@@ -1,4 +1,4 @@
-import * as execa from 'execa';
+import execa from 'execa';
 import { Buffer } from 'node:buffer';
 import * as crypto from 'node:crypto';
 

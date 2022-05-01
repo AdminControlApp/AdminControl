@@ -6,7 +6,8 @@
 		"types": ["node", "../typings/env"],
 		"baseUrl": ".",
 		"paths": {
-			"~m/*": ["./src/*"]
+			"~m/*": ["./src/*"],
+			"~p/*": ["../preload/src/*"]
 		}
 	},
 	"include": ["./src"],

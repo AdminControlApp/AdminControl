@@ -39,15 +39,18 @@ importers:
       electron-updater: ^5.0.1
       execa: ^5.1.1
       fast-sha256: ^1.3.0
+      get-secure-input-processes: ^0.0.1
       happy-dom: 2.55.0
       keytar: ^7.9.0
       nanoid-nice: ^1.0.1
       onetime: ^6.0.0
+      p-wait-for: ^4.1.0
       package-name-regex: ^2.0.6
       phone-call-input: link:../phone-call-input/dist
       playwright: 1.21.1
       rollup: ^2.70.2
       rollup-plugin-bundle-esm: ^0.1.1
+      run-applescript: ^6.0.0
       sudo-prompt: ^9.2.1
       typescript: ^4.6.3
       vite: 2.9.5
@@ -66,11 +69,14 @@ importers:
       electron-updater: 5.0.1
       execa: 5.1.1
       fast-sha256: 1.3.0
+      get-secure-input-processes: 0.0.1
       keytar: 7.9.0
       nanoid-nice: 1.0.1
       onetime: 6.0.0
+      p-wait-for: 4.1.0
       package-name-regex: 2.0.6
       phone-call-input: link:../phone-call-input/dist
+      run-applescript: 6.0.0
       sudo-prompt: 9.2.1
       vite-plugin-js-imports: 1.1.1_vite@2.9.5
       vue: 3.2.33
