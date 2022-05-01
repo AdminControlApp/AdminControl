@@ -94,7 +94,7 @@ async function resetAdminPassword() {
 		if (currentAdminPassword === undefined) {
 			oldAdminPassword = currentAdminPassword;
 		} else {
-			if (encryptAdminPassword === undefined) {
+			if (encryptedAdminPassword === undefined) {
 				throw new Error(
 					'Encrypted admin password not found. The current admin password must be provided.'
 				);
