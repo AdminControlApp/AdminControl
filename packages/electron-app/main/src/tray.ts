@@ -1,11 +1,11 @@
+import pWaitFor from '@leonzalion/p-wait-for';
+import { runAppleScript } from 'applescript-utils';
 import type { MenuItemConstructorOptions } from 'electron';
 import { app, dialog, Menu, nativeImage, Tray } from 'electron';
 import Store from 'electron-store';
 import { getSecureInputProcesses } from 'get-secure-input-processes';
 import keytar from 'keytar';
 import path from 'node:path';
-import pWaitFor from 'p-wait-for';
-import { runAppleScript } from 'run-applescript';
 
 import { retrieveSecretCode } from '~m/utils/secret-code.js';
 import { decryptAdminPassword } from '~p/utils/encryption.js';
