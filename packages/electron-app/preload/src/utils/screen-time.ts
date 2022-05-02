@@ -4,6 +4,8 @@ import {
 	openSystemPreferencesPane,
 	waitForElementMatch,
 } from 'applescript-utils';
+import * as sha256 from 'fast-sha256';
+import { Buffer } from 'node:buffer';
 
 interface ChangeScreenTimePasscodeProps {
 	oldPasscode: string;
@@ -50,4 +52,15 @@ export async function changeScreenTimePasscode({
 	);
 
 	await inputKeystrokes(newPasscode);
+}
+
+export function getScreenTimePasscodeFromAdminPassword({
+	adminPassword,
+}: {
+	adminPassword: string;
+}): string {
+	const hash = sha256.hash(new TextEncoder().encode(adminPassword));
+	const screenTimePasscode =
+		BigInt(`0x${Buffer.from(hash).toString('hex')}`) % 10_000n;
+	return String(screenTimePasscode);
 }

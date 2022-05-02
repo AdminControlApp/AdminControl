@@ -6,6 +6,10 @@ import {
 	decryptAdminPassword,
 	encryptAdminPassword,
 } from './utils/encryption.js';
+import {
+	changeScreenTimePasscode,
+	getScreenTimePasscodeFromAdminPassword,
+} from './utils/screen-time.js';
 import { retrieveSecretCode } from './utils/secret-code.js';
 import { store } from './utils/store.js';
 
@@ -16,4 +20,6 @@ export const exposedElectron = {
 	setAdminPassword,
 	decryptAdminPassword,
 	encryptAdminPassword,
+	changeScreenTimePasscode,
+	getScreenTimePasscodeFromAdminPassword,
 };

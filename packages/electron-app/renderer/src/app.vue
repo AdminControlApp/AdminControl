@@ -31,6 +31,7 @@ async function getSettings() {
 }
 
 const currentAdminPassword = $ref<string>();
+const currentScreenTimePasscode = $ref<string>();
 
 (async () => {
 	await getSettings();
@@ -82,6 +83,8 @@ const {
 	setAdminPassword,
 	decryptAdminPassword,
 	encryptAdminPassword,
+	changeScreenTimePasscode,
+	getScreenTimePasscodeFromAdminPassword,
 } = window.electron;
 
 async function resetAdminPassword() {
@@ -107,6 +110,24 @@ async function resetAdminPassword() {
 			oldAdminPassword = currentAdminPassword;
 		}
 
+		const oldScreenTimePasscode =
+			currentScreenTimePasscode ??
+			getScreenTimePasscodeFromAdminPassword({
+				adminPassword: oldAdminPassword,
+			});
+		const newScreenTimePasscode = getScreenTimePasscodeFromAdminPassword({
+			adminPassword: newAdminPassword,
+		});
+
+		const { encryptedAdminPassword: newEncryptedAdminPassword, maxSaltValue } =
+			await encryptAdminPassword({
+				adminPassword: newAdminPassword,
+				secretCode,
+			});
+
+		await store.secureSet('encryptedAdminPassword', newEncryptedAdminPassword);
+		store.set('maxSaltValue', maxSaltValue);
+
 		await setAdminPassword({
 			currentAdminPassword: oldAdminPassword,
 			newAdminPassword,
@@ -119,14 +140,10 @@ async function resetAdminPassword() {
 					: undefined,
 		});
 
-		const { encryptedAdminPassword: newEncryptedAdminPassword, maxSaltValue } =
-			await encryptAdminPassword({
-				adminPassword: newAdminPassword,
-				secretCode,
-			});
-
-		await store.secureSet('encryptedAdminPassword', newEncryptedAdminPassword);
-		store.set('maxSaltValue', maxSaltValue);
+		await changeScreenTimePasscode({
+			oldPasscode: oldScreenTimePasscode,
+			newPasscode: newScreenTimePasscode,
+		});
 
 		notify({
 			text: 'The Admin Password has successfully been reset!',
@@ -152,6 +169,8 @@ async function resetAdminPassword() {
 		>
 			<span class="input-label">Current Admin Password:</span>
 			<input v-model="currentAdminPassword" type="text" class="input" />
+			<span class="input-label">Current Screen Time Password:</span>
+			<input v-model="currentScreenTimePasscode" type="text" class="input" />
 			<span class="input-label">Twilio Account SID:</span>
 			<input v-model="twilioAccountSid" type="text" class="input" />
 			<div class="column">

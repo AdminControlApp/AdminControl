@@ -2,7 +2,7 @@
 	"extends": "@leonzalion/configs/tsconfig.json",
 	"compilerOptions": {
 		"outDir": "dist",
-		"module": "CommonJS",
+		"module": "ESNext",
 		"baseUrl": ".",
 		"paths": {
 			"~/*": ["./src/*"]
