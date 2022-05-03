@@ -42,9 +42,8 @@ async function getSettings() {
 		(await store.secureGet('bitwardenClientId')) ?? '';
 	preferences.bitwardenClientSecret =
 		(await store.secureGet('bitwardenClientSecret')) ?? '';
-	preferences.encryptedAdminPassword = await store.secureGet(
-		'encryptedAdminPassword'
-	);
+	preferences.encryptedAdminPassword =
+		(await store.secureGet('encryptedAdminPassword')) ?? undefined;
 	preferences.adminPasswordMaxSaltValue = store.get('maxSaltValue') as number;
 
 	oldPreferences = { ...preferences };
