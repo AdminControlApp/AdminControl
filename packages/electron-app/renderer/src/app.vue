@@ -1,33 +1,53 @@
 <script setup lang="ts">
+import isDeepEqual from 'fast-deep-equal';
 import { notify } from 'vue3-notify';
 import { VueSpinner } from 'vue3-spinners';
 
 const { store } = window.electron;
 
-let twilioAccountSid = $ref<string>();
-let twilioAuthToken = $ref<string>();
-let destinationPhoneNumber = $ref<string>();
-let originPhoneNumber = $ref<string>();
-let bitwardenClientId = $ref<string>();
-let bitwardenClientSecret = $ref<string>();
-let encryptedAdminPassword = $ref<string | undefined>();
-let adminPasswordMaxSaltValue = $ref<number>();
+interface Preferences {
+	twilioAccountSid: string;
+	twilioAuthToken: string;
+	destinationPhoneNumber: string;
+	originPhoneNumber: string;
+	bitwardenClientId: string;
+	bitwardenClientSecret: string;
+	encryptedAdminPassword: string | undefined;
+	adminPasswordMaxSaltValue: number;
+}
+
+const preferences = $ref<Preferences>({
+	twilioAccountSid: '',
+	twilioAuthToken: '',
+	destinationPhoneNumber: '',
+	originPhoneNumber: '',
+	bitwardenClientId: '',
+	bitwardenClientSecret: '',
+	encryptedAdminPassword: undefined,
+	adminPasswordMaxSaltValue: 0,
+});
+
+let oldPreferences = $ref<Preferences | undefined>();
 
 async function getSettings() {
-	twilioAccountSid = (await store.secureGet('twilioAccountSid')) ?? '';
-	twilioAuthToken = (await store.secureGet('twilioAuthToken')) ?? '';
-	destinationPhoneNumber =
+	preferences.twilioAccountSid =
+		(await store.secureGet('twilioAccountSid')) ?? '';
+	preferences.twilioAuthToken =
+		(await store.secureGet('twilioAuthToken')) ?? '';
+	preferences.destinationPhoneNumber =
 		(await store.secureGet('destinationPhoneNumber')) ?? '';
-	originPhoneNumber = (await store.secureGet('originPhoneNumber')) ?? '';
-	bitwardenClientId = (await store.secureGet('bitwardenClientId')) ?? '';
-	bitwardenClientSecret =
+	preferences.originPhoneNumber =
+		(await store.secureGet('originPhoneNumber')) ?? '';
+	preferences.bitwardenClientId =
+		(await store.secureGet('bitwardenClientId')) ?? '';
+	preferences.bitwardenClientSecret =
 		(await store.secureGet('bitwardenClientSecret')) ?? '';
+	preferences.encryptedAdminPassword = await store.secureGet(
+		'encryptedAdminPassword'
+	);
+	preferences.adminPasswordMaxSaltValue = store.get('maxSaltValue') as number;
 
-	encryptedAdminPassword =
-		(await store.secureGet('encryptedAdminPassword')) ?? undefined;
-
-	adminPasswordMaxSaltValue =
-		(store.get('maxSaltValue') as number) ?? undefined;
+	oldPreferences = { ...preferences };
 }
 
 const currentAdminPassword = $ref<string>();
@@ -42,29 +62,22 @@ async function saveSettings() {
 	try {
 		areSettingsSaving = true;
 
-		if (twilioAccountSid !== '') {
-			await store.secureSet('twilioAccountSid', twilioAccountSid);
+		const preferencesToSave: Array<keyof Preferences> = [
+			'twilioAccountSid',
+			'twilioAuthToken',
+			'destinationPhoneNumber',
+			'originPhoneNumber',
+			'bitwardenClientId',
+			'bitwardenClientSecret',
+		];
+
+		for (const preferenceKey of preferencesToSave) {
+			const preferenceValue = preferences[preferenceKey];
+			// eslint-disable-next-line no-await-in-loop
+			await store.secureSet(preferenceKey, preferenceValue as string);
 		}
 
-		if (twilioAuthToken !== '') {
-			await store.secureSet('twilioAuthToken', twilioAuthToken);
-		}
-
-		if (destinationPhoneNumber !== '') {
-			await store.secureSet('destinationPhoneNumber', destinationPhoneNumber);
-		}
-
-		if (originPhoneNumber !== '') {
-			await store.secureSet('originPhoneNumber', originPhoneNumber);
-		}
-
-		if (bitwardenClientId !== '') {
-			await store.secureSet('bitwardenClientId', bitwardenClientId);
-		}
-
-		if (bitwardenClientSecret !== '') {
-			await store.secureSet('bitwardenClientSecret', bitwardenClientSecret);
-		}
+		oldPreferences = { ...preferences };
 
 		notify({
 			text: 'Settings saved!',
@@ -95,15 +108,15 @@ async function resetAdminPassword() {
 
 		let oldAdminPassword: string;
 		if (currentAdminPassword === undefined) {
-			if (encryptedAdminPassword === undefined) {
+			if (preferences.encryptedAdminPassword === undefined) {
 				throw new Error(
 					'Encrypted admin password not found. The current admin password must be provided.'
 				);
 			}
 
 			oldAdminPassword = await decryptAdminPassword({
-				encryptedAdminPassword,
-				maxSaltValue: adminPasswordMaxSaltValue,
+				encryptedAdminPassword: preferences.encryptedAdminPassword,
+				maxSaltValue: preferences.adminPasswordMaxSaltValue,
 				secretCode,
 			});
 		} else {
@@ -132,10 +145,11 @@ async function resetAdminPassword() {
 			currentAdminPassword: oldAdminPassword,
 			newAdminPassword,
 			bitwarden:
-				bitwardenClientId !== '' && bitwardenClientSecret !== ''
+				preferences.bitwardenClientId !== '' &&
+				preferences.bitwardenClientSecret !== ''
 					? {
-							clientId: bitwardenClientId,
-							clientSecret: bitwardenClientSecret,
+							clientId: preferences.bitwardenClientId,
+							clientSecret: preferences.bitwardenClientSecret,
 					  }
 					: undefined,
 		});
@@ -172,7 +186,7 @@ async function resetAdminPassword() {
 			<span class="input-label">Current Screen Time Password:</span>
 			<input v-model="currentScreenTimePasscode" type="text" class="input" />
 			<span class="input-label">Twilio Account SID:</span>
-			<input v-model="twilioAccountSid" type="text" class="input" />
+			<input v-model="preferences.twilioAccountSid" type="text" class="input" />
 			<div class="column">
 				<span class="input-label">Twilio Auth Token:</span>
 				<a
@@ -183,9 +197,13 @@ async function resetAdminPassword() {
 					Link to Tokens
 				</a>
 			</div>
-			<input v-model="twilioAuthToken" type="text" class="input" />
+			<input v-model="preferences.twilioAuthToken" type="text" class="input" />
 			<span class="input-label">Destination Phone Number:</span>
-			<input v-model="destinationPhoneNumber" type="text" class="input" />
+			<input
+				v-model="preferences.destinationPhoneNumber"
+				type="text"
+				class="input"
+			/>
 			<div class="column">
 				<span class="input-label">Origin Phone Number:</span>
 				<a
@@ -196,7 +214,11 @@ async function resetAdminPassword() {
 					Link to Phone Numbers
 				</a>
 			</div>
-			<input v-model="originPhoneNumber" type="text" class="input" />
+			<input
+				v-model="preferences.originPhoneNumber"
+				type="text"
+				class="input"
+			/>
 			<div class="column">
 				<span class="input-label">Bitwarden Client ID:</span>
 				<a
@@ -207,12 +229,21 @@ async function resetAdminPassword() {
 					Link to API Key
 				</a>
 			</div>
-			<input v-model="bitwardenClientId" type="text" class="input" />
+			<input
+				v-model="preferences.bitwardenClientId"
+				type="text"
+				class="input"
+			/>
 			<span class="input-label">Bitwarden Client Secret:</span>
-			<input v-model="bitwardenClientSecret" type="text" class="input" />
+			<input
+				v-model="preferences.bitwardenClientSecret"
+				type="text"
+				class="input"
+			/>
 		</div>
 		<button
-			class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md font-medium mt-8"
+			class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md font-medium mt-8 disabled:(bg-green-300 cursor-not-allowed)"
+			:disabled="isDeepEqual(oldPreferences, preferences)"
 			@click="saveSettings"
 		>
 			<div v-if="areSettingsSaving" class="row items-center">
@@ -230,14 +261,14 @@ async function resetAdminPassword() {
 			</div>
 			<div v-else>Reset Admin Password</div>
 		</button>
-		<div v-if="encryptedAdminPassword !== undefined" class="mt-2">
+		<div v-if="preferences.encryptedAdminPassword !== undefined" class="mt-2">
 			<div class="row gap-1">
 				<span class="font-bold">Encrypted Admin Password: </span>
-				<span class="font-mono">{{ encryptedAdminPassword }}</span>
+				<span class="font-mono">{{ preferences.encryptedAdminPassword }}</span>
 			</div>
 			<div class="row gap-1">
 				<span class="font-bold">Max Salt Value:</span>
-				<span>{{ adminPasswordMaxSaltValue }}</span>
+				<span>{{ preferences.adminPasswordMaxSaltValue }}</span>
 			</div>
 		</div>
 	</div>

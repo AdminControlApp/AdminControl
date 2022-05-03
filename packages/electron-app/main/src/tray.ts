@@ -7,6 +7,7 @@ import { getSecureInputProcesses } from 'get-secure-input-processes';
 import keytar from 'keytar';
 import path from 'node:path';
 
+import { restoreOrCreateWindow } from '~m/main-window.js';
 import { retrieveSecretCode } from '~m/utils/secret-code.js';
 import { decryptAdminPassword } from '~p/utils/encryption.js';
 
@@ -30,6 +31,13 @@ export async function createTray() {
 
 			const contextMenuTemplate: MenuItemConstructorOptions[] = [
 				inputAdminPasswordMenuItem,
+				{
+					label: 'Preferences',
+					type: 'normal',
+					async click() {
+						await restoreOrCreateWindow();
+					},
+				},
 			];
 
 			function updateMenu() {

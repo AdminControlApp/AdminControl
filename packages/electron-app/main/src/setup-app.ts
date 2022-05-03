@@ -4,8 +4,6 @@ import * as process from 'node:process';
 import { installDevtools } from '~m/utils/devtools.js';
 import { checkForUpdates } from '~m/utils/updates.js';
 
-import { restoreOrCreateWindow } from './main-window.js';
-
 export function setupApp() {
 	/**
 		Prevent multiple instances
@@ -16,10 +14,8 @@ export function setupApp() {
 		process.exit(0);
 	}
 
-	app.on('second-instance', restoreOrCreateWindow);
-
 	/**
-		Shout down background process if all windows was closed
+		Shut down background process if all windows was closed
 	*/
 	app.on('window-all-closed', () => {
 		if (process.platform !== 'darwin') {
@@ -27,24 +23,9 @@ export function setupApp() {
 		}
 	});
 
-	/**
-		@see https://www.electronjs.org/docs/v14-x-y/api/app#event-activate-macos Event: 'activate'
-	 */
-	app.on('activate', restoreOrCreateWindow);
-
-	/**
-		Create app window when background process will be ready
-	*/
-	app
-		.whenReady()
-		.then(restoreOrCreateWindow)
-		.catch((error) => {
-			console.error('Failed create window:', error);
-		});
-
-	// if (import.meta.env.DEV) {
+	if (import.meta.env.DEV) {
 		installDevtools();
-	// }
+	}
 
 	if (import.meta.env.PROD) {
 		checkForUpdates();
