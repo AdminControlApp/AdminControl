@@ -14,6 +14,7 @@
 		"build:main": "cd ./main && vite build",
 		"build:preload": "cd ./preload && vite build",
 		"build:renderer": "cd ./renderer && vite build",
+		"create-icons": "node-ts ./scripts/create-icons.ts",
 		"compile": "cross-env MODE=production npm run build && electron-builder build --config .electron-builder.config.js --dir --config.asar=false",
 		"test": "npm run test:main && npm run test:preload && npm run test:renderer && npm run test:e2e",
 		"test:e2e": "npm run build && vitest run",
@@ -31,6 +32,7 @@
 	"devDependencies": {
 		"@rollup/plugin-node-resolve": "^13.2.1",
 		"@types/package-name-regex": "^2.0.0",
+		"@types/sharp": "^0.30.2",
 		"@vitejs/plugin-vue": "2.3.1",
 		"@vue/test-utils": "2.0.0-rc.21",
 		"cross-env": "7.0.3",
@@ -41,6 +43,7 @@
 		"playwright": "1.21.1",
 		"rollup": "^2.70.2",
 		"rollup-plugin-bundle-esm": "^0.1.1",
+		"sharp": "^0.30.4",
 		"typescript": "^4.6.4",
 		"vite": "2.9.5",
 		"vite-plugin-windicss": "^1.8.4",

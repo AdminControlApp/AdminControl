@@ -8,7 +8,7 @@ import * as process from 'node:process';
 	Returns versions of electron vendors
 	The performance of this feature is very poor and can be improved
 	@see https://github.com/electron/electron/issues/28006
- */
+*/
 function getVendors(): NodeJS.ProcessVersions {
 	const { stdout: output } = execa.sync(
 		`${String(electronPath)} -p "JSON.stringify(process.versions)"`,

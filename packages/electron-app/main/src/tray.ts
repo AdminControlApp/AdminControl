@@ -18,7 +18,7 @@ export async function createTray() {
 		.whenReady()
 		.then(() => {
 			const image = nativeImage.createFromPath(
-				path.join(__dirname, '../assets/icon.png')
+				path.join(__dirname, '../assets/icon-light.png')
 			);
 			const tray = new Tray(image.resize({ width: 16, height: 16 }));
 
