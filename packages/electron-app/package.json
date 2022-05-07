@@ -23,10 +23,10 @@
 		"dev": "cross-env ELECTRON_RUN_AS_NODE='' node-ts ./scripts/watch.ts",
 		"lint": "eslint --fix --cache .",
 		"prettier": "prettier --write .",
-		"tc:main": "tsc --noEmit -p main/tsconfig.json",
-		"tc:preload": "tsc --noEmit -p preload/tsconfig.json",
-		"tc:renderer": "vue-tsc --noEmit -p renderer/tsconfig.json",
-		"tc": "pnpm run tc:main && npm run tc:preload && npm run tc:renderer"
+		"typecheck:main": "tsc --noEmit -p main/tsconfig.json",
+		"typecheck:preload": "tsc --noEmit -p preload/tsconfig.json",
+		"typecheck:renderer": "vue-tsc --noEmit -p renderer/tsconfig.json",
+		"typecheck": "pnpm run typecheck:main && npm run typecheck:preload && npm run typecheck:renderer"
 	},
 	"devDependencies": {
 		"@rollup/plugin-node-resolve": "^13.2.1",

@@ -9,7 +9,7 @@
 		"setup": "node ./scripts/setup.js",
 		"pnpm:devPreinstall": "node ./packages/scripts/src/setup-check.js",
 		"prepare": "lion-git-hooks",
-		"tc": "pnpm recursive run tc",
+		"typecheck": "pnpm recursive run typecheck",
 		"lint": "pnpm recursive run lint",
 		"prettier": "pnpm recursive run prettier",
 		"dev:electron": "pnpm --filter=@admincontrol/app run dev",
