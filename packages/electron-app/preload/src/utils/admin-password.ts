@@ -3,7 +3,8 @@ import execa from 'execa';
 import { nanoid } from 'nanoid-nice';
 
 export async function generateNewAdminPassword() {
-	return nanoid(8);
+	// 20 characters ensures that it's not memorizable at a glance
+	return nanoid(20);
 }
 
 interface SetAdminPasswordProps {

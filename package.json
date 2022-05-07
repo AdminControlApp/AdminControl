@@ -7,7 +7,7 @@
 	},
 	"scripts": {
 		"setup": "node ./scripts/setup.js",
-		"pnpm:devPreinstall": "node ./scripts/setup-check.js",
+		"pnpm:devPreinstall": "node ./packages/scripts/src/setup-check.js",
 		"prepare": "lion-git-hooks",
 		"tc": "pnpm recursive run tc",
 		"lint": "pnpm recursive run lint",

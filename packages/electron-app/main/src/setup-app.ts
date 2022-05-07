@@ -23,6 +23,10 @@ export function setupApp() {
 		}
 	});
 
+	app.setLoginItemSettings({
+		openAtLogin: true,
+	});
+
 	if (import.meta.env.DEV) {
 		installDevtools();
 	}
