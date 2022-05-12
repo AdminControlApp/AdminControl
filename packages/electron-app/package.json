@@ -68,6 +68,7 @@
 		"onetime": "^6.0.0",
 		"package-name-regex": "^2.0.6",
 		"phone-call-input": "link:../phone-call-input/dist",
+		"random-int": "^3.0.0",
 		"sudo-prompt": "^9.2.1",
 		"vite-plugin-js-imports": "^1.1.1",
 		"vue": "^3.2.33",

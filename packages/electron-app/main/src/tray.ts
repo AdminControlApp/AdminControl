@@ -1,11 +1,13 @@
 import pWaitFor from '@leonzalion/p-wait-for';
-import { runAppleScript } from 'applescript-utils';
+import { inputKeystrokes } from 'applescript-utils';
 import type { MenuItemConstructorOptions } from 'electron';
 import { app, dialog, Menu, nativeImage, Tray } from 'electron';
 import Store from 'electron-store';
 import { getSecureInputProcesses } from 'get-secure-input-processes';
 import keytar from 'keytar';
-import path from 'node:path';
+import * as path from 'node:path';
+import { setTimeout as delay } from 'node:timers/promises';
+import randomInteger from 'random-int';
 
 import { restoreOrCreateWindow } from '~m/main-window.js';
 import { retrieveSecretCode } from '~m/utils/secret-code.js';
@@ -76,14 +78,38 @@ export async function createTray() {
 						'🔒 Waiting for focus on a secure input process...';
 					updateMenu();
 
-					await pWaitFor(() => getSecureInputProcesses().length > 0, {
-						interval: 500,
-					});
+					const secureInputProcessId = await pWaitFor(
+						() => {
+							const secureInputProcesses = getSecureInputProcesses();
+							if (secureInputProcesses.length > 0) {
+								return pWaitFor.resolveWith(secureInputProcesses[0]);
+							}
+
+							return false;
+						},
+						{
+							interval: 500,
+						}
+					);
 
 					console.info('Inputting password...');
-					await runAppleScript(
-						`tell application "System Events" to keystroke "${adminPassword}"`
-					);
+
+					// Deliberately input the passcode 1 character at a time across random intervals such that focus on the secure input textbox *must* be maintained at all times
+					for (const character of adminPassword) {
+						const secureInputProcesses = getSecureInputProcesses();
+						if (secureInputProcesses[0] !== secureInputProcessId) {
+							throw new Error(
+								'Focus on the secure input process was not sustained.'
+							);
+						}
+
+						// eslint-disable-next-line no-await-in-loop
+						await inputKeystrokes(character);
+
+						// eslint-disable-next-line no-await-in-loop
+						await delay(randomInteger(0, 10_000));
+					}
+
 					console.info('Password inputted!');
 				} catch (error: unknown) {
 					dialog.showErrorBox('AdminControl Error', (error as Error).message);
