@@ -4,7 +4,7 @@ import vue from '@vitejs/plugin-vue';
 import { builtinModules } from 'node:module';
 import * as path from 'node:path';
 import process from 'node:process';
-import jsImports from 'vite-plugin-js-imports';
+import jsImports from 'rollup-plugin-js-imports';
 import WindiCSS from 'vite-plugin-windicss';
 import { defineConfig } from 'vitest/config';
 

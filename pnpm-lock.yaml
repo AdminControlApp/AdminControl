@@ -48,11 +48,11 @@ importers:
       random-int: ^3.0.0
       rollup: ^2.70.2
       rollup-plugin-bundle-esm: ^0.1.1
+      rollup-plugin-js-imports: ^1.1.1
       sharp: ^0.30.4
       sudo-prompt: ^9.2.1
       typescript: ^4.6.4
-      vite: 2.9.5
-      vite-plugin-js-imports: ^1.1.1
+      vite: ^2.9.9
       vite-plugin-windicss: ^1.8.4
       vitest: 0.9.4
       vue: ^3.2.33
@@ -81,8 +81,8 @@ importers:
       phone-call-input: link:../phone-call-input/dist
       pinia: 2.0.14_ytvqwwdyss532bvoq2clv4ed5m
       random-int: 3.0.0
+      rollup-plugin-js-imports: 1.2.1
       sudo-prompt: 9.2.1
-      vite-plugin-js-imports: 1.1.1_vite@2.9.5
       vue: 3.2.33
       vue3-notify: 0.0.2_vue@3.2.33
       vue3-spinners: 1.1.1_vue@3.2.33
@@ -92,7 +92,7 @@ importers:
       '@types/node': 17.0.33
       '@types/package-name-regex': 2.0.0
       '@types/sharp': 0.30.2
-      '@vitejs/plugin-vue': 2.3.1_vite@2.9.5+vue@3.2.33
+      '@vitejs/plugin-vue': 2.3.1_vite@2.9.9+vue@3.2.33
       '@vue/test-utils': 2.0.0-rc.21_vue@3.2.33
       cross-env: 7.0.3
       electron: 18.1.0
@@ -104,8 +104,8 @@ importers:
       rollup-plugin-bundle-esm: 0.1.1
       sharp: 0.30.4
       typescript: 4.6.4
-      vite: 2.9.5
-      vite-plugin-windicss: 1.8.4_vite@2.9.5
+      vite: 2.9.9
+      vite-plugin-windicss: 1.8.4_vite@2.9.9
       vitest: 0.9.4_happy-dom@2.55.0
       vue-tsc: 0.34.9_typescript@4.6.4
 
@@ -2037,14 +2037,14 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
-  /@vitejs/plugin-vue/2.3.1_vite@2.9.5+vue@3.2.33:
+  /@vitejs/plugin-vue/2.3.1_vite@2.9.9+vue@3.2.33:
     resolution: {integrity: sha512-YNzBt8+jt6bSwpt7LP890U1UcTOIZZxfpE5WOJ638PNxSEKOqAi0+FSKS0nVeukfdZ0Ai/H7AFd6k3hayfGZqQ==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
       vite: ^2.5.10
       vue: ^3.2.25
     dependencies:
-      vite: 2.9.5
+      vite: 2.9.9
       vue: 3.2.33
     dev: true
 
@@ -2103,7 +2103,7 @@ packages:
       '@vue/shared': 3.2.33
       estree-walker: 2.0.2
       magic-string: 0.25.9
-      postcss: 8.4.12
+      postcss: 8.4.13
       source-map: 0.6.1
 
   /@vue/compiler-ssr/3.2.33:
@@ -7856,12 +7856,12 @@ packages:
     resolution: {integrity: sha512-p1sjXuopFs0xg+fPASzQ28agW1oHD7xDsd9Xkf3T15H3c/cifrFHVwrh74PdoklAPi+i7MdRsE47vm2r6JoB+w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+    dev: false
 
   /nanoid/3.3.4:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
-    dev: true
 
   /napi-build-utils/1.0.2:
     resolution: {integrity: sha512-ONmRUqK7zj7DWX0D9ADe03wbwOBZxNAfF20PlGfCWQcD3+/MakShIHrMqx9YwPTfxDdF1zLeL+RGZiR9kGMLdg==}
@@ -8677,14 +8677,6 @@ packages:
       util-deprecate: 1.0.2
     dev: true
 
-  /postcss/8.4.12:
-    resolution: {integrity: sha512-lg6eITwYe9v6Hr5CncVbK70SoioNQIq81nsaG86ev5hAidQvmOeETBqs7jm43K2F5/Ley3ytDtriImV6TpNiSg==}
-    engines: {node: ^10 || ^12 || >=14}
-    dependencies:
-      nanoid: 3.3.3
-      picocolors: 1.0.0
-      source-map-js: 1.0.2
-
   /postcss/8.4.13:
     resolution: {integrity: sha512-jtL6eTBrza5MPzy8oJLFuUscHDXTV5KcLlqAWHl5q5WYRfnNRGSmOZmOZ1T6Gy7A99mOZfqungmZMpMmCVJ8ZA==}
     engines: {node: ^10 || ^12 || >=14}
@@ -8692,7 +8684,6 @@ packages:
       nanoid: 3.3.4
       picocolors: 1.0.0
       source-map-js: 1.0.2
-    dev: true
 
   /prebuild-install/7.1.0:
     resolution: {integrity: sha512-CNcMgI1xBypOyGqjp3wOc8AAo1nMhZS3Cwd3iHIxOdAUbb+YxdNuM4Z5iIrZ8RLvOsf3F3bl7b7xGq6DjQoNYA==}
@@ -10378,15 +10369,7 @@ packages:
     dev: true
     optional: true
 
-  /vite-plugin-js-imports/1.1.1_vite@2.9.5:
-    resolution: {integrity: sha512-c430jHbuXHmWfI/xpZTbhfi5bt7okpOoyDDSeWnNjZ7fcIXZDWkocoHT+sgMefIXdOCyJcoVcMC2+3RiKRqJ/w==}
-    peerDependencies:
-      vite: ^2.9.0
-    dependencies:
-      vite: 2.9.5
-    dev: false
-
-  /vite-plugin-windicss/1.8.4_vite@2.9.5:
+  /vite-plugin-windicss/1.8.4_vite@2.9.9:
     resolution: {integrity: sha512-LSZAO8BZn3x406GRbYX5t5ONXXJVdqiQtN1qrznLA/Dy5/NzZVhfcrL6N1qEYYO7HsCDT4pLAjTzObvDnM9Y8A==}
     peerDependencies:
       vite: ^2.0.1
@@ -10394,34 +10377,10 @@ packages:
       '@windicss/plugin-utils': 1.8.4
       debug: 4.3.4
       kolorist: 1.5.1
-      vite: 2.9.5
+      vite: 2.9.9
       windicss: 3.5.1
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /vite/2.9.5:
-    resolution: {integrity: sha512-dvMN64X2YEQgSXF1lYabKXw3BbN6e+BL67+P3Vy4MacnY+UzT1AfkHiioFSi9+uiDUiaDy7Ax/LQqivk6orilg==}
-    engines: {node: '>=12.2.0'}
-    hasBin: true
-    peerDependencies:
-      less: '*'
-      sass: '*'
-      stylus: '*'
-    peerDependenciesMeta:
-      less:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-    dependencies:
-      esbuild: 0.14.38
-      postcss: 8.4.12
-      resolve: 1.22.0
-      rollup: 2.70.2
-    optionalDependencies:
-      fsevents: 2.3.2
     dev: true
 
   /vite/2.9.6:
@@ -10444,6 +10403,30 @@ packages:
       postcss: 8.4.13
       resolve: 1.22.0
       rollup: 2.71.1
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
+  /vite/2.9.9:
+    resolution: {integrity: sha512-ffaam+NgHfbEmfw/Vuh6BHKKlI/XIAhxE5QSS7gFLIngxg171mg1P3a4LSRME0z2ZU1ScxoKzphkipcYwSD5Ew==}
+    engines: {node: '>=12.2.0'}
+    hasBin: true
+    peerDependencies:
+      less: '*'
+      sass: '*'
+      stylus: '*'
+    peerDependenciesMeta:
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+    dependencies:
+      esbuild: 0.14.38
+      postcss: 8.4.13
+      resolve: 1.22.0
+      rollup: 2.73.0
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
@@ -10506,7 +10489,7 @@ packages:
       local-pkg: 0.4.1
       tinypool: 0.1.2
       tinyspy: 0.3.2
-      vite: 2.9.5
+      vite: 2.9.9
     transitivePeerDependencies:
       - less
       - sass

@@ -49,7 +49,7 @@
 		"pinia": "^2.0.14",
 		"random-int": "^3.0.0",
 		"sudo-prompt": "^9.2.1",
-		"vite-plugin-js-imports": "^1.1.1",
+		"rollup-plugin-js-imports": "^1.1.1",
 		"vue": "^3.2.33",
 		"vue3-notify": "^0.0.2",
 		"vue3-spinners": "^1.1.1",
@@ -72,7 +72,7 @@
 		"rollup-plugin-bundle-esm": "^0.1.1",
 		"sharp": "^0.30.4",
 		"typescript": "^4.6.4",
-		"vite": "2.9.5",
+		"vite": "^2.9.9",
 		"vite-plugin-windicss": "^1.8.4",
 		"vitest": "0.9.4",
 		"vue-tsc": "0.34.9"

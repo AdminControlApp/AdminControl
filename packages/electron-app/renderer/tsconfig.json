@@ -10,7 +10,7 @@
 			"~p/*": ["../preload/src/*"]
 		},
 		"lib": ["ESNext", "dom", "dom.iterable"],
-		"types": ["node", "./typings/global", "./typings/env"]
+		"types": ["vue/ref-macros", "./typings/global", "vite/client"]
 	},
 	"include": ["./src"]
 }

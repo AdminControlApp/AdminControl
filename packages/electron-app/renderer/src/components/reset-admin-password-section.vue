@@ -3,6 +3,7 @@ import { notify } from 'vue3-notify';
 import { VueSpinner } from 'vue3-spinners';
 
 import { useEncryptedAdminPasswordStore } from '~r/store/encrypted-admin-password.js';
+import { debug } from '~r/utils/debug.js';
 
 let isAdminPasswordResetting = $ref(false);
 
@@ -11,6 +12,7 @@ const currentScreenTimePasscode = $ref<string>();
 const encryptedAdminPasswordStore = useEncryptedAdminPasswordStore();
 const shouldResetScreenTimePasscode = $ref(true);
 
+const providedSecretCode = $ref('');
 const bitwardenEmail = $ref('');
 const bitwardenMasterPassword = $ref('');
 
@@ -28,7 +30,14 @@ const {
 async function resetAdminPassword() {
 	try {
 		isAdminPasswordResetting = true;
-		const secretCode = await retrieveSecretCode();
+		let secretCode: string;
+		if (providedSecretCode === '') {
+			secretCode = await retrieveSecretCode();
+		} else {
+			secretCode = providedSecretCode;
+		}
+
+		debug(() => 'Generating new admin password');
 		const newAdminPassword = await generateNewAdminPassword();
 
 		let oldAdminPassword: string;
@@ -114,10 +123,16 @@ async function resetAdminPassword() {
 	<div class="column items-center mt-8 border-1 rounded-md p-8">
 		<h1 class="font-black text-3xl">Reset Admin Password</h1>
 		<div class="grid grid-cols-[max-content,1fr] gap-2 pt-4 items-center mb-4">
+			<span class="input-label">Secret Code:</span>
+			<input v-model="providedSecretCode" type="password" class="input" />
 			<span class="input-label">Current Admin Password:</span>
-			<input v-model="currentAdminPassword" type="text" class="input" />
+			<input v-model="currentAdminPassword" type="password" class="input" />
 			<span class="input-label">Current Screen Time Password:</span>
-			<input v-model="currentScreenTimePasscode" type="text" class="input" />
+			<input
+				v-model="currentScreenTimePasscode"
+				type="password"
+				class="input"
+			/>
 			<span class="input-label">Bitwarden Email:</span>
 			<input v-model="bitwardenEmail" type="email" class="input" />
 			<span class="input-label">Bitwarden Master Password:</span>
