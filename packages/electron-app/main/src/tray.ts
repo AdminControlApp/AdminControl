@@ -94,6 +94,10 @@ export async function createTray() {
 
 					console.info('Inputting password...');
 
+					// Make it so that it takes on average 60 seconds to input the password
+					const averageAdminPasswordDelayMilliseconds =
+						(adminPassword.length / 60) * 1000;
+
 					// Deliberately input the passcode 1 character at a time across random intervals such that focus on the secure input textbox *must* be maintained at all times
 					for (const character of adminPassword) {
 						const secureInputProcesses = getSecureInputProcesses();
@@ -107,7 +111,9 @@ export async function createTray() {
 						await inputKeystrokes(character);
 
 						// eslint-disable-next-line no-await-in-loop
-						await delay(randomInteger(0, 10_000));
+						await delay(
+							randomInteger(0, 2 * averageAdminPasswordDelayMilliseconds)
+						);
 					}
 
 					console.info('Password inputted!');
