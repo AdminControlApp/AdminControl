@@ -1,6 +1,6 @@
 import sharp = require('sharp');
-import * as path from 'node:path';
 import { getProjectDir } from 'lion-system';
+import * as path from 'node:path';
 
 const monorepoDir = getProjectDir(__dirname, { monorepoRoot: true })
 const mainAssetsDir = path.join(__dirname, '../main/assets');
