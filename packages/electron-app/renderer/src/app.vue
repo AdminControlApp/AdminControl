@@ -4,14 +4,14 @@ import { notify } from 'vue3-notify';
 import { VueSpinner } from 'vue3-spinners';
 
 const { store } = window.electron;
+const shouldResetScreenTimePasscode = $ref(true);
 
 interface Preferences {
 	twilioAccountSid: string;
 	twilioAuthToken: string;
 	destinationPhoneNumber: string;
 	originPhoneNumber: string;
-	bitwardenClientId: string;
-	bitwardenClientSecret: string;
+	bitwardenMasterPassword: string;
 	encryptedAdminPassword: string | undefined;
 	adminPasswordMaxSaltValue: number;
 }
@@ -21,8 +21,7 @@ const preferences = $ref<Preferences>({
 	twilioAuthToken: '',
 	destinationPhoneNumber: '',
 	originPhoneNumber: '',
-	bitwardenClientId: '',
-	bitwardenClientSecret: '',
+	bitwardenMasterPassword: '',
 	encryptedAdminPassword: undefined,
 	adminPasswordMaxSaltValue: 0,
 });
@@ -38,10 +37,6 @@ async function getSettings() {
 		(await store.secureGet('destinationPhoneNumber')) ?? '';
 	preferences.originPhoneNumber =
 		(await store.secureGet('originPhoneNumber')) ?? '';
-	preferences.bitwardenClientId =
-		(await store.secureGet('bitwardenClientId')) ?? '';
-	preferences.bitwardenClientSecret =
-		(await store.secureGet('bitwardenClientSecret')) ?? '';
 	preferences.encryptedAdminPassword =
 		(await store.secureGet('encryptedAdminPassword')) ?? undefined;
 	preferences.adminPasswordMaxSaltValue = store.get('maxSaltValue') as number;
@@ -66,8 +61,6 @@ async function saveSettings() {
 			'twilioAuthToken',
 			'destinationPhoneNumber',
 			'originPhoneNumber',
-			'bitwardenClientId',
-			'bitwardenClientSecret',
 		];
 
 		for (const preferenceKey of preferencesToSave) {
@@ -122,15 +115,6 @@ async function resetAdminPassword() {
 			oldAdminPassword = currentAdminPassword;
 		}
 
-		const oldScreenTimePasscode =
-			currentScreenTimePasscode ??
-			getScreenTimePasscodeFromAdminPassword({
-				adminPassword: oldAdminPassword,
-			});
-		const newScreenTimePasscode = getScreenTimePasscodeFromAdminPassword({
-			adminPassword: newAdminPassword,
-		});
-
 		const { encryptedAdminPassword: newEncryptedAdminPassword, maxSaltValue } =
 			await encryptAdminPassword({
 				adminPassword: newAdminPassword,
@@ -145,21 +129,34 @@ async function resetAdminPassword() {
 
 		await setAdminPassword({
 			currentAdminPassword: oldAdminPassword,
-			newAdminPassword,
+			newAdminPassword: {
+				raw: newAdminPassword,
+				encrypted: newEncryptedAdminPassword,
+			},
 			bitwarden:
-				preferences.bitwardenClientId !== '' &&
-				preferences.bitwardenClientSecret !== ''
-					? {
-							clientId: preferences.bitwardenClientId,
-							clientSecret: preferences.bitwardenClientSecret,
-					  }
-					: undefined,
+				preferences.bitwardenMasterPassword === ''
+					? undefined
+					: {
+							masterPassword: preferences.bitwardenMasterPassword,
+					  },
 		});
 
-		await changeScreenTimePasscode({
-			oldPasscode: oldScreenTimePasscode,
-			newPasscode: newScreenTimePasscode,
-		});
+		if (shouldResetScreenTimePasscode) {
+			const oldScreenTimePasscode =
+				currentScreenTimePasscode ??
+				getScreenTimePasscodeFromAdminPassword({
+					adminPassword: oldAdminPassword,
+				});
+
+			const newScreenTimePasscode = getScreenTimePasscodeFromAdminPassword({
+				adminPassword: newAdminPassword,
+			});
+
+			await changeScreenTimePasscode({
+				oldPasscode: oldScreenTimePasscode,
+				newPasscode: newScreenTimePasscode,
+			});
+		}
 
 		notify({
 			text: 'The Admin Password has successfully been reset!',
@@ -188,7 +185,11 @@ async function resetAdminPassword() {
 			<span class="input-label">Current Screen Time Password:</span>
 			<input v-model="currentScreenTimePasscode" type="text" class="input" />
 			<span class="input-label">Twilio Account SID:</span>
-			<input v-model="preferences.twilioAccountSid" type="text" class="input" />
+			<input
+				v-model="preferences.twilioAccountSid"
+				type="password"
+				class="input"
+			/>
 			<div class="column">
 				<span class="input-label">Twilio Auth Token:</span>
 				<a
@@ -199,7 +200,11 @@ async function resetAdminPassword() {
 					Link to Tokens
 				</a>
 			</div>
-			<input v-model="preferences.twilioAuthToken" type="text" class="input" />
+			<input
+				v-model="preferences.twilioAuthToken"
+				type="password"
+				class="input"
+			/>
 			<span class="input-label">Destination Phone Number:</span>
 			<input
 				v-model="preferences.destinationPhoneNumber"
@@ -221,25 +226,10 @@ async function resetAdminPassword() {
 				type="text"
 				class="input"
 			/>
-			<div class="column">
-				<span class="input-label">Bitwarden Client ID:</span>
-				<a
-					target="_blank"
-					href="https://vault.bitwarden.com/#/settings/account"
-					class="text-orange-400 hover:text-orange-600 underline text-xs self-start"
-				>
-					Link to API Key
-				</a>
-			</div>
+			<span class="input-label">Bitwarden Master Password:</span>
 			<input
-				v-model="preferences.bitwardenClientId"
-				type="text"
-				class="input"
-			/>
-			<span class="input-label">Bitwarden Client Secret:</span>
-			<input
-				v-model="preferences.bitwardenClientSecret"
-				type="text"
+				v-model="preferences.bitwardenMasterPassword"
+				type="password"
 				class="input"
 			/>
 		</div>
@@ -263,6 +253,17 @@ async function resetAdminPassword() {
 			</div>
 			<div v-else>Reset Admin Password</div>
 		</button>
+		<div class="row items-center gap-2 mt-1.5">
+			<input
+				id="reset-screen-time-passcode-checkbox"
+				v-model="shouldResetScreenTimePasscode"
+				class="w-4 h-4"
+				type="checkbox"
+			/>
+			<label for="reset-screen-time-passcode-checkbox">
+				Reset Screen Time Passcode
+			</label>
+		</div>
 		<div v-if="preferences.encryptedAdminPassword !== undefined" class="mt-2">
 			<div class="row gap-1">
 				<span class="font-bold">Encrypted Admin Password: </span>
