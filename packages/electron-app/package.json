@@ -10,24 +10,22 @@
 		"url": "https://leonzalion.com"
 	},
 	"scripts": {
-		"build": "npm run build:main && npm run build:preload && npm run build:renderer",
+		"build": "pnpm run build:main && pnpm run build:preload && pnpm run build:renderer",
 		"build:main": "cd ./main && vite build",
 		"build:preload": "cd ./preload && vite build",
 		"build:renderer": "cd ./renderer && vite build",
 		"create-icons": "node-ts ./scripts/create-icons.ts",
-		"compile": "cross-env MODE=production npm run build && electron-builder build --config .electron-builder.config.js --dir --config.asar=false",
-		"test": "npm run test:main && npm run test:preload && npm run test:renderer && npm run test:e2e",
-		"test:e2e": "npm run build && vitest run",
+		"compile": "cross-env MODE=production pnpm run build && electron-builder build --config .electron-builder.config.js --dir --config.asar=false",
+		"test": "pnpm run test:main && pnpm run test:preload && pnpm run test:renderer && pnpm run test:e2e",
+		"test:e2e": "pnpm run build && vitest run",
 		"test:main": "vitest run -r main --passWithNoTests",
 		"test:preload": "vitest run -r preload --passWithNoTests",
 		"test:renderer": "vitest run -r renderer --passWithNoTests",
 		"dev": "cross-env ELECTRON_RUN_AS_NODE='' node-ts ./scripts/watch.ts",
-		"lint": "eslint --fix --cache .",
-		"prettier": "prettier --write .",
 		"typecheck:main": "tsc --noEmit -p main/tsconfig.json",
 		"typecheck:preload": "tsc --noEmit -p preload/tsconfig.json",
 		"typecheck:renderer": "vue-tsc --noEmit -p renderer/tsconfig.json",
-		"typecheck": "pnpm run typecheck:main && npm run typecheck:preload && npm run typecheck:renderer"
+		"typecheck": "pnpm run typecheck:main && pnpm run typecheck:preload && pnpm run typecheck:renderer"
 	},
 	"devDependencies": {
 		"@rollup/plugin-node-resolve": "^13.2.1",
