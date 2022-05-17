@@ -15,6 +15,7 @@ interface Preferences {
 	adminPasswordMaxSaltValue: number;
 }
 
+const bitwardenEmail = $ref('');
 const bitwardenMasterPassword = $ref('');
 
 const preferences = $ref<Preferences>({
@@ -244,6 +245,8 @@ async function resetAdminPassword() {
 			<div
 				class="grid grid-cols-[max-content,1fr] gap-2 pt-4 items-center mb-4"
 			>
+				<span class="input-label">Bitwarden Email:</span>
+				<input v-model="bitwardenEmail" type="email" class="input" />
 				<span class="input-label">Bitwarden Master Password:</span>
 				<input
 					v-model="bitwardenMasterPassword"
@@ -274,12 +277,16 @@ async function resetAdminPassword() {
 			</div>
 		</div>
 
-		<div v-if="preferences.encryptedAdminPassword !== undefined" class="mt-2">
-			<div class="row gap-1">
+		<!-- Encrypted Password Data -->
+		<div
+			v-if="preferences.encryptedAdminPassword !== undefined"
+			class="border-1 rounded-md p-8 column items-center gap-2 mt-8"
+		>
+			<div class="column items-center">
 				<span class="font-bold">Encrypted Admin Password: </span>
 				<span class="font-mono">{{ preferences.encryptedAdminPassword }}</span>
 			</div>
-			<div class="row gap-1">
+			<div class="column items-center">
 				<span class="font-bold">Max Salt Value:</span>
 				<span>{{ preferences.adminPasswordMaxSaltValue }}</span>
 			</div>
