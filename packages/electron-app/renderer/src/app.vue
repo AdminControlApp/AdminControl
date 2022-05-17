@@ -140,6 +140,9 @@ async function resetAdminPassword() {
 		await store.secureSet('encryptedAdminPassword', newEncryptedAdminPassword);
 		store.set('maxSaltValue', maxSaltValue);
 
+		preferences.encryptedAdminPassword = newEncryptedAdminPassword;
+		preferences.adminPasswordMaxSaltValue = maxSaltValue;
+
 		await setAdminPassword({
 			currentAdminPassword: oldAdminPassword,
 			newAdminPassword,
