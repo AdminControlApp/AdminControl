@@ -4,6 +4,11 @@ import execa from 'execa';
 import { nanoid } from 'nanoid-nice';
 import { Buffer } from 'node:buffer';
 
+import type { BitwardenItemSubset } from '~p/types/bitwarden.js';
+import { BitwardenItemType } from '~p/types/bitwarden.js';
+
+import { debug } from './debug.js';
+
 export async function generateNewAdminPassword() {
 	// 20 characters ensures that it's not memorizable at a glance
 	return nanoid(20);
@@ -35,36 +40,23 @@ async function saveEncryptedAdminPasswordToBitwarden({
 		BW_PASSWORD: bitwarden.masterPassword,
 	};
 
-	const bwExec = (commandArgs: string[], options?: ExecaOptions) =>
-		execa('bw', commandArgs, {
+	const bwExec = (commandArgs: string[], options?: ExecaOptions) => {
+		debug((f) => f`Running \`bw\` with args ${commandArgs}`);
+		return execa('bw', commandArgs, {
 			env: bwEnv,
 			...options,
 		});
+	};
 
+	debug(() => 'Logging out of Bitwarden...');
 	await execa('bw', ['logout'], { reject: false });
-
-	enum BitwardenItemType {
-		login = 1,
-		secureNote = 2,
-		card = 3,
-		identity = 4,
-	}
-
-	interface BitwardenItemSubset {
-		readonly id: string;
-		name: string;
-		login: {
-			username: string;
-			password: string;
-		};
-		type: BitwardenItemType;
-	}
 
 	const { stdout: macosUser } = await execa('id', ['-un']);
 
-	// Save the encrypted password in Bitwarden
+	debug(() => 'Logging into Bitwarden...');
 	await bwExec(['login', bitwarden.email, '--passwordenv', 'BW_PASSWORD']);
 
+	debug(() => 'Unlocking the vault...');
 	const { stdout: bwSession } = await bwExec([
 		'unlock',
 		'--passwordenv',
@@ -74,6 +66,7 @@ async function saveEncryptedAdminPasswordToBitwarden({
 
 	bwEnv.BW_SESSION = bwSession;
 
+	debug(() => 'Searching for an existing AdminControl item...');
 	const adminControlItemName =
 		'Encrypted Admin Password Backup (created by AdminControl)';
 	const { stdout: adminControlBwItemsJson } = await bwExec([
@@ -88,6 +81,9 @@ async function saveEncryptedAdminPasswordToBitwarden({
 	) as BitwardenItemSubset[];
 
 	if (adminControlBwItems.length === 0) {
+		debug(
+			() => 'An existing AdminControl item was not found, creating a new one...'
+		);
 		const { stdout: itemTemplateJson } = await bwExec([
 			'get',
 			'template',
@@ -109,6 +105,10 @@ async function saveEncryptedAdminPasswordToBitwarden({
 			Buffer.from(JSON.stringify(itemTemplate)).toString('base64'),
 		]);
 	} else {
+		debug(
+			() =>
+				'An existing AdminControl item was found, updating the existing one...'
+		);
 		const adminControlBwItemId = adminControlBwItems[0]?.id;
 
 		if (adminControlBwItemId === undefined) {
@@ -133,9 +133,10 @@ async function saveEncryptedAdminPasswordToBitwarden({
 			adminControlBwItemId,
 			Buffer.from(JSON.stringify(adminControlBwItem)).toString('base64'),
 		]);
-
-		await execa('bw', ['logout']);
 	}
+
+	debug(() => 'Logging out of Bitwarden...');
+	await execa('bw', ['logout']);
 }
 
 export async function setAdminPassword({

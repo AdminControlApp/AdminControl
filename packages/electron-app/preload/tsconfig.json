@@ -5,7 +5,10 @@
 		"lib": ["es2021", "DOM"],
 		"target": "es2021",
 		"types": ["node"],
-		"baseUrl": "."
+		"baseUrl": ".",
+		"paths": {
+			"~p/*": ["./src/*"]
+		}
 	},
 	"include": ["./src", "./typings"],
 	"exclude": ["./test"]

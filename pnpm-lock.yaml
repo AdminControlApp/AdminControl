@@ -38,6 +38,7 @@ importers:
       get-secure-input-processes: ^0.0.1
       happy-dom: 2.55.0
       keytar: ^7.9.0
+      ldebug: ^0.1.2
       nanoid-nice: ^1.0.1
       onetime: ^6.0.0
       package-name-regex: ^2.0.6
@@ -73,6 +74,7 @@ importers:
       fast-sha256: 1.3.0
       get-secure-input-processes: 0.0.1
       keytar: 7.9.0
+      ldebug: 0.1.2
       nanoid-nice: 1.0.1
       onetime: 6.0.0
       package-name-regex: 2.0.6
@@ -2390,6 +2392,10 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
+  /any-promise/1.3.0:
+    resolution: {integrity: sha512-7UvmKalWRt1wgjL1RrGxoSJW/0QZFIegpeGvZG9kjp8vrRu55XTHbwnqq2GpXm9uLbcuhxm3IqX9OB4MZR1b2A==}
+    dev: false
+
   /anymatch/3.1.2:
     resolution: {integrity: sha512-P43ePfOAIupkguHUycrc4qJ9kz8ZiuOUijaETwX7THt0Y/GNK7v0aa8rY816xWjZ7rJdA5XdMcpVFTKMq+RvWg==}
     engines: {node: '>= 8'}
@@ -3034,6 +3040,20 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       restore-cursor: 4.0.0
+    dev: false
+
+  /cli-highlighter/1.0.0:
+    resolution: {integrity: sha512-J7sYjWADTTMfOqYb6X9JXJTCWNdqR4W6lQSvSzL1hX4Y4XedKS4wjVOhLN93mxsejjqplkoFX0HZ4gs9ufd9pw==}
+    hasBin: true
+    dependencies:
+      chalk: 5.0.1
+      commander: 9.2.0
+      highlight.js: 11.5.1
+      mz: 2.7.0
+      onetime: 6.0.0
+      outdent: 0.8.0
+      parse5: 6.0.1
+      parse5-htmlparser2-tree-adapter: 6.0.1
     dev: false
 
   /cli-spinners/2.6.1:
@@ -5911,6 +5931,11 @@ packages:
     hasBin: true
     dev: true
 
+  /highlight.js/11.5.1:
+    resolution: {integrity: sha512-LKzHqnxr4CrD2YsNoIf/o5nJ09j4yi/GcH5BnYz9UnVpZdS4ucMgvP61TDty5xJcFGRjnH4DpujkS9bHT3hq0Q==}
+    engines: {node: '>=12.0.0'}
+    dev: false
+
   /hosted-git-info/2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
 
@@ -6733,6 +6758,10 @@ packages:
     resolution: {integrity: sha1-nbe1lJatPzz+8wp1FC0tkwrXJlE=}
     dev: true
 
+  /json-stringify-pretty-compact/3.0.0:
+    resolution: {integrity: sha512-Rc2suX5meI0S3bfdZuA7JMFBGkJ875ApfVyq2WHELjBiiG22My/l7/8zPpH/CfFVQHuVLd8NLR0nv6vi0BYYKA==}
+    dev: false
+
   /json-stringify-safe/5.0.1:
     resolution: {integrity: sha1-Epai1Y/UXxmg9s4B1lcB4sc1tus=}
 
@@ -6804,6 +6833,10 @@ packages:
       pako: 1.0.11
       readable-stream: 2.3.7
       set-immediate-shim: 1.0.1
+
+  /just-zip-it/3.0.2:
+    resolution: {integrity: sha512-JhnDos0Qv+wDBImi94AG9SKXQqvdWPI95NNRuSMwA56qjyBEmo8hgW4BxeiwU3RSnjH7pQ6D36MzvFVWeLrtsg==}
+    dev: false
 
   /jwa/1.4.1:
     resolution: {integrity: sha512-qiLX/xhEEFKUAJ6FiBMbes3w9ATzyk5W7Hvzpa/SLYdxNtng+gcurvrI7TbACjIXlsJyr05/S1oUhZrc63evQA==}
@@ -6927,6 +6960,14 @@ packages:
 
   /lazy-val/1.0.5:
     resolution: {integrity: sha512-0/BnGCCfyUMkBpeDgWihanIAF9JmZhHBgUhEqzvf+adhNGLoP6TaiI5oF8oyb3I45P+PcnrqihSf01M0l0G5+Q==}
+
+  /ldebug/0.1.2:
+    resolution: {integrity: sha512-q4EE67a83jpl5Ko6NnZFpLqBaANl3aytpTKBRA9DUSAdG50N4bQOtEsqOZZh0vZSJFDMyMefCBZpZ2p9cgn4Yg==}
+    dependencies:
+      cli-highlighter: 1.0.0
+      json-stringify-pretty-compact: 3.0.0
+      just-zip-it: 3.0.2
+    dev: false
 
   /levn/0.3.0:
     resolution: {integrity: sha1-OwmSTt+fCDwEkP3UwLxEIeBHZO4=}
@@ -7796,6 +7837,14 @@ packages:
     engines: {node: '>=12.0.0'}
     dev: true
 
+  /mz/2.7.0:
+    resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}
+    dependencies:
+      any-promise: 1.3.0
+      object-assign: 4.1.1
+      thenify-all: 1.6.0
+    dev: false
+
   /nanoid-nice/1.0.1:
     resolution: {integrity: sha512-HHhAQer6qKNSSaY+P4ArvTocslXZM9Xp4Mc8F661T7avUxEAuhbkSmbnD+YDE1qPijHsxK2OlIqjRWUNXc2tOg==}
     dependencies:
@@ -8372,6 +8421,12 @@ packages:
     resolution: {integrity: sha512-kHt7kzLoS9VBZfUsiKjv43mr91ea+U05EyKkEtqp7vNbHxmaVuEqN7XxeEVnGrMtYOAxGrDElSi96K7EgO1zCA==}
     engines: {node: '>=6'}
     dev: true
+
+  /parse5-htmlparser2-tree-adapter/6.0.1:
+    resolution: {integrity: sha512-qPuWvbLgvDGilKc5BoicRovlT4MtYT6JfJyBOMDsKoiT+GiuP5qyrPCnR9HcPECIJJmZh5jRndyNThnhhb/vlA==}
+    dependencies:
+      parse5: 6.0.1
+    dev: false
 
   /parse5/6.0.1:
     resolution: {integrity: sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==}
@@ -9816,6 +9871,19 @@ packages:
       promise: 8.1.0
       qs: 6.10.3
     dev: true
+
+  /thenify-all/1.6.0:
+    resolution: {integrity: sha1-GhkY1ALY/D+Y+/I02wvMjMEOlyY=}
+    engines: {node: '>=0.8'}
+    dependencies:
+      thenify: 3.3.1
+    dev: false
+
+  /thenify/3.3.1:
+    resolution: {integrity: sha512-RVZSIV5IG10Hk3enotrhvz0T9em6cyHBLkH/YAZuKqd8hRkKhSfCGIcP2KUY0EPxndzANBmNllzWPwak+bheSw==}
+    dependencies:
+      any-promise: 1.3.0
+    dev: false
 
   /through/2.3.8:
     resolution: {integrity: sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=}

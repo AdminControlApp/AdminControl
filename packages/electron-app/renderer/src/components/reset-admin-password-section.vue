@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { notify } from 'vue3-notify';
+import { VueSpinner } from 'vue3-spinners';
 
 import { useEncryptedAdminPasswordStore } from '~r/store/encrypted-admin-password.js';
 
