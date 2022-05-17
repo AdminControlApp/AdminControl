@@ -11,6 +11,9 @@ export const store = {
 	async secureSet(property: string, value: string) {
 		await keytar.setPassword('AdminControl', property, value);
 	},
+	async secureDelete(property: string) {
+		await keytar.deletePassword('AdminControl', property);
+	},
 	async secureGet(property: string) {
 		return keytar.getPassword('AdminControl', property);
 	},
