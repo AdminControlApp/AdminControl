@@ -1,5 +1,5 @@
 import sharp = require('sharp');
-import { getProjectDir } from 'lion-system';
+import { getProjectDir } from 'lionconfig';
 import * as path from 'node:path';
 
 const monorepoDir = getProjectDir(__dirname, { monorepoRoot: true })
