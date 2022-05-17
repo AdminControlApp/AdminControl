@@ -7,8 +7,6 @@
 	"scripts": {
 		"start": "node-ts ./src/bin/cli.ts",
 		"preinstall": "pnpm build",
-		"lint": "eslint --fix --cache .",
-		"prettier": "prettier --write .",
 		"build": "node-ts ./scripts/build.ts"
 	},
 	"dependencies": {

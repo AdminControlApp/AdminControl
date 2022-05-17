@@ -1,8 +1,9 @@
 import * as execa from 'execa';
-import { copyPackageFiles, rmDist } from 'lion-system';
+import { chProjectDir, copyPackageFiles, rmDist } from 'lion-system';
 import * as fs from 'node:fs';
 
 (async () => {
+	chProjectDir(import.meta.url);
 	rmDist();
 	execa.commandSync('cargo build --release', {
 		cwd: './src/encryption-brute-forcer',
