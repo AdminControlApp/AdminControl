@@ -11,17 +11,17 @@ interface Preferences {
 	twilioAuthToken: string;
 	destinationPhoneNumber: string;
 	originPhoneNumber: string;
-	bitwardenMasterPassword: string;
 	encryptedAdminPassword: string | undefined;
 	adminPasswordMaxSaltValue: number;
 }
+
+const bitwardenMasterPassword = $ref('');
 
 const preferences = $ref<Preferences>({
 	twilioAccountSid: '',
 	twilioAuthToken: '',
 	destinationPhoneNumber: '',
 	originPhoneNumber: '',
-	bitwardenMasterPassword: '',
 	encryptedAdminPassword: undefined,
 	adminPasswordMaxSaltValue: 0,
 });
@@ -134,10 +134,10 @@ async function resetAdminPassword() {
 				encrypted: newEncryptedAdminPassword,
 			},
 			bitwarden:
-				preferences.bitwardenMasterPassword === ''
+				bitwardenMasterPassword === ''
 					? undefined
 					: {
-							masterPassword: preferences.bitwardenMasterPassword,
+							masterPassword: bitwardenMasterPassword,
 					  },
 		});
 
@@ -226,12 +226,6 @@ async function resetAdminPassword() {
 				type="text"
 				class="input"
 			/>
-			<span class="input-label">Bitwarden Master Password:</span>
-			<input
-				v-model="preferences.bitwardenMasterPassword"
-				type="password"
-				class="input"
-			/>
 		</div>
 		<button
 			class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md font-medium mt-8 disabled:(bg-green-300 cursor-not-allowed)"
@@ -243,27 +237,43 @@ async function resetAdminPassword() {
 			</div>
 			<div v-else>Save Settings</div>
 		</button>
-		<button
-			class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-medium mt-8 disabled:(bg-orange-300 cursor-not-allowed)"
-			:disabled="isAdminPasswordResetting"
-			@click="resetAdminPassword"
-		>
-			<div v-if="isAdminPasswordResetting" class="row items-center">
-				<VueSpinner class="mr-2" /> Resetting Admin Password...
+
+		<!-- Reset Admin Password Section -->
+		<div class="column items-center mt-8 border-1 rounded-md p-8">
+			<h1 class="font-black text-3xl">Reset Admin Password</h1>
+			<div
+				class="grid grid-cols-[max-content,1fr] gap-2 pt-4 items-center mb-4"
+			>
+				<span class="input-label">Bitwarden Master Password:</span>
+				<input
+					v-model="bitwardenMasterPassword"
+					type="password"
+					class="input"
+				/>
 			</div>
-			<div v-else>Reset Admin Password</div>
-		</button>
-		<div class="row items-center gap-2 mt-1.5">
-			<input
-				id="reset-screen-time-passcode-checkbox"
-				v-model="shouldResetScreenTimePasscode"
-				class="w-4 h-4"
-				type="checkbox"
-			/>
-			<label for="reset-screen-time-passcode-checkbox">
-				Reset Screen Time Passcode
-			</label>
+			<button
+				class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md font-medium disabled:(bg-orange-300 cursor-not-allowed)"
+				:disabled="isAdminPasswordResetting"
+				@click="resetAdminPassword"
+			>
+				<div v-if="isAdminPasswordResetting" class="row items-center">
+					<VueSpinner class="mr-2" /> Resetting Admin Password...
+				</div>
+				<div v-else>Reset Admin Password</div>
+			</button>
+			<div class="items-center row items-center gap-2 mt-1">
+				<input
+					id="reset-screen-time-passcode-checkbox"
+					v-model="shouldResetScreenTimePasscode"
+					class="w-4 h-4"
+					type="checkbox"
+				/>
+				<label for="reset-screen-time-passcode-checkbox">
+					Reset Screen Time Passcode
+				</label>
+			</div>
 		</div>
+
 		<div v-if="preferences.encryptedAdminPassword !== undefined" class="mt-2">
 			<div class="row gap-1">
 				<span class="font-bold">Encrypted Admin Password: </span>
