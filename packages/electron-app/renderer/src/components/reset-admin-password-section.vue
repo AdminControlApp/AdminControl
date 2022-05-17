@@ -3,9 +3,12 @@ import { notify } from 'vue3-notify';
 import { VueSpinner } from 'vue3-spinners';
 
 import { useEncryptedAdminPasswordStore } from '~r/store/encrypted-admin-password.js';
+import { useSettingsStore } from '~r/store/settings.js';
 import { debug } from '~r/utils/debug.js';
 
 let isAdminPasswordResetting = $ref(false);
+
+const settingsStore = useSettingsStore();
 
 const currentAdminPassword = $ref<string>();
 const currentScreenTimePasscode = $ref<string>();
@@ -31,7 +34,9 @@ async function resetAdminPassword() {
 	try {
 		isAdminPasswordResetting = true;
 		let secretCode: string;
+
 		if (providedSecretCode === '') {
+			debug(() => 'Retrieving secret code...');
 			secretCode = await retrieveSecretCode();
 		} else {
 			secretCode = providedSecretCode;
@@ -48,6 +53,7 @@ async function resetAdminPassword() {
 				);
 			}
 
+			debug(() => 'Decrypting admin password...');
 			oldAdminPassword = await decryptAdminPassword({
 				encryptedAdminPassword:
 					encryptedAdminPasswordStore.encryptedAdminPassword,
@@ -58,6 +64,7 @@ async function resetAdminPassword() {
 			oldAdminPassword = currentAdminPassword;
 		}
 
+		debug(() => 'Encrypting new admin password...');
 		const { encryptedAdminPassword: newEncryptedAdminPassword, maxSaltValue } =
 			await encryptAdminPassword({
 				adminPassword: newAdminPassword,
@@ -83,10 +90,13 @@ async function resetAdminPassword() {
 					: {
 							email: bitwardenEmail,
 							masterPassword: bitwardenMasterPassword,
+							clientId: settingsStore.settings.bitwardenClientId!,
+							clientSecret: settingsStore.settings.bitwardenClientSecret!,
 					  },
 		});
 
 		if (shouldResetScreenTimePasscode) {
+			debug(() => 'Updating screen time passcode...');
 			const oldScreenTimePasscode =
 				currentScreenTimePasscode ??
 				getScreenTimePasscodeFromAdminPassword({

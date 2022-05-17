@@ -5,11 +5,11 @@ importers:
   .:
     specifiers:
       lion-system: ^1.3.34
-      lionconfig: ^1.6.27
+      lionconfig: ^1.6.31
       typescript: ^4.6.4
     devDependencies:
       lion-system: 1.3.34
-      lionconfig: 1.6.27_typescript@4.6.4
+      lionconfig: 1.6.31_typescript@4.6.4
       typescript: 4.6.4
 
   packages/electron-app:
@@ -38,7 +38,7 @@ importers:
       get-secure-input-processes: ^0.0.1
       happy-dom: 2.55.0
       keytar: ^7.9.0
-      ldebug: ^0.1.2
+      ldebug: ^1.0.0
       nanoid-nice: ^1.0.1
       onetime: ^6.0.0
       package-name-regex: ^2.0.6
@@ -74,7 +74,7 @@ importers:
       fast-sha256: 1.3.0
       get-secure-input-processes: 0.0.1
       keytar: 7.9.0
-      ldebug: 0.1.2
+      ldebug: 1.0.0
       nanoid-nice: 1.0.1
       onetime: 6.0.0
       package-name-regex: 2.0.6
@@ -6961,8 +6961,8 @@ packages:
   /lazy-val/1.0.5:
     resolution: {integrity: sha512-0/BnGCCfyUMkBpeDgWihanIAF9JmZhHBgUhEqzvf+adhNGLoP6TaiI5oF8oyb3I45P+PcnrqihSf01M0l0G5+Q==}
 
-  /ldebug/0.1.2:
-    resolution: {integrity: sha512-q4EE67a83jpl5Ko6NnZFpLqBaANl3aytpTKBRA9DUSAdG50N4bQOtEsqOZZh0vZSJFDMyMefCBZpZ2p9cgn4Yg==}
+  /ldebug/1.0.0:
+    resolution: {integrity: sha512-53/Md5a7vSu6NaIZeVgBRpmKUoIf4IPLlKawsSUTL0Q1Ipn2H20bcZIYIlWLBGZW2o5WmEL8wev3cn7rht2o1w==}
     dependencies:
       cli-highlighter: 1.0.0
       json-stringify-pretty-compact: 3.0.0
@@ -7112,8 +7112,8 @@ packages:
       tslib: 2.4.0
       typescript: 4.6.4
 
-  /lionconfig/1.6.27_typescript@4.6.4:
-    resolution: {integrity: sha512-mzVwwuTgh7KmS3mqFIG+G3moOhk4HZqfVQnGZQT0fDDmxNJHOut16wJVQkwWZdxfTeWTWz4EHy+1B+dIkZPq+g==}
+  /lionconfig/1.6.31_typescript@4.6.4:
+    resolution: {integrity: sha512-YwbrplhGBAy59pXxDy9qFrc1aFWU97mI0aP7X6OL/AqDyFFUm0JqF/U0PRhczZd70AlKwSCaBitcO3AISymFsQ==}
     hasBin: true
     dependencies:
       '@commitlint/cli': 17.0.0_@swc+core@1.2.186

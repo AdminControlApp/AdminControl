@@ -13,4 +13,5 @@ export interface BitwardenItemSubset {
 		password: string;
 	};
 	type: BitwardenItemType;
+	notes: string;
 }

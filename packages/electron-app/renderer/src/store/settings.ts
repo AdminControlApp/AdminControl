@@ -15,6 +15,8 @@ export const useSettingsStore = defineStore('pinia', {
 			destinationPhoneNumber: undefined,
 			originPhoneNumber: undefined,
 			twilioAuthToken: undefined,
+			bitwardenClientId: undefined,
+			bitwardenClientSecret: undefined,
 		},
 	}),
 	actions: {
@@ -27,6 +29,10 @@ export const useSettingsStore = defineStore('pinia', {
 				(await store.secureGet('destinationPhoneNumber')) ?? '';
 			this.settings.originPhoneNumber =
 				(await store.secureGet('originPhoneNumber')) ?? '';
+			this.settings.bitwardenClientId =
+				(await store.secureGet('bitwardenClientId')) ?? '';
+			this.settings.bitwardenClientSecret =
+				(await store.secureGet('bitwardenClientSecret')) ?? '';
 		},
 		async saveSettings() {
 			await Promise.all(
@@ -34,7 +40,7 @@ export const useSettingsStore = defineStore('pinia', {
 					async ([settingKey, settingValue]) => {
 						if (settingValue === undefined) {
 							await store.secureDelete(settingKey);
-						} else {
+						} else if (settingValue !== '') {
 							await store.secureSet(settingKey, settingValue);
 						}
 					}

@@ -12,6 +12,7 @@ let oldSettings = $ref<AdminControlSettings>();
 let areSettingsSaving = $ref(false);
 async function saveSettings() {
 	areSettingsSaving = true;
+
 	try {
 		await settingsStore.saveSettings();
 		oldSettings = { ...settingsStore.settings };
@@ -76,6 +77,27 @@ async function saveSettings() {
 			<input
 				v-model="settingsStore.settings.originPhoneNumber"
 				type="text"
+				class="input"
+			/>
+			<div class="column">
+				<span class="input-label">Bitwarden Client ID:</span>
+				<a
+					target="_blank"
+					href="https://vault.bitwarden.com/#/settings/account"
+					class="text-orange-400 hover:text-orange-600 underline text-xs self-start"
+				>
+					Link to API Key
+				</a>
+			</div>
+			<input
+				v-model="settingsStore.settings.bitwardenClientId"
+				type="text"
+				class="input"
+			/>
+			<span class="input-label">Bitwarden Client Secret:</span>
+			<input
+				v-model="settingsStore.settings.bitwardenClientSecret"
+				type="password"
 				class="input"
 			/>
 		</div>
