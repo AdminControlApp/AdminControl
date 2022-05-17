@@ -1,5 +1,5 @@
 import * as execa from 'execa';
-import { chProjectDir, copyPackageFiles, rmDist } from 'lion-system';
+import { chProjectDir, copyPackageFiles, rmDist } from 'lionconfig';
 import * as fs from 'node:fs';
 
 (async () => {
