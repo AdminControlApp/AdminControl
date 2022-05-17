@@ -32,10 +32,10 @@ const config: UserConfig = {
 		},
 		rollupOptions: {
 			external: [
-				/electron\.cjs/,
 				'electron',
 				'@admincontrol/encryption',
 				'keytar',
+				'ldebug',
 				...builtinModules.flatMap((p) => [p, `node:${p}`]),
 			],
 			output: {
