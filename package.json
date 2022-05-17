@@ -15,7 +15,7 @@
 	},
 	"devDependencies": {
 		"lion-system": "^1.3.34",
-		"lionconfig": "^1.6.31",
+		"lionconfig": "^1.6.33",
 		"typescript": "^4.6.4"
 	}
 }
