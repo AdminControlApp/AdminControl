@@ -1,5 +1,6 @@
 /* eslint-disable unicorn/prefer-module */
 
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import vue from '@vitejs/plugin-vue';
 import { builtinModules } from 'node:module';
 import * as path from 'node:path';
@@ -29,6 +30,7 @@ export default defineConfig({
 		}),
 		WindiCSS(),
 		jsImports(),
+		nodeResolve({browser: true}),
 	],
 	server: {
 		fs: {
