@@ -15,7 +15,7 @@
 		"build:preload": "cd ./preload && vite build",
 		"build:renderer": "cd ./renderer && vite build",
 		"create-icons": "node-ts ./scripts/create-icons.ts",
-		"compile": "cross-env MODE=production pnpm run build && electron-builder build --config .electron-builder.config.js --dir --config.asar=false",
+		"compile": "node-ts ./scripts/compile.ts",
 		"test": "pnpm run test:main && pnpm run test:preload && pnpm run test:renderer && pnpm run test:e2e",
 		"test:e2e": "pnpm run build && vitest run",
 		"test:main": "vitest run -r main --passWithNoTests",
