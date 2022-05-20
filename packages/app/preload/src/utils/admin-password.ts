@@ -1,6 +1,6 @@
+import type { Options as ExecaOptions } from '@commonjs/execa';
+import execa from '@commonjs/execa';
 import delay from 'delay';
-import type { Options as ExecaOptions } from 'execa';
-import execa from 'execa';
 import { nanoid } from 'nanoid-nice';
 import { Buffer } from 'node:buffer';
 

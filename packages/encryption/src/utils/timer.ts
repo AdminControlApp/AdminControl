@@ -1,4 +1,4 @@
-import execa from 'execa';
+import execa from '@commonjs/execa';
 
 import { getBruteForcerExecutablePath } from '~/utils/brute-forcer.js';
 

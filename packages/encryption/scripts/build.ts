@@ -1,4 +1,4 @@
-import * as execa from 'execa';
+import * as execa from '@commonjs/execa';
 import { chProjectDir, copyPackageFiles, rmDist } from 'lionconfig';
 import * as fs from 'node:fs';
 

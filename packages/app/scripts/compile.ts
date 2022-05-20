@@ -1,4 +1,4 @@
-import execa from 'execa';
+import * as execa from '@commonjs/execa';
 import { chProjectDir } from 'lionconfig';
 
 // Create a temporary `dist/` folder to create the final bundled app in

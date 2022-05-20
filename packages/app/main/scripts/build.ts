@@ -1,4 +1,4 @@
-import * as execa from 'execa';
+import * as execa from '@commonjs/execa';
 import * as path from 'node:path';
 import * as process from 'node:process';
 

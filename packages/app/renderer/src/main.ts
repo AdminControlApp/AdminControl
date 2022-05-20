@@ -1,5 +1,4 @@
 import 'virtual:windi.css';
-import 'vue3-spinners/spinners.css';
 
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';

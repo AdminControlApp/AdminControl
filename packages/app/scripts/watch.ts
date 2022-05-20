@@ -2,8 +2,8 @@
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 import electronPath = require('electron');
-import type { ExecaChildProcess } from 'execa';
-import * as execa from 'execa';
+import type { ExecaChildProcess } from '@commonjs/execa';
+import * as execa from '@commonjs/execa';
 import type { Buffer } from 'node:buffer';
 import * as process from 'node:process';
 import type { OutputPlugin } from 'rollup';

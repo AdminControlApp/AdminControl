@@ -10,7 +10,7 @@
 		"build": "node-ts ./scripts/build.ts"
 	},
 	"dependencies": {
-		"execa": "^5.1.1",
+		"@commonjs/execa": "npm:execa@^5.1.1",
 		"hash.js": "^1.1.7",
 		"onetime": "^6.0.0",
 		"pkg-dir": "^6.0.1"
