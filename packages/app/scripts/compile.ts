@@ -10,7 +10,11 @@ execa.commandSync('pnpm run build', {
 	env: { MODE: 'production' },
 });
 
+execa.commandSync('pnpm install --shamefully-hoist', { stdio: 'inherit' });
+
 execa.commandSync(
 	'electron-builder build --config .electron-builder.config.js --dir --config.asar=false',
 	{ stdio: 'inherit', env: { MODE: 'production' } }
 );
+
+execa.commandSync('pnpm install', { stdio: 'inherit' });
