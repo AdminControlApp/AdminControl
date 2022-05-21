@@ -34,7 +34,7 @@ importers:
       electron-updater: ^5.0.1
       fast-deep-equal: ^3.1.3
       fast-sha256: ^1.3.0
-      get-secure-input-processes: ^0.0.1
+      get-secure-input-processes: ^0.0.2
       happy-dom: 2.55.0
       is-ci: ^3.0.1
       keytar: ^7.9.0
@@ -72,7 +72,7 @@ importers:
       electron-updater: 5.0.1
       fast-deep-equal: 3.1.3
       fast-sha256: 1.3.0
-      get-secure-input-processes: 0.0.1
+      get-secure-input-processes: 0.0.2
       is-ci: 3.0.1
       keytar: 7.9.0
       ldebug: 1.0.0
@@ -4778,8 +4778,26 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: false
 
+  /get-secure-input-processes-darwin-arm64/0.0.2:
+    resolution: {integrity: sha512-ODBoTrlWM4nfa/+y2j6IcgymMqUgQgXON5O8+RR9pkXnO0S87sMFpvI8MTFcjID8v17Zr7uB8iC22XoLwpI7Kw==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
   /get-secure-input-processes-darwin-x64/0.0.1:
     resolution: {integrity: sha512-WnafKpFNZqayN4vIQIdXS9ghnxpVCxv2sDM6j+2vTO0TQj6JnHa4BzKK7ULB3zOTsrqWRPagrkD+LZymd6G+FA==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /get-secure-input-processes-darwin-x64/0.0.2:
+    resolution: {integrity: sha512-UXQheeAKUg9l6MENj7ZL/Efcd9VHMK+YpateLYoh/cffxAYs4UdadDyduufs9BYtfXlKhYNrsbcQoKgknFK1Hg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
@@ -4792,6 +4810,14 @@ packages:
     engines: {node: '>= 10'}
     optionalDependencies:
       get-secure-input-processes-darwin-x64: 0.0.1
+    dev: false
+
+  /get-secure-input-processes/0.0.2:
+    resolution: {integrity: sha512-FsAmR+lCFxzrN3iKuzeS+O1lxzfw2gVOOfEkQs20gT3Js7dyyloP/tLqTgbZcCUEXDgFw3k+oXdeSBqZsvo7Qw==}
+    engines: {node: '>= 14'}
+    optionalDependencies:
+      get-secure-input-processes-darwin-arm64: 0.0.2
+      get-secure-input-processes-darwin-x64: 0.0.2
     dev: false
 
   /get-set-props/0.1.0:
