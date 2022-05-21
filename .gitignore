@@ -1,6 +1,2 @@
 target
 packages/phone-call-input
-packages/phone-call-input/*
-!packages/phone-call-input/dist
-packages/phone-call-input/dist/*
-!packages/phone-call-input/dist/.gitkeep
