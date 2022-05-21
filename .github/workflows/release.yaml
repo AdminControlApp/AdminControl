@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths-ignore:
-      - packages/website
+      - packages/website/**
       - .github/workflows/github-pages.yaml
 
 jobs:
