@@ -53,12 +53,3 @@ jobs:
           pnpm compile:electron
         env:
           GH_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
-
-      - uses: marvinpinto/action-automatic-releases@latest
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          prerelease: false
-          files: |
-            packages/app/dist
-          automatic_release_tag: latest
-          title: "AdminControl"

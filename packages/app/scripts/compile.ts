@@ -18,7 +18,7 @@ if (process.env.GITHUB_ACTIONS === undefined) {
 } else {
 	console.info('CI detected; building for publish...');
 	execa.commandSync(
-		'electron-builder build --config .electron-builder.config.js --config.asar=false --mac',
+		'electron-builder build --config .electron-builder.config.js --config.asar=false --mac --publish always',
 		{ stdio: 'inherit', env: { MODE: 'production' } }
 	);
 }
