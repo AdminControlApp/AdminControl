@@ -32,7 +32,7 @@
 		"execa": "latest",
 		"typescript": "latest",
 		"vite": "latest",
-		"vite-plugin-js-imports": "latest",
+		"rollup-plugin-js-imports": "latest",
 		"vite-plugin-windicss": "latest",
 		"vue-tsc": "latest",
 		"windicss": "latest"

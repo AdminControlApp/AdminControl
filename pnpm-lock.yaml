@@ -183,6 +183,37 @@ importers:
     devDependencies:
       '@types/node': 17.0.35
 
+  packages/website:
+    specifiers:
+      '@types/node': latest
+      '@vitejs/plugin-vue': latest
+      desm: latest
+      execa: latest
+      lionconfig: latest
+      pinia: latest
+      typescript: latest
+      vite: latest
+      vite-plugin-js-imports: latest
+      vite-plugin-windicss: latest
+      vue: latest
+      vue-tsc: latest
+      windicss: latest
+    dependencies:
+      pinia: 2.0.14_4nej522qscl2iwygtb75pjp4ie
+      vue: 3.2.35
+    devDependencies:
+      '@types/node': 17.0.35
+      '@vitejs/plugin-vue': 2.3.3_vite@2.9.9+vue@3.2.35
+      desm: 1.2.0
+      execa: 6.1.0
+      lionconfig: 1.7.17_typescript@4.6.4
+      typescript: 4.6.4
+      vite: 2.9.9
+      vite-plugin-js-imports: 1.1.1_vite@2.9.9
+      vite-plugin-windicss: 1.8.4_vite@2.9.9
+      vue-tsc: 0.34.15_typescript@4.6.4
+      windicss: 3.5.4
+
 packages:
 
   /7zip-bin/5.1.1:
@@ -1454,14 +1485,45 @@ packages:
       vue: 3.2.35
     dev: true
 
+  /@vitejs/plugin-vue/2.3.3_vite@2.9.9+vue@3.2.35:
+    resolution: {integrity: sha512-SmQLDyhz+6lGJhPELsBdzXGc+AcaT8stgkbiTFGpXPe8Tl1tJaBw1A6pxDqDuRsVkD8uscrkx3hA7QDOoKYtyw==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      vite: ^2.5.10
+      vue: ^3.2.25
+    dependencies:
+      vite: 2.9.9
+      vue: 3.2.35
+    dev: true
+
+  /@volar/code-gen/0.34.15:
+    resolution: {integrity: sha512-g30glPo5N9bJocf1NBt802UcmqgZ3UtPst9b/Tangj+zR+K2RV5S2Un/suR6ZRiETXtg3nmrUcCgsTSJ6PC29A==}
+    dependencies:
+      '@volar/source-map': 0.34.15
+    dev: true
+
   /@volar/code-gen/0.34.9:
     resolution: {integrity: sha512-LHkuA4VfjeMjouMyE5LkQyr/q7BBBL+RnpV+4xLN5ad2fW639vUlJKK8JIx6DswMlmLSF88N5s4WFGFmLcl40g==}
     dependencies:
       '@volar/source-map': 0.34.9
     dev: true
 
+  /@volar/source-map/0.34.15:
+    resolution: {integrity: sha512-Y3sENK/kqsgD7Vtve6gq6/Dor6JuoJWR+s9iwHcHTcA4VDkJnJRGHcvP8S3SVBsWl7T9qtlnvH3WCbFj7WlXrw==}
+    dev: true
+
   /@volar/source-map/0.34.9:
     resolution: {integrity: sha512-+n1hb6SPKV6Y/MNDYAO9uwB+oSDmoVlFVuYrb6QiZnLowqjB9WSoDg31GRHGNjfepjTruOiAkKa3bLMc0rFsOg==}
+    dev: true
+
+  /@volar/vue-code-gen/0.34.15:
+    resolution: {integrity: sha512-GglGsHxPPb7mW2v//5MUrkzxAO68YEIL5bRwpZD0Cp9np34keQdd1SHB5DXdoyU38cnfHJWjBlqCYpTnz2CR/w==}
+    dependencies:
+      '@volar/code-gen': 0.34.15
+      '@volar/source-map': 0.34.15
+      '@vue/compiler-core': 3.2.35
+      '@vue/compiler-dom': 3.2.35
+      '@vue/shared': 3.2.35
     dev: true
 
   /@volar/vue-code-gen/0.34.9:
@@ -1472,6 +1534,16 @@ packages:
       '@vue/compiler-core': 3.2.35
       '@vue/compiler-dom': 3.2.35
       '@vue/shared': 3.2.35
+    dev: true
+
+  /@volar/vue-typescript/0.34.15:
+    resolution: {integrity: sha512-7jwhYl1NQB0uYgTO74x+OBSD4SPF7bI3m1KFQ98Wt/NOTXr57YcUyOkDBImcTKRLX3PHG9ex6OfT7u3jiZ2Zzg==}
+    dependencies:
+      '@volar/code-gen': 0.34.15
+      '@volar/source-map': 0.34.15
+      '@volar/vue-code-gen': 0.34.15
+      '@vue/compiler-sfc': 3.2.35
+      '@vue/reactivity': 3.2.35
     dev: true
 
   /@volar/vue-typescript/0.34.9:
@@ -9390,6 +9462,15 @@ packages:
     dev: true
     optional: true
 
+  /vite-plugin-js-imports/1.1.1_vite@2.9.9:
+    resolution: {integrity: sha512-c430jHbuXHmWfI/xpZTbhfi5bt7okpOoyDDSeWnNjZ7fcIXZDWkocoHT+sgMefIXdOCyJcoVcMC2+3RiKRqJ/w==}
+    deprecated: This package has moved to rollup-plugin-js-imports
+    peerDependencies:
+      vite: ^2.9.0
+    dependencies:
+      vite: 2.9.9
+    dev: true
+
   /vite-plugin-windicss/1.8.4_vite@2.9.9:
     resolution: {integrity: sha512-LSZAO8BZn3x406GRbYX5t5ONXXJVdqiQtN1qrznLA/Dy5/NzZVhfcrL6N1qEYYO7HsCDT4pLAjTzObvDnM9Y8A==}
     peerDependencies:
@@ -9524,6 +9605,16 @@ packages:
       semver: 7.3.7
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /vue-tsc/0.34.15_typescript@4.6.4:
+    resolution: {integrity: sha512-xRNaOpg/UCHnRcz9vOdbIjB7uCQ0mifHpqNaejAho7em4WLOzNdJx4R9HMJrqWek44keg7AblIiwM+86QfXx9g==}
+    hasBin: true
+    peerDependencies:
+      typescript: '*'
+    dependencies:
+      '@volar/vue-typescript': 0.34.15
+      typescript: 4.6.4
     dev: true
 
   /vue-tsc/0.34.9_typescript@4.6.4:
