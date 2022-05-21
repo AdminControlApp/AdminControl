@@ -1,6 +1,5 @@
 import * as execa from '@commonjs/execa';
 import { chProjectDir } from 'lionconfig';
-import process from 'node:process';
 
 chProjectDir(__dirname);
 
