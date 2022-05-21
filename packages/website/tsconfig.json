@@ -1,0 +1,13 @@
+{
+	"extends": "lionconfig/tsconfig.json",
+	"compilerOptions": {
+		"lib": ["ESNext", "DOM", "DOM.Iterable"],
+		"outDir": "dist",
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["./src/*"],
+			"~test/*": ["./src/*"]
+		}
+	},
+	"include": ["./src", "./typings"]
+}

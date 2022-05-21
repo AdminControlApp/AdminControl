@@ -1,0 +1,40 @@
+{
+	"name": "{{project_name}}",
+	"version": "0.0.0",
+	"description": "{{description}}",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/{{repository}}.git"
+	},
+	"homepage": "https://github.com/{{repository}}#readme",
+	"author": {
+		"name": "Leon Si",
+		"email": "contact@leonzalion.com",
+		"url": "https://leonzalion.com"
+	},
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vue-tsc --noEmit && vite build",
+		"preview": "vite preview",
+		"prepare": "lion-git-hooks",
+		"typecheck": "vue-tsc --noEmit"
+	},
+	"dependencies": {
+		"pinia": "latest",
+		"vue": "latest"
+	},
+	"devDependencies": {
+		"lionconfig": "latest",
+		"@types/node": "latest",
+		"@vitejs/plugin-vue": "latest",
+		"desm": "latest",
+		"execa": "latest",
+		"typescript": "latest",
+		"vite": "latest",
+		"vite-plugin-js-imports": "latest",
+		"vite-plugin-windicss": "latest",
+		"vue-tsc": "latest",
+		"windicss": "latest"
+	}
+}
