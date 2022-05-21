@@ -1,5 +1,5 @@
 target
 packages/phone-call-input
-dist/*
-!dist/.gitkeep
+**/dist/*
+!**/dist/.gitkeep
 
