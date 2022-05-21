@@ -26,7 +26,7 @@ importers:
       cross-env: 7.0.3
       delay: ^5.0.0
       desm: ^1.2.0
-      electron: ^18.2.4
+      electron: 18.2.4
       electron-builder: 23.0.3
       electron-devtools-installer: 3.2.0
       electron-store: ^8.0.1
@@ -8528,7 +8528,7 @@ packages:
     engines: {node: '>= 10'}
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.3
+      debug: 4.3.4
       socks: 2.6.2
     transitivePeerDependencies:
       - supports-color
