@@ -39,6 +39,8 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - uses: Swatinem/rust-cache@v1
+        with:
+          target: ./packages/encryption/src/encryption-brute-forcer/target
 
       - name: Install dependencies
         run: pnpm run setup-monorepo && pnpm install
