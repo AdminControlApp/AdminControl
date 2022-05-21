@@ -6,12 +6,15 @@
 		"pnpm": ">=7.0.0"
 	},
 	"scripts": {
-		"setup-monorepo": "node ./packages/scripts/src/setup.js",
+		"setup-monorepo": "node ./packages/scripts/src/bin/setup.js",
 		"prepare": "lion-git-hooks",
-		"pnpm:devPreinstall": "node ./packages/scripts/src/setup-check.js",
+		"pnpm:devPreinstall": "node ./packages/scripts/src/bin/setup-check.js",
 		"dev:electron": "pnpm --filter=@admincontrol/app run dev",
 		"build:electron": "pnpm --filter=@admincontrol/app run build",
-		"compile:electron": "pnpm --filter=@admincontrol/app run compile"
+		"compile:electron": "pnpm --filter=@admincontrol/app run compile",
+		"dev:website": "pnpm --filter=@admincontrol/website",
+		"prune:for-website": "node ./packages/scripts/src/bin/prune-for-website.js",
+		"prune:for-app": "node ./packages/scripts/src/bin/prune-for-app.js"
 	},
 	"devDependencies": {
 		"lionconfig": "^1.7.17",

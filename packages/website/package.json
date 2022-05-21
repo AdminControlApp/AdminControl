@@ -1,40 +1,28 @@
 {
-	"name": "{{project_name}}",
+	"name": "@admincontrol/website",
 	"version": "0.0.0",
-	"description": "{{description}}",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/{{repository}}.git"
-	},
-	"homepage": "https://github.com/{{repository}}#readme",
-	"author": {
-		"name": "Leon Si",
-		"email": "contact@leonzalion.com",
-		"url": "https://leonzalion.com"
-	},
+	"description": "The website for AdminControl.",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
 		"build": "vue-tsc --noEmit && vite build",
 		"preview": "vite preview",
-		"prepare": "lion-git-hooks",
 		"typecheck": "vue-tsc --noEmit"
 	},
 	"dependencies": {
-		"pinia": "latest",
-		"vue": "latest"
+		"pinia": "^2.0.14",
+		"vue": "^3.2.35"
 	},
 	"devDependencies": {
-		"lionconfig": "latest",
-		"@types/node": "latest",
-		"@vitejs/plugin-vue": "latest",
-		"desm": "latest",
-		"execa": "latest",
-		"typescript": "latest",
-		"vite": "latest",
-		"rollup-plugin-js-imports": "latest",
-		"vite-plugin-windicss": "latest",
-		"vue-tsc": "latest",
-		"windicss": "latest"
+		"@types/node": "^17.0.35",
+		"@vitejs/plugin-vue": "^2.3.3",
+		"desm": "^1.2.0",
+		"execa": "^6.1.0",
+		"rollup-plugin-js-imports": "^1.2.1",
+		"typescript": "^4.6.4",
+		"vite": "^2.9.9",
+		"vite-plugin-windicss": "^1.8.4",
+		"vue-tsc": "^0.34.15",
+		"windicss": "^3.5.4"
 	}
 }

@@ -3,6 +3,5 @@
 	"type": "module",
 	"devDependencies": {
 		"@types/node": "^17.0.33"
-	},
-	"dependencies": {}
+	}
 }
