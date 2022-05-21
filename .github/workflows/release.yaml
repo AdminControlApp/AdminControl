@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - packages/website
+      - .github/workflows/github-pages.yaml
 
 jobs:
   deploy:
