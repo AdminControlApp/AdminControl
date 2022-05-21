@@ -7,7 +7,7 @@
 		</p>
 		<a
 			class="mt-4 py-2 px-6 hover:bg-orange-500 transition-colors rounded-md bg-orange-400 text-white"
-			href="https://github.com/AdminControlApp/AdminControl/releases/download/latest/AdminControl"
+			href="https://github.com/AdminControlApp/AdminControl/releases/latest/download/AdminControl.dmg"
 		>
 			Download
 		</a>
