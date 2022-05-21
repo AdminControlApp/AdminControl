@@ -42,7 +42,10 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm run prune:for-website && pnpm install
+        run: pnpm run prune:for-website && pnpm install --no-frozen-lockfile
+
+      - name: Build Website
+        run: pnpm --filter @admincontrol/website build
 
       - name: Deploy to GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.3
