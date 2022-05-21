@@ -3,11 +3,13 @@
 	"type": "module",
 	"version": "1.0.0",
 	"description": "Encryption utilities for AdminControl.",
-	"exports": "./src/index.ts",
+	"exports": {
+		"import": "./index.js",
+		"require": "./index.cjs"
+	},
 	"scripts": {
-		"start": "node-ts ./src/bin/cli.ts",
-		"preinstall": "pnpm build",
-		"build": "node-ts ./scripts/build.ts"
+		"start": "node-ts ./src/bin/cli.js",
+		"build": "node-ts ./scripts/build.js"
 	},
 	"dependencies": {
 		"@commonjs/execa": "npm:execa@^5.1.1",
