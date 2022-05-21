@@ -17,8 +17,6 @@ if (process.env.GITHUB_ACTIONS === undefined) {
 	);
 } else {
 	console.info('CI detected; building for publish...');
-	// Needed for electron-builder
-	process.env.GH_TOKEN = process.env.GITHUB_TOKEN;
 	execa.commandSync(
 		'electron-builder build --config .electron-builder.config.js --config.asar=false --mac',
 		{ stdio: 'inherit', env: { MODE: 'production' } }

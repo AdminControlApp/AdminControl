@@ -51,6 +51,8 @@ jobs:
       - name: Compile Electron App for Release
         run: |
           pnpm compile:electron
+        env:
+          GH_TOKEN: ${{ secrets.GH_BOT_TOKEN }}
 
       - uses: marvinpinto/action-automatic-releases@latest
         with:
