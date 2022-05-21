@@ -6,7 +6,7 @@
 		"pnpm": ">=7.0.0"
 	},
 	"scripts": {
-		"setup": "node ./scripts/setup.js",
+		"setup-monorepo": "node ./packages/scripts/setup.js",
 		"prepare": "lion-git-hooks",
 		"pnpm:devPreinstall": "node ./packages/scripts/src/setup-check.js",
 		"dev:electron": "pnpm --filter=@admincontrol/app run dev",

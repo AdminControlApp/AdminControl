@@ -39,7 +39,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm run setup && pnpm install
+        run: pnpm run setup-monorepo && pnpm install
 
       - name: Compile Electron App for Release
         run: |
