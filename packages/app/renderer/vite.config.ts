@@ -30,7 +30,7 @@ export default defineConfig({
 		}),
 		WindiCSS(),
 		jsImports(),
-		nodeResolve({browser: true}),
+		nodeResolve({ browser: true }),
 	],
 	server: {
 		fs: {
