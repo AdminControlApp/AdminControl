@@ -34,7 +34,7 @@ importers:
       electron-updater: ^5.0.1
       fast-deep-equal: ^3.1.3
       fast-sha256: ^1.3.0
-      get-secure-input-processes: ^0.0.1
+      get-secure-input-processes: ^0.0.2
       happy-dom: 2.55.0
       is-ci: ^3.0.1
       keytar: ^7.9.0
@@ -72,7 +72,7 @@ importers:
       electron-updater: 5.0.1
       fast-deep-equal: 3.1.3
       fast-sha256: 1.3.0
-      get-secure-input-processes: 0.0.1
+      get-secure-input-processes: 0.0.2
       is-ci: 3.0.1
       keytar: 7.9.0
       ldebug: 1.0.0
@@ -142,7 +142,7 @@ importers:
       execa: ^6.1.0
       fastify: ^3.29.0
       get-port: ^6.1.2
-      get-secure-input-processes: ^0.0.1
+      get-secure-input-processes: ^0.0.2
       inquirer: ^8.2.4
       lionconfig: ^1.7.17
       log-symbols: ^5.1.0
@@ -163,7 +163,7 @@ importers:
       execa: 6.1.0
       fastify: 3.29.0
       get-port: 6.1.2
-      get-secure-input-processes: 0.0.1
+      get-secure-input-processes: 0.0.2
       inquirer: 8.2.4
       log-symbols: 5.1.0
       ngrok: 4.3.1
@@ -1621,7 +1621,6 @@ packages:
     dependencies:
       '@vue/reactivity': 3.2.35
       '@vue/shared': 3.2.35
-    dev: false
 
   /@vue/runtime-dom/3.2.35:
     resolution: {integrity: sha512-M5xrVJ/b0KqssjPQMdpwLp3KwzG1Tn2w/IrOptVqGY5c9fEBluIbm18AeO4Fr3YxfeyaPWm1rY8POrEso0UE3w==}
@@ -1629,7 +1628,6 @@ packages:
       '@vue/runtime-core': 3.2.35
       '@vue/shared': 3.2.35
       csstype: 2.6.20
-    dev: false
 
   /@vue/server-renderer/3.2.35_vue@3.2.35:
     resolution: {integrity: sha512-ZMF8V+bZ0EIjSB7yzPEmDlxRDOIXj04iqG4Rw/H5rIuBCf0b7rNTleiOldlX5haG++zUq6uiL2AVp/A9uyz+cw==}
@@ -1639,7 +1637,6 @@ packages:
       '@vue/compiler-ssr': 3.2.35
       '@vue/shared': 3.2.35
       vue: 3.2.35
-    dev: false
 
   /@vue/shared/3.2.35:
     resolution: {integrity: sha512-/sxDqMcy0MsfQ3LQixKYDxIinDYNy1dXTsF2Am0pv0toImWabymFQ8cFmPJnPt+gh5ElKwwn7KzQcDbLHar60A==}
@@ -2915,7 +2912,6 @@ packages:
 
   /csstype/2.6.20:
     resolution: {integrity: sha512-/WwNkdXfckNgw6S5R125rrW8ez139lBHWouiBvX8dfMFtcn6V81REDqnH7+CRpRipfYlyU1CmOnOxrmGcFOjeA==}
-    dev: false
 
   /dargs/7.0.0:
     resolution: {integrity: sha512-2iy1EkLdlBzQGvbweYRFxmFath8+K7+AKB0TlhHWkNuH+TmovaMH/Wp7V7R4u7f4SnX3OgLsU9t1NI9ioDnUpg==}
@@ -4778,8 +4774,17 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: false
 
-  /get-secure-input-processes-darwin-x64/0.0.1:
-    resolution: {integrity: sha512-WnafKpFNZqayN4vIQIdXS9ghnxpVCxv2sDM6j+2vTO0TQj6JnHa4BzKK7ULB3zOTsrqWRPagrkD+LZymd6G+FA==}
+  /get-secure-input-processes-darwin-arm64/0.0.2:
+    resolution: {integrity: sha512-ODBoTrlWM4nfa/+y2j6IcgymMqUgQgXON5O8+RR9pkXnO0S87sMFpvI8MTFcjID8v17Zr7uB8iC22XoLwpI7Kw==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /get-secure-input-processes-darwin-x64/0.0.2:
+    resolution: {integrity: sha512-UXQheeAKUg9l6MENj7ZL/Efcd9VHMK+YpateLYoh/cffxAYs4UdadDyduufs9BYtfXlKhYNrsbcQoKgknFK1Hg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
@@ -4787,11 +4792,12 @@ packages:
     dev: false
     optional: true
 
-  /get-secure-input-processes/0.0.1:
-    resolution: {integrity: sha512-QuY9ocgz7lRmTvaT0Uc1jDRZWD+8mbKkbYHjfJBJDHx6vI9of7DzK51y0LJT/eW4tXhYdQ6nP+tTXOCt2G2KxQ==}
-    engines: {node: '>= 10'}
+  /get-secure-input-processes/0.0.2:
+    resolution: {integrity: sha512-FsAmR+lCFxzrN3iKuzeS+O1lxzfw2gVOOfEkQs20gT3Js7dyyloP/tLqTgbZcCUEXDgFw3k+oXdeSBqZsvo7Qw==}
+    engines: {node: '>= 14'}
     optionalDependencies:
-      get-secure-input-processes-darwin-x64: 0.0.1
+      get-secure-input-processes-darwin-arm64: 0.0.2
+      get-secure-input-processes-darwin-x64: 0.0.2
     dev: false
 
   /get-set-props/0.1.0:
@@ -9324,7 +9330,6 @@ packages:
     resolution: {integrity: sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==}
     engines: {node: '>=4.2.0'}
     hasBin: true
-    dev: true
 
   /uc.micro/1.0.6:
     resolution: {integrity: sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==}
@@ -9632,7 +9637,6 @@ packages:
       '@vue/runtime-dom': 3.2.35
       '@vue/server-renderer': 3.2.35_vue@3.2.35
       '@vue/shared': 3.2.35
-    dev: false
 
   /vue3-notify/0.0.2_vue@3.2.35:
     resolution: {integrity: sha512-fPrOaMHWLqnDzgGBeXTGk2wTYSRmdi2aValJjrsdaHDG9NQ7gUsBYckfiYDfro1V8J566jDZGHiciKHmlLg7xw==}
