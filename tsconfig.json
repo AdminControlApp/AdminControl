@@ -1,0 +1,8 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/app" },
+    { "path": "./packages/encryption" },
+    { "path": "./packages/phone-call-input" }
+  ]
+}

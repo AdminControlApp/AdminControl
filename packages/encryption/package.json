@@ -6,7 +6,6 @@
 	"exports": "./src/index.ts",
 	"scripts": {
 		"start": "node-ts ./src/bin/cli.ts",
-		"preinstall": "pnpm build",
 		"build": "node-ts ./scripts/build.ts"
 	},
 	"dependencies": {
