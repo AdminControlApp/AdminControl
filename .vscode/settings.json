@@ -2,5 +2,6 @@
 	"rust-analyzer.linkedProjects": [
 		"packages/phone-call-input/src/secure-input/Cargo.toml",
 		"packages/encryption/src/encryption-brute-forcer/Cargo.toml"
-	]
+	],
+	"prettier.configPath": "./node_modules/lionconfig/prettier.cjs"
 }

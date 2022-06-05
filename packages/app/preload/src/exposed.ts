@@ -10,7 +10,7 @@ import {
 	changeScreenTimePasscode,
 	getScreenTimePasscodeFromAdminPassword,
 } from './utils/screen-time.js';
-import { retrieveSecretCode } from './utils/secret-code.js';
+import { changeSecretCode, retrieveSecretCode } from './utils/secret-code.js';
 import { store } from './utils/store.js';
 
 export const exposedElectron = {
@@ -22,4 +22,5 @@ export const exposedElectron = {
 	encryptAdminPassword,
 	changeScreenTimePasscode,
 	getScreenTimePasscodeFromAdminPassword,
+	changeSecretCode,
 };
